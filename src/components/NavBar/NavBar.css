@@ -1,0 +1,37 @@
+/* LeftBar */
+.navBar{
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 190px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background: linear-gradient(#000000, #000000);
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+}
+
+/* The navigation menu links */
+.navBar a {
+    padding: 6px;
+    padding-left: 22px;
+    text-decoration: none;
+    font-size: small;
+    color: #818181;
+    display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.navBar a:hover {
+    color: #f1f1f1;
+}
+
+.title{
+  color: #fff;
+  font-size: 20px;
+  font-weight: 300;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-top: 0;
+  margin-bottom: 25px;
+}

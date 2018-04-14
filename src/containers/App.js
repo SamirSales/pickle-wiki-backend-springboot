@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
+
+import NavBar from '../components/NavBar/NavBar';
+
 import logo from '../logo.svg';
 import './App.css';
 
 class App extends Component {
+
+  state = {
+    navItems: [
+      { title: 'Home'},
+      { title: 'About'},
+      { title: 'Contact'},
+      { title: 'Github'}
+    ]
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <NavBar items={this.state.navItems} />
       </div>
     );
   }
