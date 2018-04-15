@@ -8,13 +8,14 @@ import './App.css';
 class App extends Component {
 
   state = {
-    home: 'http://localhost:3000/',
+    url: 'http://localhost:3000/',
     appTitle: 'My Wiki',
     navItems: [
-      { title: 'Home', key: '1'},
-      { title: 'About', key: '2'},
-      { title: 'Contact', key: '3'},
-      { title: 'Github', key: '4'}
+      { title: 'Início', key: '1'},
+      { title: 'Sobre', key: '2'},
+      { title: 'Ajuda', key: '3'},
+      { title: 'Github', key: '4'},
+      { title: 'Informar erro', key: '5'}
     ]
   }
 
@@ -24,8 +25,8 @@ class App extends Component {
         <NavBar items={this.state.navItems}
           home={this.state.home}
           title={this.state.appTitle} />
-        
-        <TopBar home={this.state.home} />
+
+        <TopBar home={this.state.url} />
       </div>
     );
   }

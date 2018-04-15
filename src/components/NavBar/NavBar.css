@@ -1,14 +1,14 @@
 /* LeftBar */
 .navBar{
     height: 100%; /* Full-height: remove this if you want "auto" height */
-    width: 190px; /* Set the width of the sidebar */
+    width: 175px; /* Set the width of the sidebar */
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
     background: linear-gradient(#000000, #000000);
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 /* The navigation menu links */
@@ -30,7 +30,16 @@
   color: #fff;
   font-size: 20px;
   font-weight: 300;
-  padding-top: 6px;
+  padding-top: 2px;
+  margin: 0;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.quote{
+  color: #fff;
+  font-size: 11px;
+  font-weight: 100;
+  padding-top: 2px;
   padding-bottom: 6px;
   margin-top: 0;
   margin-bottom: 25px;
