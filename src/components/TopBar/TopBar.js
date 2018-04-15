@@ -8,8 +8,8 @@ const topBar = ( props ) => {
     return (
         <div className="topBar">
           <div className="topTopBar">
-            <a href="#">Entrar</a>
-            <a href="#" className="user-link"><i className="fas fa-user"></i> Não autenticado</a>
+            <a href={props.home}>Entrar</a>
+            <a href={props.home} className="user-link"><i className="fas fa-user"></i> Não autenticado</a>
           </div>
 
           <div className="bottomTopBar">

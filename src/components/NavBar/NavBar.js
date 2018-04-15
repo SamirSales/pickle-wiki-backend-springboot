@@ -8,7 +8,7 @@ import logo from '../../assets/img/earth.png';
 const navBar = ( props ) => {
 
     let items = props.items.map((item) => {
-      return <a align="left" href="#">{item.title}</a>;
+      return <a align="left" href={props.home} key={item.key}>{item.title}</a>;
     })
 
     return (
