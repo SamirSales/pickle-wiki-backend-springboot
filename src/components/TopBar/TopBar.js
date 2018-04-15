@@ -2,6 +2,7 @@
 import React from 'react';
 
 import './TopBar.css';
+import Tab from '../Tab/Tab';
 
 const topBar = ( props ) => {
 
@@ -17,6 +18,9 @@ const topBar = ( props ) => {
               <input type="text" placeholder="Pesquisar..." />
               <i className="fa fa-search search-icon"></i>
             </div>
+
+            <Tab title="Principal" active="true"/>
+            <Tab title="Novo Artigo" />
           </div>
 
         </div>

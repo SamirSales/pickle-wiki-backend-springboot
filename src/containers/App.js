@@ -26,7 +26,10 @@ class App extends Component {
           home={this.state.home}
           title={this.state.appTitle} />
 
-        <TopBar home={this.state.url} />
+        <div className="main-content">
+          <TopBar home={this.state.url} />
+        </div>
+
       </div>
     );
   }
