@@ -1,0 +1,67 @@
+.topBar{
+  background-color: #ffffff;
+  overflow: hidden;
+  padding-bottom: 4px;
+}
+
+.topTopBar{
+  overflow: hidden;
+  padding: 4px;
+  padding-right: 22px;
+  padding-top: 10px;
+}
+
+.topTopBar a, .topTopBar a:visited{
+  float: right;
+  text-decoration: none;
+  font-size: 13px;
+  color: #326fad;
+  margin-left: 20px;
+}
+
+.topTopBar a:hover{
+  color: #004c99;
+}
+
+.topTopBar a.user-link{
+  color: #c0c0c0;
+}
+
+.bottomTopBar{
+  padding-right: 20px;
+  padding-top: 12px;
+}
+
+.divSearch{
+  border: solid 1px #777777;
+  border-radius: 2px;
+  background-color: #ffffff;
+  /* padding: 4px; */
+  width: 100%;
+  max-width: 280px;
+  float: right;
+  display: inline-block;
+  height: 21px;
+}
+
+.divSearch:focus-within{
+  border-color: #004c99;
+}
+
+.divSearch input{
+  border-width: 0px;
+  width: calc(100% - 30px);
+  padding-left: 5px;
+  margin-top: 2px;
+}
+
+.divSearch input:focus{
+  outline-color: transparent;
+}
+
+.divSearch .search-icon{
+  font-size: 13px;
+  height: 13px;
+  width: 13px;
+  color: #555555;
+}
