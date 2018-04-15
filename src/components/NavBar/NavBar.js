@@ -14,7 +14,7 @@ const navBar = ( props ) => {
     return (
         <div className="navBar">
           <img src={logo} alt="Earth" height="110" width="110" />
-          <h5 className="title">My Week</h5>
+          <h5 className="title">{props.title}</h5>
           {items}
         </div>
     )

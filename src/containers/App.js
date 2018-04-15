@@ -9,6 +9,7 @@ class App extends Component {
 
   state = {
     home: 'http://localhost:3000/',
+    appTitle: 'My Wiki',
     navItems: [
       { title: 'Home', key: '1'},
       { title: 'About', key: '2'},
@@ -20,7 +21,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar items={this.state.navItems} home={this.state.home} />
+        <NavBar items={this.state.navItems}
+          home={this.state.home}
+          title={this.state.appTitle} />
+        
         <TopBar home={this.state.home} />
       </div>
     );
