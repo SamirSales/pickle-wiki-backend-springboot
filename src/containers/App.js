@@ -10,6 +10,10 @@ class App extends Component {
   state = {
     url: 'http://localhost:3000/',
     appTitle: 'My Wiki',
+    user: {
+      name: 'Francisco',
+      login: 'chico'
+    },
     navItems: [
       { title: 'Início', key: '1'},
       { title: 'Sobre', key: '2'},
@@ -27,7 +31,7 @@ class App extends Component {
           title={this.state.appTitle} />
 
         <div className="main-content">
-          <TopBar home={this.state.url} />
+          <TopBar home={this.state.url} user={this.state.user}/>
         </div>
 
       </div>
