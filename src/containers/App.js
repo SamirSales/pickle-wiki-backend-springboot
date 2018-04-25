@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import NavBar from '../components/NavBar/NavBar';
 import TopBar from '../components/TopBar/TopBar';
+import SimpleTemplate from '../components/SimpleTemplate/SimpleTemplate';
 
 import './App.css';
 
@@ -32,6 +33,9 @@ class App extends Component {
 
         <div className="main-content">
           <TopBar home={this.state.url} user={this.state.user}/>
+          <div className="container">
+            <SimpleTemplate title='Título' text='Blá blá blá'/>
+          </div>
         </div>
 
       </div>

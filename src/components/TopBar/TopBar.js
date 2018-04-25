@@ -37,7 +37,7 @@ const topBar = ( props ) => {
               <i className="fa fa-search search-icon"></i>
             </div>
 
-            <Tab title="Principal" active="true"/>
+            <Tab title="Artigo" active="true"/>
             {tabAddArticle}
           </div>
 

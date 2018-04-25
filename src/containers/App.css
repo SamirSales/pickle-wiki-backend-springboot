@@ -29,4 +29,17 @@
 
 .main-content{
   margin-left: 175px;
+  width: calc(100% - 175px);
+  height: 100%;
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0;
+}
+
+.container{
+  width: calc(100% - 40px);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }

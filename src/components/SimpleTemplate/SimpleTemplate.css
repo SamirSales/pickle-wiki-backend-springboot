@@ -1,0 +1,19 @@
+
+h1{
+    font-family: "Times New Roman", Times, serif;
+    color: #333333;
+    text-align: left;
+    font-size: 29px;
+    font-weight: 200;
+
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #c0c0c0;
+    padding-bottom: 3px;
+}
+
+p{
+    color: #333333;
+    text-align: left;
+    font-size: 14px;
+}
