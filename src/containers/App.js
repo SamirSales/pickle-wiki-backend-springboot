@@ -10,18 +10,33 @@ class App extends Component {
 
   state = {
     url: 'http://localhost:3000/',
-    appTitle: 'My Wiki',
+    appTitle: 'Pickle Wiki',
     user: {
       name: 'Francisco',
-      login: 'chico'
+      login: 'chico',
+      password: '123456'
     },
     navItems: [
-      { title: 'Início', key: '1'},
-      { title: 'Sobre', key: '2'},
-      { title: 'Ajuda', key: '3'},
-      { title: 'Github', key: '4'},
-      { title: 'Informar erro', key: '5'}
-    ]
+      { title: 'Início', key: '1', text: 'Hello início...'},
+      { title: 'Sobre', key: '2', text: 'Hello sobre...'},
+      { title: 'Ajuda', key: '3', text: 'Hello ajuda...'},
+      { title: 'Github', key: '4', text: 'Hello github...'},
+      { title: 'Informar erro', key: '5', text: 'Hello informar erro...'}
+    ],
+    simpleTemplate:{
+      title: 'Bem vindo ao Pickle Wiki',
+      text: 'Blá blá blá 2'
+    }
+  }
+
+  switchNameHandler = (newTitle, newText) => {
+    
+    this.setState( {
+      simpleTemplate: {
+        title: newTitle,
+        text: newText
+      }
+    } );
   }
 
   render() {
@@ -29,12 +44,15 @@ class App extends Component {
       <div className="App">
         <NavBar items={this.state.navItems}
           home={this.state.home}
-          title={this.state.appTitle} />
+          title={this.state.appTitle}
+          click={this.switchNameHandler} />
 
         <div className="main-content">
           <TopBar home={this.state.url} user={this.state.user}/>
           <div className="container">
-            <SimpleTemplate title='Título' text='Blá blá blá'/>
+            <SimpleTemplate 
+              title={this.state.simpleTemplate.title} 
+              text={this.state.simpleTemplate.text} />
           </div>
         </div>
 
