@@ -7,7 +7,7 @@ const dialogConfirmation = ( props ) => {
 
     let dialog = null;
 
-    if(props.active == true){
+    if(props.active === true){
         dialog = (
             <div className="modal-content">
                 <h3>{props.title}</h3>
@@ -21,7 +21,7 @@ const dialogConfirmation = ( props ) => {
     }
 
     return (
-        <div className={props.active == true ? 'modal' : ''}>{dialog}</div>
+        <div className={props.active === true ? 'modal' : ''}>{dialog}</div>
     )
 };
 export default dialogConfirmation;

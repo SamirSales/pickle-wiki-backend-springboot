@@ -11,7 +11,7 @@ const topBar = ( props ) => {
 
     let dialogLogoutMsg = {
       title: 'Fazer logout',
-      message: 'Tem certeza que deseja sair da aplicação?'
+      message: 'Tem certeza que deseja fazer logout?'
     };
 
     if(props.user == null){

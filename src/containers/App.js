@@ -69,10 +69,9 @@ class App extends Component {
     this.setState( {
       dialog: {
         active: false
-      }
+      },
+      user: null
     });
-
-    this.state.user = null;
   }
 
   render() {
