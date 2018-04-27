@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import NavBar from '../components/NavBar/NavBar';
 import TopBar from '../components/TopBar/TopBar';
 import SimpleTemplate from '../components/SimpleTemplate/SimpleTemplate';
+import DialogConfirmation from '../components/DialogConfirmation/DialogConfirmation';
 
 import './App.css';
 
@@ -26,17 +27,40 @@ class App extends Component {
     simpleTemplate:{
       title: 'Bem vindo ao Pickle Wiki',
       text: 'Blá blá blá 2'
+    },
+    dialog:{
+      title: '',
+      message: '',
+      active: false
     }
   }
 
-  switchNameHandler = (newTitle, newText) => {
-    
+  setSimpleTemplate = (newTitle, newText) => {  
     this.setState( {
       simpleTemplate: {
         title: newTitle,
         text: newText
       }
-    } );
+    });
+  }
+
+  dialogConfirmation = (newTitle, newText, confirmAction) => {
+
+    this.setState( {
+      dialog: {
+        title: newTitle,
+        message: newText,
+        active: true
+      }
+    });
+  }
+
+  closeDialog = () =>{
+    this.setState( {
+      dialog: {
+        active: false
+      }
+    });
   }
 
   render() {
@@ -45,10 +69,13 @@ class App extends Component {
         <NavBar items={this.state.navItems}
           home={this.state.home}
           title={this.state.appTitle}
-          click={this.switchNameHandler} />
+          click={this.setSimpleTemplate} />
 
         <div className="main-content">
-          <TopBar home={this.state.url} user={this.state.user}/>
+          <TopBar home={this.state.url} 
+            user={this.state.user}
+            logout={this.dialogConfirmation} />
+
           <div className="container">
             <SimpleTemplate 
               title={this.state.simpleTemplate.title} 
@@ -56,6 +83,11 @@ class App extends Component {
           </div>
         </div>
 
+        <DialogConfirmation 
+          title={this.state.dialog.title}
+          message={this.state.dialog.message}
+          active={this.state.dialog.active}
+          confirm="" cancel={this.closeDialog} />
       </div>
     );
   }

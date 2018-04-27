@@ -18,6 +18,7 @@
   font-size: 13px;
   color: #326fad;
   margin-left: 20px;
+  cursor: pointer;
 }
 
 .topTopBar a:hover{

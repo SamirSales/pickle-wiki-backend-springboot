@@ -9,6 +9,11 @@ const topBar = ( props ) => {
     let itemUser =  null;
     let tabAddArticle = null;
 
+    let dialogLogoutMsg = {
+      title: 'Fazer logout',
+      message: 'Tem certeza que deseja sair da aplicação?'
+    };
+
     if(props.user == null){
       itemUser = (
         <div className="topTopBar">
@@ -19,7 +24,7 @@ const topBar = ( props ) => {
     } else {
       itemUser = (
         <div className="topTopBar">
-          <a href={props.home}>Sair</a>
+          <a onClick={props.logout.bind(this, dialogLogoutMsg.title, dialogLogoutMsg.message, null)}>Sair</a>
           <a href={props.home} className="user-link"><i className="fa fa-user"></i> {props.user.name}</a>
         </div>
       );
