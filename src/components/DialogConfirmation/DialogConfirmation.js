@@ -14,7 +14,7 @@ const dialogConfirmation = ( props ) => {
                 <p>{props.message}</p>
                 <div className="buttons">
                     <button className="cancel" onClick={props.cancel.bind(this)}>Não</button>
-                    <button>Sim</button>                    
+                    <button onClick={props.confirm.bind(this)}>Sim</button>                    
                 </div>
             </div>
         );

@@ -31,7 +31,8 @@ class App extends Component {
     dialog:{
       title: '',
       message: '',
-      active: false
+      active: false,
+      funConfirm: null
     }
   }
 
@@ -50,17 +51,28 @@ class App extends Component {
       dialog: {
         title: newTitle,
         message: newText,
-        active: true
+        active: true, 
+        funConfirm: this.logout
       }
     });
   }
 
-  closeDialog = () =>{
+  closeDialog = () => {
     this.setState( {
       dialog: {
         active: false
       }
     });
+  }
+
+  logout = () => {
+    this.setState( {
+      dialog: {
+        active: false
+      }
+    });
+
+    this.state.user = null;
   }
 
   render() {
@@ -87,7 +99,7 @@ class App extends Component {
           title={this.state.dialog.title}
           message={this.state.dialog.message}
           active={this.state.dialog.active}
-          confirm="" cancel={this.closeDialog} />
+          confirm={this.state.dialog.funConfirm} cancel={this.closeDialog} />
       </div>
     );
   }
