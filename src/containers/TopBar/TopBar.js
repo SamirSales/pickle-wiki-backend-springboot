@@ -1,14 +1,10 @@
 import React, { PureComponent } from 'react';
 
 import './TopBar.css';
-import Tab from '../Tab/Tab';
+import Tab from '../../components/Tab/Tab';
 import { AuthContext } from '../../containers/App';
 
 class TopBar extends PureComponent {
-
-  TopBar(props){
-
-  }
 
   render() {
     let userAuthenticated = (

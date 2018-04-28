@@ -7,10 +7,6 @@ import logo from '../../assets/img/pickle-wiki.png';
 
 class NavBar extends Component {
 
-  NavBar(props) {
-    
-  }
-
   state = {
     navItems: [
       { title: 'Início', key: '1', text: 'Hello início...'},

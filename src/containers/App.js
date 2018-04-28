@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 
-import NavBar from '../components/NavBar/NavBar';
-import TopBar from '../components/TopBar/TopBar';
+import NavBar from './NavBar/NavBar';
+import TopBar from './TopBar/TopBar';
 import SimpleTemplate from '../components/SimpleTemplate/SimpleTemplate';
 import DialogConfirmation from '../components/DialogConfirmation/DialogConfirmation';
 
