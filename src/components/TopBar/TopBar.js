@@ -3,33 +3,35 @@ import React from 'react';
 
 import './TopBar.css';
 import Tab from '../Tab/Tab';
+import { AuthContext } from '../../containers/App';
 
 const topBar = ( props ) => {
 
-    let itemUser =  null;
-    let tabAddArticle = null;
+    let userAuthenticated = (
+      <div className="topTopBar">
+        <a onClick={props.logout}>Sair</a>
+        <a href={props.home} className="user-link"><i className="fa fa-user"></i> {props.user ? props.user.name : ''}</a>
+      </div>
+    ); 
 
-    if(props.user == null){
-      itemUser = (
-        <div className="topTopBar">
-          <a href={props.home}>Entrar</a>
-          <a href={props.home} className="user-link"><i className="fa fa-user"></i> Não autenticado</a>
-        </div>
-      );
-    } else {
-      itemUser = (
-        <div className="topTopBar">
-          <a onClick={props.logout}>Sair</a>
-          <a href={props.home} className="user-link"><i className="fa fa-user"></i> {props.user.name}</a>
-        </div>
-      );
+    let userNotAuthenticated = (
+      <div className="topTopBar">
+        <a href={props.home}>Entrar</a>
+        <a href={props.home} className="user-link"><i className="fa fa-user"></i> Não autenticado</a>
+      </div>
+    );
 
-      tabAddArticle = <Tab title="Novo Artigo" />;
-    }
+    let tabAddArticle = <Tab title="Novo Artigo" />;
 
     return (
         <div className="topBar">
-          {itemUser}
+          <AuthContext.Consumer>
+            { auth => auth ? userAuthenticated : null}
+          </AuthContext.Consumer>
+
+          <AuthContext.Consumer>
+            { auth => !auth ? userNotAuthenticated : null}
+          </AuthContext.Consumer>
 
           <div className="bottomTopBar">
             <div className="divSearch">
@@ -38,7 +40,10 @@ const topBar = ( props ) => {
             </div>
 
             <Tab title="Artigo" active="true"/>
-            {tabAddArticle}
+
+            <AuthContext.Consumer>
+              { auth => auth ? tabAddArticle : null}
+            </AuthContext.Consumer>
           </div>
 
         </div>

@@ -7,6 +7,8 @@ import DialogConfirmation from '../components/DialogConfirmation/DialogConfirmat
 
 import './App.css';
 
+export const AuthContext = React.createContext(false);
+
 class App extends Component {
 
   state = {
@@ -82,14 +84,17 @@ class App extends Component {
           click={this.setSimpleTemplate} />
 
         <div className="main-content">
-          <TopBar home={this.state.url} 
-            user={this.state.user}
-            logout={this.dialogLogout} />
+          <AuthContext.Provider value={this.state.user !== null}>
+            <TopBar home={this.state.url} 
+              user={this.state.user}
+              logout={this.dialogLogout} />
+          </AuthContext.Provider>
 
           <div className="container">
             <SimpleTemplate 
               title={this.state.simpleTemplate.title} 
               text={this.state.simpleTemplate.text} />
+            
           </div>
         </div>
 
