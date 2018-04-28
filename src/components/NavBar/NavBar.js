@@ -11,6 +11,16 @@ class NavBar extends Component {
     
   }
 
+  state = {
+    navItems: [
+      { title: 'Início', key: '1', text: 'Hello início...'},
+      { title: 'Sobre', key: '2', text: 'Hello sobre...'},
+      { title: 'Ajuda', key: '3', text: 'Hello ajuda...'},
+      { title: 'Github', key: '4', text: 'Hello github...'},
+      { title: 'Informar erro', key: '5', text: 'Hello informar erro...'}
+    ]
+  }
+
   shouldComponentUpdate(nextProps, nextState){
     // this component does not need to update
     return false;
@@ -18,7 +28,7 @@ class NavBar extends Component {
 
   render() {
 
-    let items = this.props.items.map((item) => {
+    let items = this.state.navItems.map((item) => {
       return <a align="left" 
         href={this.props.home} 
         key={item.key} onClick={this.props.click.bind(this, item.title, item.text)}>{item.title}</a>;
@@ -28,7 +38,7 @@ class NavBar extends Component {
       <div className="navBar">
         <img src={logo} alt="Pickle Wiki" height="106" width="106" />
         <h5 className="title">{this.props.title}</h5>
-        <h4 className="quote"><i>Sua enciclopédia pessoal</i></h4>
+        <h4 className="quote"><i>Sua enciclopédia personalisada</i></h4>
         {items}
       </div>
     )

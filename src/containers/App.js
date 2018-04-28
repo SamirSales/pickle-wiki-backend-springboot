@@ -19,16 +19,9 @@ class App extends PureComponent {
       login: 'chico',
       password: '123456'
     },
-    navItems: [
-      { title: 'Início', key: '1', text: 'Hello início...'},
-      { title: 'Sobre', key: '2', text: 'Hello sobre...'},
-      { title: 'Ajuda', key: '3', text: 'Hello ajuda...'},
-      { title: 'Github', key: '4', text: 'Hello github...'},
-      { title: 'Informar erro', key: '5', text: 'Hello informar erro...'}
-    ],
     simpleTemplate:{
       title: 'Bem vindo ao Pickle Wiki',
-      text: 'Blá blá blá 2'
+      text: 'Sistema Wiki que tem como foco seu funcionamento em intranets empresarias e blá blá blá...'
     },
     dialog:{
       title: '',
@@ -78,8 +71,7 @@ class App extends PureComponent {
   render() {
     return (
       <div className="App">
-        <NavBar items={this.state.navItems}
-          home={this.state.home}
+        <NavBar home={this.state.home}
           title={this.state.appTitle}
           click={this.setSimpleTemplate} />
 
