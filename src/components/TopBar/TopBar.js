@@ -1,23 +1,27 @@
-
-import React from 'react';
+import React, { PureComponent } from 'react';
 
 import './TopBar.css';
 import Tab from '../Tab/Tab';
 import { AuthContext } from '../../containers/App';
 
-const topBar = ( props ) => {
+class TopBar extends PureComponent {
 
+  TopBar(props){
+
+  }
+
+  render() {
     let userAuthenticated = (
       <div className="topTopBar">
-        <a onClick={props.logout}>Sair</a>
-        <a href={props.home} className="user-link"><i className="fa fa-user"></i> {props.user ? props.user.name : ''}</a>
+        <a onClick={this.props.logout}>Sair</a>
+        <a href={this.props.home} className="user-link"><i className="fa fa-user"></i> {this.props.user ? this.props.user.name : ''}</a>
       </div>
     ); 
 
     let userNotAuthenticated = (
       <div className="topTopBar">
-        <a href={props.home}>Entrar</a>
-        <a href={props.home} className="user-link"><i className="fa fa-user"></i> Não autenticado</a>
+        <a href={this.props.home}>Entrar</a>
+        <a href={this.props.home} className="user-link"><i className="fa fa-user"></i> Não autenticado</a>
       </div>
     );
 
@@ -48,6 +52,7 @@ const topBar = ( props ) => {
 
         </div>
     )
-};
+  }
+}
 
-export default topBar;
+export default TopBar;

@@ -11,6 +11,11 @@ class NavBar extends Component {
     
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    // this component does not need to update
+    return false;
+  }
+
   render() {
 
     let items = this.props.items.map((item) => {

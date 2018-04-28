@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import NavBar from '../components/NavBar/NavBar';
 import TopBar from '../components/TopBar/TopBar';
@@ -9,7 +9,7 @@ import './App.css';
 
 export const AuthContext = React.createContext(false);
 
-class App extends Component {
+class App extends PureComponent {
 
   state = {
     url: 'http://localhost:3000/',

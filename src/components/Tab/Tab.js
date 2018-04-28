@@ -4,17 +4,9 @@ import React from 'react';
 import './Tab.css';
 
 const tab = ( props ) => {
-
-    let theTab = null;
-
-    if(props.active === 'true'){
-      theTab = <div className="tab active">{props.title}</div>
-    }else{
-      theTab = <div className="tab">{props.title}</div>
-    }
-
     return (
-        <div>{theTab}</div>
+      <div className={props.active ? 'tab active' : 'tab'}>{props.title}</div>
     )
 };
+
 export default tab;
