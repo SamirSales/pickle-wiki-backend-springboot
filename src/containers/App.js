@@ -45,12 +45,11 @@ class App extends Component {
     });
   }
 
-  dialogConfirmation = (newTitle, newText, confirmAction) => {
-
+  dialogLogout = () => {
     this.setState( {
       dialog: {
-        title: newTitle,
-        message: newText,
+        title: 'Fazer logout',
+        message: 'Tem certeza que deseja fazer logout?',
         active: true, 
         funConfirm: this.logout
       }
@@ -85,7 +84,7 @@ class App extends Component {
         <div className="main-content">
           <TopBar home={this.state.url} 
             user={this.state.user}
-            logout={this.dialogConfirmation} />
+            logout={this.dialogLogout} />
 
           <div className="container">
             <SimpleTemplate 
@@ -98,7 +97,8 @@ class App extends Component {
           title={this.state.dialog.title}
           message={this.state.dialog.message}
           active={this.state.dialog.active}
-          confirm={this.state.dialog.funConfirm} cancel={this.closeDialog} />
+          confirm={this.state.dialog.funConfirm} 
+          cancel={this.closeDialog} />
       </div>
     );
   }
