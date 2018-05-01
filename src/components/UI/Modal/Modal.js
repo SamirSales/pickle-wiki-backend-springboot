@@ -1,14 +1,14 @@
 
 import React from 'react';
 
-import './DialogConfirmation.css';
+import './Modal.css';
 
-const dialogConfirmation = ( props ) => {
+const modal = ( props ) => {
 
-    let dialog = null;
+    let modal = null;
 
     if(props.active === true){
-        dialog = (
+        modal = (
             <div className="modal-content">
                 <h3>{props.title}</h3>
                 <p>{props.message}</p>
@@ -21,7 +21,7 @@ const dialogConfirmation = ( props ) => {
     }
 
     return (
-        <div className={props.active === true ? 'modal' : ''}>{dialog}</div>
+        <div className={props.active === true ? 'modal' : ''}>{modal}</div>
     )
 };
-export default dialogConfirmation;
+export default modal;

@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import NavBar from './NavBar/NavBar';
 import TopBar from './TopBar/TopBar';
 import SimpleTemplate from '../components/SimpleTemplate/SimpleTemplate';
-import DialogConfirmation from '../components/DialogConfirmation/DialogConfirmation';
+import Modal from '../components/UI/Modal/Modal';
 
 import './App.css';
 
@@ -90,7 +90,7 @@ class App extends PureComponent {
           </div>
         </div>
 
-        <DialogConfirmation 
+        <Modal 
           title={this.state.dialog.title}
           message={this.state.dialog.message}
           active={this.state.dialog.active}
