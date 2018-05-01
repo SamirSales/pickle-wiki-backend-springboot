@@ -13,11 +13,20 @@
 
 /* Modal Content/Box */
 .modal-content {
+    position: relative;
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 10px;
     border: 1px solid #888;
     width: 400px; /* Could be more or less, depending on screen size */
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
 }
 
 .modal-content h3{
