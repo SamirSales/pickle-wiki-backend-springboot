@@ -1,17 +1,18 @@
 
 import React from 'react';
+import Backdrop from '../Backdrop/Backdrop';
+import Aux from '../../../hoc/Aux';
 
 import './Modal.css';
 
 const modal = ( props ) => {
 
     return (
-        <div className={props.active === true ? 'modal' : ''}>
-        
+        <Aux>
+            <Backdrop active={props.active} click={props.cancel} />
+            
             <div className="modal-content" 
-                style={{
-                    display: props.active ? 'block' : 'none',
-                }}> 
+                style={{ display: props.active ? 'block' : 'none' }}> 
                 <h3>{props.title}</h3>
                 <p>{props.message}</p>
                 <div className="buttons">
@@ -19,8 +20,7 @@ const modal = ( props ) => {
                     <button onClick={props.confirm}>Sim</button>                    
                 </div>
             </div>
-
-        </div>
+        </Aux>        
     )
 };
 export default modal;
