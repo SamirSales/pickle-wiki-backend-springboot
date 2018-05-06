@@ -26,12 +26,11 @@ class NavBar extends Component {
 
     let items = this.state.navItems.map((item) => {
       return <a align="left" 
-        href={this.props.home} 
-        key={item.key} onClick={this.props.click.bind(this, item.title, item.text)}>{item.title}</a>;
+        key={item.key} onClick={this.props.itemClick.bind(this, item.title, item.text)}>{item.title}</a>;
     });
 
     return (
-      <div className="navBar">
+      <div className="navBar" align="center" >
         <img src={logo} alt="Pickle Wiki" height="106" width="106" />
         <h5 className="title">{this.props.title}</h5>
         <h4 className="quote"><i>Sua enciclopédia personalisada</i></h4>

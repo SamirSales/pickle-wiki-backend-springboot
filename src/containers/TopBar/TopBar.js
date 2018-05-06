@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 
 import './TopBar.css';
 import Tab from './Tab/Tab';
-import { AuthContext } from '../../containers/App';
+import { AuthContext } from '../Layout/Layout';
 
 class TopBar extends PureComponent {
 
