@@ -7,6 +7,8 @@ import Modal from '../../components/UI/Modal/Modal';
 
 import './Layout.css';
 
+import { ScreenStatus } from '../App';
+
 export const AuthContext = React.createContext(false);
 
 class Layout extends Component {
@@ -51,6 +53,8 @@ class Layout extends Component {
             },
             user: null
         });
+
+        this.props.screenStatusEvent(ScreenStatus.SimpleTemplate);
     }
 
     render() {

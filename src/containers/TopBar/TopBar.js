@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 
 import './TopBar.css';
-// import Tab from './Tab/Tab';
 
 import { AuthContext } from '../Layout/Layout';
 import { ScreenStatus } from '../App';
