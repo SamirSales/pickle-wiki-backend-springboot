@@ -39,18 +39,21 @@ class App extends PureComponent {
 
   render() {
 
-    let simpleTemp = null;
+    let screen = null;
 
-    if(this.state.screenStatus === ScreenStatus.SimpleTemplate){
-      simpleTemp = <SimpleTemplate 
-        title={this.state.simpleTemplate.title} 
-        text={this.state.simpleTemplate.text} />;
-    }
+    switch (this.state.screenStatus){
+      case ScreenStatus.SimpleTemplate:
+        screen = <SimpleTemplate 
+          title={this.state.simpleTemplate.title} 
+          text={this.state.simpleTemplate.text} />;
+        break;
 
-    let artBuilder = null; 
+      case ScreenStatus.ArticleBuilder:
+        screen = <ArticleBuilder />;
+        break;
 
-    if(this.state.screenStatus === ScreenStatus.ArticleBuilder){
-      artBuilder = <ArticleBuilder />;
+      default:
+        console.log("unknown screen");
     }
 
     return (
@@ -61,9 +64,7 @@ class App extends PureComponent {
         screenStatusEvent={this.setScreenStatus}
         screenStatus={this.state.screenStatus} >
 
-        {simpleTemp}
-
-        {artBuilder}
+        {screen}
       </Layout>
     );
   }
