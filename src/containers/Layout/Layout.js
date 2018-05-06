@@ -64,7 +64,9 @@ class Layout extends Component {
                     <AuthContext.Provider value={this.state.user !== null}>
                         <TopBar home={this.state.url} 
                             user={this.state.user}
-                            logout={this.dialogLogout} />
+                            logout={this.dialogLogout}
+                            screenStatus={this.props.screenStatus}
+                            screenStatusEvent={this.props.screenStatusEvent} />
                     </AuthContext.Provider>
 
                     <main id='container'>{this.props.children}</main>

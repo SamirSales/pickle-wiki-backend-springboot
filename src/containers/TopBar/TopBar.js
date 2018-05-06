@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 
 import './TopBar.css';
-import Tab from './Tab/Tab';
+// import Tab from './Tab/Tab';
+
 import { AuthContext } from '../Layout/Layout';
+import { ScreenStatus } from '../App';
 
 class TopBar extends PureComponent {
 
@@ -21,7 +23,13 @@ class TopBar extends PureComponent {
       </div>
     );
 
-    let tabAddArticle = <Tab title="Novo Artigo" />;
+    let article = <div
+      className={this.props.screenStatus === ScreenStatus.SimpleTemplate ? 'tab active' : 'tab'} 
+      onClick={this.props.screenStatusEvent.bind(this, ScreenStatus.SimpleTemplate)} >Artigo</div>;
+
+    let tabAddArticle = <div
+      className={this.props.screenStatus === ScreenStatus.ArticleBuilder ? 'tab active' : 'tab'} 
+      onClick={this.props.screenStatusEvent.bind(this, ScreenStatus.ArticleBuilder)} >Novo Artigo</div>;
 
     return (
         <div className="topBar">
@@ -39,7 +47,7 @@ class TopBar extends PureComponent {
               <i className="fa fa-search search-icon"></i>
             </div>
 
-            <Tab title="Artigo" active="true"/>
+            {article}
 
             <AuthContext.Consumer>
               { auth => auth ? tabAddArticle : null}
