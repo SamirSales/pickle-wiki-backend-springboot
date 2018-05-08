@@ -8,15 +8,15 @@ const articleBuilder = ( props ) => {
 
     return (
         <Aux>
-            <h1>Novo artigo</h1>
-            <p>Título <span className='needed'>*</span></p>
+            <h1 className='simple-template-title'><i class="fa fa-edit"></i> Novo artigo</h1>
+            <p className='article-builder-p'>Título <span className='needed'>*</span></p>
             <input className="form-input" placeholder='Insira um título...' />
 
-            <p>Resumo <span className='needed'>*</span></p>
+            <p className='article-builder-p'>Resumo <span className='needed'>*</span></p>
             <textarea className="form-input" placeholder='Insira um resumo...' rows="5" />
 
-            <h2>Tópicos</h2>
-            <button>Novo Tópico</button>
+            <h2 className='article-builder-h2'>Tópicos & Templates</h2>
+            <button><i class="fa fa-bookmark"></i> Adicionar Tópico</button>
         </Aux>
     )
 };

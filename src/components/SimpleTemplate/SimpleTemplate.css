@@ -1,5 +1,5 @@
 
-h1{
+.simple-template-title{
     font-family: "Times New Roman", Times, serif;
     color: #333333;
     text-align: left;
@@ -12,7 +12,7 @@ h1{
     padding-bottom: 3px;
 }
 
-p{
+.simple-template-p{
     color: #333333;
     text-align: left;
     font-size: 14px;

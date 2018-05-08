@@ -2,6 +2,26 @@
     color: red;
 }
 
+.article-builder-p{
+    color: #333333;
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.article-builder-h2{
+    font-family: "Times New Roman", Times, serif;
+    color: #333333;
+    text-align: left;
+    font-size: 20px;
+    font-weight: 200;
+
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #e0e0e0;
+    padding-bottom: 3px;
+}
+
 .form-input{
     padding-top: 5px;
     padding-bottom: 5px;

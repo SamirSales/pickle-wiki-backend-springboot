@@ -8,8 +8,8 @@ const simpleTemplate = ( props ) => {
 
     return (
         <Aux>
-            <h1>{props.title}</h1>
-            <p>{props.text}</p>
+            <h1 className='simple-template-title'>{props.title}</h1>
+            <p className='simple-template-p'>{props.text}</p>
         </Aux>
     )
 };
