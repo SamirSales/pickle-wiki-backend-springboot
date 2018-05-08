@@ -34,3 +34,15 @@
 .temp-btn-text{
     font-size: 5px;
 }
+
+.temp-btn-div-img-text-text{
+    float: left;
+    width: 80px;
+    margin-left: 8px;
+    margin-right: 2px;
+}
+
+.temp-btn-div-img-text-img{
+    float: left;
+    width: 50px;
+}
