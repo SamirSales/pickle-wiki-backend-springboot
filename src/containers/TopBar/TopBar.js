@@ -30,7 +30,9 @@ class TopBar extends PureComponent {
       className={this.props.screenStatus === ScreenStatus.ArticleBuilder ? 'tab active' : 'tab'} 
       onClick={this.props.screenStatusEvent.bind(this, ScreenStatus.ArticleBuilder)} >Novo Artigo</div>;
 
-    let tabAddNewUser = <div className='tab' >Novo Usuário</div>;
+    let tabAddNewUser = <div 
+      className={this.props.screenStatus === ScreenStatus.UsersEdition ? 'tab active' : 'tab'} 
+      onClick={this.props.screenStatusEvent.bind(this, ScreenStatus.UsersEdition)} >Usuários</div>;
 
     return (
         <div className="topBar">

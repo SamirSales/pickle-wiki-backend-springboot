@@ -1,10 +1,9 @@
 
 import React, { Component } from 'react';
+import CKEditor from "react-ckeditor-component";
 
 import Aux from '../../hoc/Aux';
 import './ArticleBuilder.css';
-
-import CKEditor from "react-ckeditor-component";
 
 class ArticleBuilder extends Component {
 

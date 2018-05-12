@@ -2,11 +2,13 @@ import React, { PureComponent } from 'react';
 
 import Layout from './Layout/Layout'
 import SimpleTemplate from '../components/SimpleTemplate/SimpleTemplate';
-import ArticleBuilder from '../components/ArticleBuilder/ArticleBuilder';
+import ArticleBuilder from './ArticleBuilder/ArticleBuilder';
+import UserEditor from './UserEditor/UserEditor';
 
 export const ScreenStatus = {
   SimpleTemplate: 0,
-  ArticleBuilder: 1
+  ArticleBuilder: 1,
+  UsersEdition: 2
 }
 
 class App extends PureComponent {
@@ -18,7 +20,7 @@ class App extends PureComponent {
         title: 'Bem vindo ao Pickle Wiki',
         text: 'Sistema Wiki que tem como foco seu funcionamento em intranets empresarias e blá blá blá...'
     },
-    screenStatus: ScreenStatus.ArticleBuilder
+    screenStatus: ScreenStatus.UsersEdition
   }
 
   setSimpleTemplate = (newTitle, newText) => {  
@@ -50,6 +52,10 @@ class App extends PureComponent {
 
       case ScreenStatus.ArticleBuilder:
         screen = <ArticleBuilder />;
+        break;
+
+      case ScreenStatus.UsersEdition:
+        screen = <UserEditor />;
         break;
 
       default:
