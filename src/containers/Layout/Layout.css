@@ -9,6 +9,7 @@
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
     z-index: 1; /* Stay on top */
     top: 0;
+    overflow-y: auto;
   }
   
   #container{
