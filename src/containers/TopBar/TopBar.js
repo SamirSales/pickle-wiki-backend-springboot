@@ -30,6 +30,10 @@ class TopBar extends PureComponent {
       className={this.props.screenStatus === ScreenStatus.ArticleBuilder ? 'tab active' : 'tab'} 
       onClick={this.props.screenStatusEvent.bind(this, ScreenStatus.ArticleBuilder)} >Novo Artigo</div>;
 
+    let tabAddNewUser = <div className='tab' >Novo Usuário</div>;
+
+    let tabImages = <div className='tab' >Imagens</div>;
+
     return (
         <div className="topBar">
           <AuthContext.Consumer>
@@ -50,6 +54,14 @@ class TopBar extends PureComponent {
 
             <AuthContext.Consumer>
               { auth => auth ? tabAddArticle : null}
+            </AuthContext.Consumer>
+
+            <AuthContext.Consumer>
+              { auth => auth ? tabImages : null}
+            </AuthContext.Consumer>
+
+            <AuthContext.Consumer>
+              { auth => auth ? tabAddNewUser : null}
             </AuthContext.Consumer>
           </div>
 
