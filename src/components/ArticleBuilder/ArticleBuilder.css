@@ -45,3 +45,39 @@
     outline: -webkit-focus-ring-color auto 0px;
     border-color: #32b0de;
 }
+
+.article-btn{
+    padding: 8px 15px 8px 15px;
+    border-width: 0px;
+    cursor: pointer;
+}
+
+.article-btn-topic{
+    background-color: black;
+    color: #fff;
+}
+
+.article-btn-topic:hover{
+    background-color: #c0c0c0;
+    color: #000;
+}
+
+.article-btn-submit{
+    background-color: #40b352;
+    color: #fff;
+}
+
+.article-btn-submit:hover{
+    background-color: #c0c0c0;
+    color: #000;
+}
+
+.article-btn-cancel{
+    background-color: #d74226;
+    color: #fff;
+}
+
+.article-btn-cancel:hover{
+    background-color: #c0c0c0;
+    color: #000;
+}

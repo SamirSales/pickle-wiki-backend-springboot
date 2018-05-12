@@ -13,7 +13,7 @@ class ArticleBuilder extends Component {
         this.updateContent = this.updateContent.bind(this);
 
         this.state = {
-            resumeContent: 'content',
+            resumeContent: '',
         }
     }
  
@@ -50,10 +50,15 @@ class ArticleBuilder extends Component {
     
                 <h2 className='article-builder-h2'>Tópicos & Templates</h2>
     
-                <button>Novo Tópico</button>
+                <button className='article-btn article-btn-topic'>Novo Tópico</button>
     
-                <button>Submeter</button>
-                <button>Descartar</button>
+                <h2 className='article-builder-h2'>Em fim!</h2>
+
+                
+                <div style={{marginTop: '10px'}}>
+                    <button className='article-btn article-btn-submit' style={{marginRight: '10px'}}>Submeter</button>
+                    <button className='article-btn article-btn-cancel'>Descartar</button>
+                </div>
     
                 <br/><br/><br/><br/>
             </Aux>
