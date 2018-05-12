@@ -81,3 +81,26 @@
     background-color: #c0c0c0;
     color: #000;
 }
+
+.article-builder-div-content{
+    width:100%;
+    min-height: 100px;
+    background-color: #f0f0f0;
+    padding: 6px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #c0c0c0;
+    border-radius: 2px;
+
+    box-sizing : border-box;
+}
+
+.article-builder-div-content > .empty-content-message{
+    font-size: 15px;
+    font-style: italic;
+    text-align: center;
+    color: #c0c0c0;
+
+    margin-top: 33px;
+}

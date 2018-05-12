@@ -32,8 +32,6 @@ class TopBar extends PureComponent {
 
     let tabAddNewUser = <div className='tab' >Novo Usuário</div>;
 
-    let tabImages = <div className='tab' >Imagens</div>;
-
     return (
         <div className="topBar">
           <AuthContext.Consumer>
@@ -54,10 +52,6 @@ class TopBar extends PureComponent {
 
             <AuthContext.Consumer>
               { auth => auth ? tabAddArticle : null}
-            </AuthContext.Consumer>
-
-            <AuthContext.Consumer>
-              { auth => auth ? tabImages : null}
             </AuthContext.Consumer>
 
             <AuthContext.Consumer>

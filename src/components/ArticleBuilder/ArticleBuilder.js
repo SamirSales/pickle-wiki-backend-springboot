@@ -42,16 +42,25 @@ class ArticleBuilder extends Component {
                 <p className='article-builder-p'><b>Palavras chaves</b></p>
                 <input className="form-input" placeholder='Insira palavras chaves...' />
     
-                <p className='article-builder-p'><b>Resumo <span className='needed'>*</span></b></p>
+                <h2 className='article-builder-h2'>Imagens</h2>
+                <button className='article-btn article-btn-topic'>Importar imagem</button>
+                <div className='article-builder-div-content' style={{marginTop: '10px'}}>
+                    <p className='empty-content-message'>Nenhuma imagem foi importada para esse artigo.</p>
+                </div>
+
+                {/* <p className='article-builder-p'><b>Resumo <span className='needed'>*</span></b></p> */}
+                <h2 className='article-builder-h2'>Resumo</h2>
                 <CKEditor 
                     activeClass="p10" 
                     content={this.state.resumeContent} 
                     events={{"change": this.onResumeContentChange }} />
     
                 <h2 className='article-builder-h2'>Tópicos & Templates</h2>
-    
                 <button className='article-btn article-btn-topic'>Novo Tópico</button>
-    
+                <div className='article-builder-div-content' style={{marginTop: '10px'}}>
+                <p className='empty-content-message'>Nenhum tópico foi adicionado para esse artigo.</p>
+                </div>
+
                 <h2 className='article-builder-h2'>Em fim!</h2>
 
                 
