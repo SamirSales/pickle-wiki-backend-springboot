@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import CKEditor from "react-ckeditor-component";
+import ReactMarkdown from 'react-markdown';
 
 import Aux from '../../hoc/Aux';
 import './ArticleBuilder.css';
@@ -31,13 +32,25 @@ class ArticleBuilder extends Component {
       console.log(newContent);
     }
 
+
+    
+
+
+
     render() {
+
+        // const ReactMarkdown = require('react-markdown');
+
+        const input = '# This is a header\n\nAnd this is a paragraph\n\n ## other head \n\n [GitHub](//github.com/rexxars/react-markdown)';
+
         return (
             <Aux>
                 <h1 className='simple-template-title'><i className="fa fa-edit"></i> Novo artigo</h1>
                 <p className='article-builder-p'><b>Título <span className='needed'>*</span></b></p>
                 <input className="form-input" placeholder='Insira um título...' />
     
+                <ReactMarkdown source={input} />
+
                 <p className='article-builder-p'><b>Palavras chaves</b></p>
                 <input className="form-input" placeholder='Insira palavras chaves...' />
     
