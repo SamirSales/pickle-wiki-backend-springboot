@@ -9,7 +9,7 @@ class UserEditor extends Component {
     
         return (
           <Aux>
-              <h1 className='simple-template-title'><i className="fa fa-users"></i> Usuários</h1>
+              <h1 className='simple-template-title'><i className="fa fa-users"></i> Editores</h1>
           </Aux>
         );
       }
