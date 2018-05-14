@@ -9,55 +9,39 @@ import './ArticleBuilder.css';
 
 class ArticleBuilder extends Component {
 
-    constructor(props) {
-        super(props);
-        this.updateContent = this.updateContent.bind(this);
-
-        this.state = {
-            resumeContent: '',
-        }
+    state = {
+        title: '',
+        content: ''
     }
- 
-    updateContent(newContent) {
-        this.setState({
-            resumeContent: newContent
+
+    onChangeTitle = (event) => {
+        this.setState( {
+            title: event.target.value
         })
     }
-    
-    onResumeContentChange = (evt) => {
-      var newContent = evt.editor.getData();
-      this.setState({
-        resumeContent: newContent
-      })
 
-      console.log(newContent);
+    getTitle(){
+        return this.state.title.trim() === '' ? 'Novo artigo' : this.state.title.trim();
     }
-
-
-    
-
-
-
+ 
     render() {
-
-        // const ReactMarkdown = require('react-markdown');
-
-        const input = '# This is a header\n\nAnd this is a paragraph\n\n ## other head \n\n [GitHub](//github.com/rexxars/react-markdown)';
-
         return (
             <Aux>
-                <h1 className='simple-template-title'><i className="fa fa-edit"></i> Novo artigo</h1>
+                <h1 className='simple-template-title'><i className="fa fa-edit"></i> {this.getTitle()}</h1>
                 <p className='article-builder-p'><b>Título <span className='needed'>*</span></b></p>
-                <input className="form-input" placeholder='Insira um título...' />
+                <input className="form-input" placeholder='Insira um título...' onChange={this.onChangeTitle} />
+
+                <p className='article-builder-p'><b>Contexto</b></p>
+                <input className="form-input" placeholder='Insira um contexto...' />
                 
                 <p className='article-builder-p'><b>Palavras chaves</b></p>
                 <input className="form-input" style={{marginBottom: '20px'}} 
                     placeholder='Insira palavras chaves...' />
 
-                <TextEditor />                
+                <TextEditor title={this.getTitle()} />                
     
                 <h2 className='article-builder-h2'>Imagens</h2>
-                <button className='article-btn article-btn-topic'>Importar imagem</button>
+                <button className='article-btn article-btn-topic'>Fazer upload de imagem</button>
                 <div className='article-builder-div-content' style={{marginTop: '10px'}}>
                     <p className='empty-content-message'>Nenhuma imagem foi importada para esse artigo.</p>
                 </div>

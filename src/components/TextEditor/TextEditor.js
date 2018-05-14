@@ -7,7 +7,7 @@ import './TextEditor.css';
 class TextEditor extends Component {
 
     state = {
-        content: '# Título',
+        content: '',
         shownPreview: true
     }
  
@@ -34,13 +34,18 @@ class TextEditor extends Component {
             content: event.target.value
         })
     }
+
+    getContent(){
+        return this.props.title.trim() === '' ? this.state.content 
+            : '# '+this.props.title.trim()+'\n'+this.state.content;
+    }
  
     render() {
 
         let page = null;
 
         if(this.state.shownPreview){
-            page = <div className='text-editor-markdown'><ReactMarkdown source={this.state.content} /></div>;
+            page = <div className='text-editor-markdown'><ReactMarkdown source={this.getContent()} /></div>;
         }else{
             page = <textarea 
                 className='text-editor-textarea' 
