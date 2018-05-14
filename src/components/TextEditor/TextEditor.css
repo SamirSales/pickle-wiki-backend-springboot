@@ -55,8 +55,60 @@
     background-color: transparent;
     border: solid 0;
     padding-top: 10px;
+    color: #555555;
+    resize: none;
 }
 
 .text-editor-textarea:focus{
     outline: -webkit-focus-ring-color auto 0px;
+}
+
+.text-editor-link-help{
+    float: right;
+    margin-top: 6px;
+    margin-right: 4px;
+    color: #337ab7;
+}
+
+.text-editor-link-help:hover{
+    color: #70a1cc;
+}
+
+/* Style for Pickle Wiki articles */
+
+.text-editor-markdown{
+    padding: 0;
+    margin: 0;
+}
+
+.text-editor-markdown h1{
+    font-family: "Times New Roman", Times, serif;
+    color: #333333;
+    text-align: left;
+    font-size: 29px;
+    font-weight: 200;
+
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #c0c0c0;
+    padding-bottom: 3px;
+}
+
+.text-editor-markdown h2{
+    font-family: "Times New Roman", Times, serif;
+    color: #333333;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 200;
+
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #c0c0c0;
+    padding-bottom: 3px;
+}
+
+.text-editor-markdown p{
+    color: #333333;
+    text-align: left;
+    font-size: 14px;
 }

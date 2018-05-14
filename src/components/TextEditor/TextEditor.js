@@ -8,7 +8,7 @@ class TextEditor extends Component {
 
     state = {
         content: '# Título',
-        shownPreview: false
+        shownPreview: true
     }
  
     updateContent(newContent) {
@@ -40,7 +40,7 @@ class TextEditor extends Component {
         let page = null;
 
         if(this.state.shownPreview){
-            page = <ReactMarkdown source={this.state.content} />;
+            page = <div className='text-editor-markdown'><ReactMarkdown source={this.state.content} /></div>;
         }else{
             page = <textarea 
                 className='text-editor-textarea' 
@@ -52,9 +52,16 @@ class TextEditor extends Component {
             <div className='text-editor-frame'>
                 <div className='text-editor-div-tabs'>
                     <button onClick={this.turnOnCodeEdition} 
-                        className={!this.state.shownPreview ? 'text-editor-div-tab-selected': ''}>Código</button>
+                        className={!this.state.shownPreview ? 'text-editor-div-tab-selected': ''}>
+                        <i className="fa fa-edit"></i></button>
                     <button onClick={this.turnOnPreview}
-                        className={this.state.shownPreview ? 'text-editor-div-tab-selected': ''} >Visualização</button>
+                        className={this.state.shownPreview ? 'text-editor-div-tab-selected': ''} >
+                        <i className="fa fa-eye"></i></button>
+                    
+                    <a className='text-editor-link-help' target="_blank" 
+                        href="https://rexxars.github.io/react-markdown/"
+                        rel="noopener noreferrer">
+                        <i className="fa fa-question-circle"></i></a>
                 </div>
 
                 <div className='text-editor-div-content'>
