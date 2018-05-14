@@ -1,7 +1,8 @@
 
 import React, { Component } from 'react';
-import CKEditor from "react-ckeditor-component";
-import ReactMarkdown from 'react-markdown';
+// import CKEditor from "react-ckeditor-component";
+
+import TextEditor from '../../components/TextEditor/TextEditor';
 
 import Aux from '../../hoc/Aux';
 import './ArticleBuilder.css';
@@ -49,7 +50,8 @@ class ArticleBuilder extends Component {
                 <p className='article-builder-p'><b>Título <span className='needed'>*</span></b></p>
                 <input className="form-input" placeholder='Insira um título...' />
     
-                <ReactMarkdown source={input} />
+                <h2 className='article-builder-h2'>Resumo</h2>
+                <TextEditor />
 
                 <p className='article-builder-p'><b>Palavras chaves</b></p>
                 <input className="form-input" placeholder='Insira palavras chaves...' />
@@ -61,11 +63,12 @@ class ArticleBuilder extends Component {
                 </div>
 
                 {/* <p className='article-builder-p'><b>Resumo <span className='needed'>*</span></b></p> */}
-                <h2 className='article-builder-h2'>Resumo</h2>
-                <CKEditor 
+                
+
+                {/* <CKEditor 
                     activeClass="p10" 
                     content={this.state.resumeContent} 
-                    events={{"change": this.onResumeContentChange }} />
+                    events={{"change": this.onResumeContentChange }} /> */}
     
                 <h2 className='article-builder-h2'>Tópicos & Templates</h2>
                 <button className='article-btn article-btn-topic'>Novo Tópico</button>

@@ -1,0 +1,62 @@
+.text-editor-frame{
+    border: solid 1px #ddd; 
+    border-radius: 4px;
+
+    height: 300px;
+}
+
+.text-editor-div-tabs{
+    padding: 5px 5px 0px 5px;
+    border-bottom: solid 1px #ddd;
+    min-height: 34px;
+}
+
+.text-editor-div-tabs button{
+    display: flex;
+    float: left;
+
+    background-color: #fff;
+    border: solid 1px transparent; 
+    border-radius: 4px 4px 0px 0px;
+    border-bottom-color: #ddd;
+
+    font-size: 13px;
+    color: #337ab7;
+    cursor: pointer;
+
+    height: 35px;
+
+    padding: 10px 10px 8px 10px;
+}
+
+.text-editor-div-tabs button:hover{
+    background-color: #f0f0f0;
+}
+
+.text-editor-div-tabs .text-editor-div-tab-selected{
+    border: solid 1px #ddd; 
+    border-bottom-color: transparent;
+    color: #444;
+}
+
+.text-editor-div-content{
+    margin: 0;
+    width: 100%;
+    height: calc(100% - 40px);
+    /* background-color: #f9f9f9; */
+    padding: 5px;
+    box-sizing : border-box;
+    overflow-y: auto;
+}
+
+.text-editor-textarea{
+    width: calc(100% - 6px);
+    height: calc(100% - 20px);
+    background-color: transparent;
+    border: solid 0;
+    padding-top: 10px;
+}
+
+.text-editor-textarea:focus{
+    outline: -webkit-focus-ring-color auto 0px;
+}
