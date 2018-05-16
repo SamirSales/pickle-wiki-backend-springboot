@@ -20,7 +20,7 @@ class App extends PureComponent {
         title: 'Bem vindo ao Pickle Wiki',
         text: 'Sistema Wiki que tem como foco seu funcionamento em intranets empresarias e blá blá blá...'
     },
-    screenStatus: ScreenStatus.ArticleBuilder
+    screenStatus: ScreenStatus.UsersEdition
   }
 
   setSimpleTemplate = (newTitle, newText) => {  

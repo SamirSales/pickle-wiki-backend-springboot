@@ -22,9 +22,9 @@ class TopBar extends PureComponent {
       </div>
     );
 
-    let article = <div
+    let tabRead = <div
       className={this.props.screenStatus === ScreenStatus.SimpleTemplate ? 'tab active' : 'tab'} 
-      onClick={this.props.screenStatusEvent.bind(this, ScreenStatus.SimpleTemplate)} >Artigo</div>;
+      onClick={this.props.screenStatusEvent.bind(this, ScreenStatus.SimpleTemplate)} >Leitura</div>;
 
     let tabAddArticle = <div
       className={this.props.screenStatus === ScreenStatus.ArticleBuilder ? 'tab active' : 'tab'} 
@@ -50,7 +50,9 @@ class TopBar extends PureComponent {
               <i className="fa fa-search search-icon"></i>
             </div>
 
-            {article}
+            <AuthContext.Consumer>
+              { auth => auth ? tabRead : null}
+            </AuthContext.Consumer>
 
             <AuthContext.Consumer>
               { auth => auth ? tabAddArticle : null}

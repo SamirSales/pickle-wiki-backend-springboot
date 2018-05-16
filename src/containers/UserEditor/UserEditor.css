@@ -1,0 +1,7 @@
+.user-editor-div-user-list{
+    min-height: 300px;
+}
+
+.user-editor-div-user-list > .empty-content-message{
+    margin-top: 130px;
+}
