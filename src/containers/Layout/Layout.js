@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import Aux from '../../hoc/Aux';
 import NavBar from '../NavBar/NavBar';
 import TopBar from '../TopBar/TopBar';
-import Modal from '../../components/UI/Modal/Modal';
+import LogoutModal from '../../components/UI/Modal/LogoutModal/LogoutModal';
+import LoginModal from '../../components/UI/Modal/LoginModal/LoginModal';
 
 import './Layout.css';
 
@@ -19,28 +20,89 @@ class Layout extends Component {
             login: 'chico',
             password: '123456'
         },
-        dialog:{
-            title: '',
-            message: '',
+        dialogLogout:{
             active: false,
             funConfirm: null
+        },
+        dialogLogin:{
+            active: true,
+            funConfirm: null
+        },
+        userAccess:{
+            login: '',
+            password: ''
         }
     }
     
+    /* Log in Methods */
+
+    dialogLogin = () => {
+        this.setState( {
+            dialogLogin: {
+                active: true
+            }
+        });
+    }
+
+    closeDialogLogin = () => {
+        this.setState( {
+            dialogLogin: {
+                active: false
+            },
+            userAccess: {
+                login: '',
+                password: ''
+            }
+        });
+    }
+
+    login = () => {
+        if(this.state.userAccess.login === 'admin' && this.state.userAccess.password === '123456'){
+            
+            console.log("login = "+this.state.userAccess.login);
+            console.log("password = "+this.state.userAccess.password);
+            console.log("Acesso autorizado.");
+        }else{
+            console.log("login = "+this.state.userAccess.login);
+            console.log("password = "+this.state.userAccess.password);
+            console.log("Acesso negado.");
+        }
+    }
+
+    onChangeLoginField = (event) => {
+        this.setState({
+            userAccess:{
+                login: event.target.value
+            }
+        });
+
+        // console.log("login: "+this.state.userAccess.login);
+    }
+
+    onChangePasswordField = (event) => {
+        this.setState({
+            userAccess:{
+                password: event.target.value
+            }
+        });
+
+        // console.log("password: "+this.state.userAccess.password);
+    }
+
+    /* Log out methods */
+
     dialogLogout = () => {
         this.setState( {
-            dialog: {
-                title: 'Fazer logout',
-                message: 'Tem certeza que deseja fazer logout?',
+            dialogLogout: {
                 active: true, 
                 funConfirm: this.logout
             }
         });
     }
     
-    closeDialog = () => {
+    closeDialogLogout = () => {
         this.setState( {
-            dialog: {
+            dialogLogout: {
                 active: false
             }
         });
@@ -48,7 +110,7 @@ class Layout extends Component {
 
     logout = () => {
         this.setState( {
-            dialog: {
+            dialogLogout: {
                 active: false
             },
             user: null
@@ -69,6 +131,7 @@ class Layout extends Component {
                         <TopBar home={this.state.url} 
                             user={this.state.user}
                             logout={this.dialogLogout}
+                            login={this.dialogLogin}
                             screenStatus={this.props.screenStatus}
                             screenStatusEvent={this.props.screenStatusEvent} />
                     </AuthContext.Provider>
@@ -76,12 +139,17 @@ class Layout extends Component {
                     <main id='container'>{this.props.children}</main>
                 </div>
    
-                <Modal 
-                    title={this.state.dialog.title}
-                    message={this.state.dialog.message}
-                    active={this.state.dialog.active}
-                    confirm={this.state.dialog.funConfirm} 
-                    cancel={this.closeDialog} />
+                <LogoutModal 
+                    active={this.state.dialogLogout.active}
+                    confirm={this.state.dialogLogout.funConfirm} 
+                    cancel={this.closeDialogLogout} />
+
+                <LoginModal 
+                    active={this.state.dialogLogin.active}
+                    onchangelogin={this.onChangeLoginField}
+                    onchangepassword={this.onChangePasswordField}
+                    confirm={this.login} 
+                    cancel={this.closeDialogLogin} />
             </Aux>
         );
     }  

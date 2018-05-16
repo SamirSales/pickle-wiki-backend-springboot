@@ -17,8 +17,8 @@ class TopBar extends PureComponent {
 
     let userNotAuthenticated = (
       <div className="topTopBar">
-        <a href={this.props.home}>Entrar</a>
-        <a href={this.props.home} className="user-link"><i className="fa fa-user"></i> Não autenticado</a>
+        <a onClick={this.props.login}>Entrar</a>
+        <a className="user-link"><i className="fa fa-user"></i> Não autenticado</a>
       </div>
     );
 
