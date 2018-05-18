@@ -25,12 +25,7 @@ class Layout extends Component {
             funConfirm: null
         },
         dialogLogin:{
-            active: true,
-            funConfirm: null
-        },
-        userAccess:{
-            login: '',
-            password: ''
+            active: true
         }
     }
     
@@ -48,45 +43,31 @@ class Layout extends Component {
         this.setState( {
             dialogLogin: {
                 active: false
-            },
-            userAccess: {
-                login: '',
-                password: ''
             }
         });
     }
 
-    login = () => {
-        if(this.state.userAccess.login === 'admin' && this.state.userAccess.password === '123456'){
+    login = (login, password) => {
+        if(login === 'admin' && password === '123456'){
             
-            console.log("login = "+this.state.userAccess.login);
-            console.log("password = "+this.state.userAccess.password);
+            console.log("login = "+login);
+            console.log("password = "+password);
             console.log("Acesso autorizado.");
+
+            this.setState( {
+                user: {
+                    name: 'Francisco',
+                    login: 'chico',
+                    password: '123456'
+                }
+            });
+
+            this.closeDialogLogin();
         }else{
-            console.log("login = "+this.state.userAccess.login);
-            console.log("password = "+this.state.userAccess.password);
+            console.log("login = "+login);
+            console.log("password = "+password);
             console.log("Acesso negado.");
         }
-    }
-
-    onChangeLoginField = (event) => {
-        this.setState({
-            userAccess:{
-                login: event.target.value
-            }
-        });
-
-        // console.log("login: "+this.state.userAccess.login);
-    }
-
-    onChangePasswordField = (event) => {
-        this.setState({
-            userAccess:{
-                password: event.target.value
-            }
-        });
-
-        // console.log("password: "+this.state.userAccess.password);
     }
 
     /* Log out methods */
@@ -146,8 +127,6 @@ class Layout extends Component {
 
                 <LoginModal 
                     active={this.state.dialogLogin.active}
-                    onchangelogin={this.onChangeLoginField}
-                    onchangepassword={this.onChangePasswordField}
                     confirm={this.login} 
                     cancel={this.closeDialogLogin} />
             </Aux>
