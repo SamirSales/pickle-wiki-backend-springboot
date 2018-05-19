@@ -45,6 +45,10 @@ class Layout extends Component {
                 active: false
             }
         });
+
+        // clean the fields
+        document.getElementById("inputLoginModal").value = "";
+        document.getElementById("inputPasswordModal").value = "";
     }
 
     login = (login, password) => {
@@ -63,11 +67,13 @@ class Layout extends Component {
             });
 
             this.closeDialogLogin();
-        }else{
-            console.log("login = "+login);
-            console.log("password = "+password);
-            console.log("Acesso negado.");
+            return true;
         }
+        
+        console.log("login = "+login);
+        console.log("password = "+password);
+        console.log("Acesso negado.");
+        return false;
     }
 
     /* Log out methods */

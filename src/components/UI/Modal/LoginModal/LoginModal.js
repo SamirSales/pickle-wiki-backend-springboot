@@ -33,9 +33,9 @@ class LoginModal extends PureComponent {
                     style={{ display: this.props.active ? 'block' : 'none' }}> 
                     <h3><i className="fa fa-lock"></i> Entrar</h3>
                     
-                    <input className="form-input" placeholder='Login' onChange={this.onChangeLogin}/>
+                    <input id='inputLoginModal' className="form-input" placeholder='Login' onChange={this.onChangeLogin}/>
                     
-                    <input className="form-input" placeholder='Senha' 
+                    <input id='inputPasswordModal' type='password' className="form-input" placeholder='Senha' 
                         onChange={this.onChangePassword} style={{marginTop: '10px'}}/>
                     
                     <div className="buttons" style={{marginTop: '10px'}}>
