@@ -17,10 +17,10 @@ public class FakeUserDaoImpl implements UserDao {
     static {
         users = new HashMap<Long, User>(){
             {
-                put((long) 1, new User(1, "Samir", "samir", "samir@email.com","123456"));
-                put((long) 2, new User(2, "Andrio", "andrio", "andrio@email.com","111111"));
-                put((long) 3, new User(3, "Diego", "diego", "diego@email.com","222222"));
-                put((long) 4, new User(4, "John", "john", "john@email.com","333333"));
+                put((long) 1, new User(1L, "Samir", "samir", "samir@email.com","123456"));
+                put((long) 2, new User(2L, "Andrio", "andrio", "andrio@email.com","111111"));
+                put((long) 3, new User(3L, "Diego", "diego", "diego@email.com","222222"));
+                put((long) 4, new User(4L, "John", "john", "john@email.com","333333"));
             }
         };
     }
