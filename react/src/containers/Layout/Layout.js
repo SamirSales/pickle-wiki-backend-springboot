@@ -25,7 +25,7 @@ class Layout extends Component {
             funConfirm: null
         },
         dialogLogin:{
-            active: true
+            active: false
         }
     }
     

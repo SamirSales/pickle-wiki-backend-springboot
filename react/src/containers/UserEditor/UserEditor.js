@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import Aux from '../../hoc/Aux';
 import './UserEditor.css';
  
 class UserEditor extends Component {
+
+    componentDidMount(){
+      const users = axios.get('http://localhost:8080/users/')
+        .then(response => {
+          console.log(response);
+        });
+    }
 
     render() {
     

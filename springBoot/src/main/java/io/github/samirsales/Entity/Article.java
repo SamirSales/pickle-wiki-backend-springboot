@@ -1,10 +1,14 @@
 package io.github.samirsales.Entity;
 
+import java.util.List;
+
 public class Article {
 
     private Long id;
     private String title;
     private String text;
+
+    private List<Picture> pictures;
 
     public Article(Long id, String title, String text) {
         this.id = id;
@@ -34,5 +38,13 @@ public class Article {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
     }
 }
