@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import { getUsers } from "../../service/HttpHandler/HttpHandler";
 
 import Aux from '../../hoc/Aux';
 import UserItem from '../../components/UserItem/UserItem';
@@ -13,8 +14,7 @@ class UserEditor extends Component {
 
     componentDidMount(){
       // eslint-disable-next-line
-      const users = axios.get('http://localhost:8080/users/')
-        .then(response => {
+      const users = getUsers().then(response => {
           // console.log(response);
           this.setState({users: response.data});
         });
