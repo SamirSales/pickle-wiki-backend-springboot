@@ -18,8 +18,8 @@ const userItem = ( props ) => {
 
                 <div className="user-item-div-options">
                 
-                    <a className="fa fa-trash" eslint-disable-next-line>{/**/}</a>
-                    <a className="fa fa-edit" eslint-disable-next-line>{/**/}</a>                    
+                    <a className="fa fa-trash">{/**/}</a>
+                    <a className="fa fa-edit">{/**/}</a>                    
                 </div>
             </div>
             

@@ -1,0 +1,66 @@
+/* Bordered form */
+.editUserModal {
+    border: 3px solid #f1f1f1;
+    background-color: #ffffff;
+    margin-left: calc(50% - 350px);
+
+    width: 350px;    
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 110; /* Stay on top */
+    top: 100px;
+}
+
+.editUserModal h3{
+    margin-top: 4px;
+    margin-bottom: 4px;
+    color: #707070;
+}
+
+/* Full-width inputs */
+.editUserModal select, .editUserModal input[type=text], 
+.editUserModal input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: #fff;  
+}
+
+/* Set a style for all buttons */
+.editUserModal button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Add a hover effect for buttons */
+.editUserModal button:hover {
+    opacity: 0.8;
+}
+
+/* Add padding to containers */
+.editUserModal .container {
+    padding: 16px;
+}
+
+/* Add Zoom Animation */
+.edit-user-modal-animation {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}

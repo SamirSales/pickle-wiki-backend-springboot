@@ -27,7 +27,7 @@ public class FakeUserDaoImpl implements UserDao {
                         "diego@email.com","222222", Gender.MALE, UserType.USER));
                 put((long) 4, new User(4L, "John Alisson", "john",
                         "john@email.com","333333", Gender.MALE, UserType.USER));
-                put((long) 5, new User(4L, "Fabiana Angelo", "fabi",
+                put((long) 5, new User(5L, "Fabiana Angelo", "fabi",
                         "fabi@email.com","333333", Gender.FEMALE, UserType.USER));
             }
         };
