@@ -12,6 +12,7 @@ class UserEditor extends Component {
     }
 
     componentDidMount(){
+      // eslint-disable-next-line
       const users = axios.get('http://localhost:8080/users/')
         .then(response => {
           // console.log(response);

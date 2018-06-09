@@ -7,6 +7,15 @@ public class Article {
     private Long id;
     private String title;
     private String text;
+    private int views;
+
+    public Article(Long id, String title, String text, int views, List<Picture> pictures) {
+        this.id = id;
+        this.title = title;
+        this.text = text;
+        this.views = views;
+        this.pictures = pictures;
+    }
 
     private List<Picture> pictures;
 
@@ -14,6 +23,7 @@ public class Article {
         this.id = id;
         this.title = title;
         this.text = text;
+
     }
 
     public Long getId() {
@@ -46,5 +56,13 @@ public class Article {
 
     public void setPictures(List<Picture> pictures) {
         this.pictures = pictures;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
     }
 }

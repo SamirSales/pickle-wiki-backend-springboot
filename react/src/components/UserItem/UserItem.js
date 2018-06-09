@@ -6,8 +6,7 @@ import logo from '../../assets/img/profile.png';
 const userItem = ( props ) => {
 
     return (
-        <div className="userItem">
-            
+        <div className="userItem">            
             <div className="user-item-div-image">
                 <img src={logo} alt="Pickle Wiki" height="47" width="47"/>
             </div>
@@ -18,8 +17,9 @@ const userItem = ( props ) => {
                 <h3 style={{width : '30%'}}>e-mail: <span className="user-item-span">{props.email}</span></h3>
 
                 <div className="user-item-div-options">
-                    <a className="fa fa-trash"></a>
-                    <a className="fa fa-edit"></a>                    
+                
+                    <a className="fa fa-trash" eslint-disable-next-line>{/**/}</a>
+                    <a className="fa fa-edit" eslint-disable-next-line>{/**/}</a>                    
                 </div>
             </div>
             
@@ -28,4 +28,5 @@ const userItem = ( props ) => {
         </div>       
     )
 };
+
 export default userItem;

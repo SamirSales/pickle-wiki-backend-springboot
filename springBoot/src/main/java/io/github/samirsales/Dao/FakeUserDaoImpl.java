@@ -1,5 +1,7 @@
 package io.github.samirsales.Dao;
 
+import io.github.samirsales.Entity.Enum.Gender;
+import io.github.samirsales.Entity.Enum.UserType;
 import io.github.samirsales.Entity.User;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -17,10 +19,16 @@ public class FakeUserDaoImpl implements UserDao {
     static {
         users = new HashMap<Long, User>(){
             {
-                put((long) 1, new User(1L, "Samir", "samir", "samir@email.com","123456"));
-                put((long) 2, new User(2L, "Andrio", "andrio", "andrio@email.com","111111"));
-                put((long) 3, new User(3L, "Diego", "diego", "diego@email.com","222222"));
-                put((long) 4, new User(4L, "John", "john", "john@email.com","333333"));
+                put((long) 1, new User(1L, "Samir Sales", "samir",
+                        "samir@email.com","123456", Gender.MALE, UserType.ADMIN));
+                put((long) 2, new User(2L, "Andrio Antônio", "andrio",
+                        "andrio@email.com","111111", Gender.MALE, UserType.USER));
+                put((long) 3, new User(3L, "Diego Maia", "diego",
+                        "diego@email.com","222222", Gender.MALE, UserType.USER));
+                put((long) 4, new User(4L, "John Alisson", "john",
+                        "john@email.com","333333", Gender.MALE, UserType.USER));
+                put((long) 5, new User(4L, "Fabiana Angelo", "fabi",
+                        "fabi@email.com","333333", Gender.FEMALE, UserType.USER));
             }
         };
     }
