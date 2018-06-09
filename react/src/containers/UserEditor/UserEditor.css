@@ -1,5 +1,6 @@
 .user-editor-div-user-list{
-    min-height: 300px;
+    height: 300px;
+    overflow-y: scroll;
 }
 
 .user-editor-div-user-list > .empty-content-message{

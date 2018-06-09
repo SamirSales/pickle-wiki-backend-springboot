@@ -1,0 +1,59 @@
+
+.userItem{
+    height: 50px;
+    border-bottom: solid 1px #c0c0c0;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.userItem > div{
+    float: left;
+}
+
+.user-item-div-image{
+    width: 55px;
+}
+
+.user-item-div-info{
+    height: 100%;
+    width: calc(100% - 60px);
+}
+
+.user-item-div-info:hover .user-item-span{
+    color: #326fad;
+}
+
+.user-item-div-info:hover .user-item-name{
+    color: #000000;
+}
+
+.user-item-div-info h3 {
+    margin: 0;
+    font-weight: 100;
+    font-size: 14px;
+    color: #606060;
+    float: left;
+}
+
+.user-item-div-info .user-item-name{
+    font-size: 16px;
+    color: #333333;
+    margin-top: 8px;
+    margin-bottom: 3px;
+    width: 100%;
+}
+
+.user-item-div-options{
+    width: 40%;
+    float: left;
+}
+
+.user-item-div-options a{
+    margin-left: 8px;
+    float: right;
+    color: #a0a0a0;
+}
+
+.user-item-div-options a:hover{
+    color: #326fad;
+}
