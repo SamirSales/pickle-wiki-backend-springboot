@@ -5,3 +5,7 @@ const url = "http://localhost:8080";
 export const getUsers = function(){
     return axios.get(url + '/users/');
 }
+
+export const postUser = function(user){
+    return axios.post(url + '/users/', user);
+}
