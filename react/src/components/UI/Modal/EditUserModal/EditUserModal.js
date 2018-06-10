@@ -7,7 +7,6 @@ import './EditUserModal.css';
 class EditUserModal extends PureComponent {
     
     state = {
-        id: null,
         name: '',
         login: '',
         password: '',
@@ -59,7 +58,21 @@ class EditUserModal extends PureComponent {
         });
     }
 
+    componentDidUpdate(){
+
+        if(!this.props.active){
+            document.getElementById("edit-user-modal-name").value = "";
+            document.getElementById("edit-user-modal-login").value = "";
+            document.getElementById("edit-user-modal-email").value = "";
+            document.getElementById("edit-user-modal-password").value = "";
+            document.getElementById("edit-user-modal-password-confirm").value = "";
+            document.getElementById("edit-user-modal-select-gender").value = "MALE";
+            document.getElementById("edit-user-modal-select-usertype").value = "EDITOR";
+        }
+    }
+
     render(){
+
         return (
             <Aux>
                 <Backdrop active={this.props.active} click={this.props.cancel} />
@@ -69,22 +82,22 @@ class EditUserModal extends PureComponent {
     
                     <div className="container">
                         <h3>{this.props.title}</h3>
-                        <input type="text" placeholder="Nome" onChange={this.onChangeName}/>
-                        <input type="text" placeholder="Login" onChange={this.onChangeLogin} />
-                        <input type="text" placeholder="E-mail" onChange={this.onChangeEmail} />
+                        <input id="edit-user-modal-name" type="text" placeholder="Nome" onChange={this.onChangeName}/>
+                        <input id="edit-user-modal-login" type="text" placeholder="Login" onChange={this.onChangeLogin} />
+                        <input id="edit-user-modal-email" type="text" placeholder="E-mail" onChange={this.onChangeEmail} />
 
-                        <select onChange={this.onChangeGender}>
+                        <select id="edit-user-modal-select-gender" onChange={this.onChangeGender}>
                             <option value="MALE">Masculino</option>
                             <option value="FEMALE">Feminino</option>
                         </select>
 
-                        <select onChange={this.onChangeUserType}>
+                        <select id="edit-user-modal-select-usertype" onChange={this.onChangeUserType}>
                             <option value="EDITOR">Editor</option>
                             <option value="ADMIN">Administrado</option>
                         </select>
 
-                        <input type="password" placeholder="Senha" onChange={this.onChangePassword} />
-                        <input type="password" placeholder="Confirme a senha" 
+                        <input id="edit-user-modal-password" type="password" placeholder="Senha" onChange={this.onChangePassword} />
+                        <input id="edit-user-modal-password-confirm" type="password" placeholder="Confirme a senha" 
                             onChange={this.onChangePasswordConfirmation}/>
     
                         <button onClick={this.props.onSaveClick.bind(this, 

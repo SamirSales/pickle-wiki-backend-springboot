@@ -20,7 +20,7 @@ class UserEditor extends Component {
     componentDidMount(){
       // eslint-disable-next-line
       const users = getUsers().then(response => {
-        // console.log(response);
+        console.log(response);
         this.setState({users: response.data});
       });
 
@@ -45,19 +45,32 @@ class UserEditor extends Component {
 
     saveNewUser = (name, login, email, gender, password, passwordConfirm, userType) => {
 
-      const user = {
-        id: null,
-        name: name,
-        login: login,
-        email: email,
-        password: password,
-        gender: gender,
-        userType: userType
-      };
+      if(name.trim() === '' || login.trim() === '' || email.trim() === '' || 
+        password.trim() === ''){
+        console.log("Preencha todos os campos.");
+      
+      }else if(password !== passwordConfirm){
+        console.log("A confirmação de senha falhou.");
 
-      // postUser(user);
-      console.log("----------------");
-      console.log(user);
+      }else{
+        const user = {
+          id: null,
+          name: name.trim(),
+          login: login.trim(),
+          email: email.trim(),
+          password: password.trim(),
+          gender: gender,
+          userType: userType
+        };
+
+        postUser(user).then(res => {
+          getUsers().then(response => {
+            this.setState({users: response.data});
+          });
+        });
+
+        this.closeUserModal();
+      }
     }
 
     render() {

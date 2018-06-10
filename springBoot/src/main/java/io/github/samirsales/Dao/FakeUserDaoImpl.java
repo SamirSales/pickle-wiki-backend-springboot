@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -61,6 +62,12 @@ public class FakeUserDaoImpl implements UserDao {
 
     @Override
     public void insertUser(User user) {
+        user.setId((long) users.size());
+
+        while(users.get(user.getId()) != null){
+            user.setId(user.getId() + 1);
+        }
+
         this.users.put(user.getId(), user);
     }
 }
