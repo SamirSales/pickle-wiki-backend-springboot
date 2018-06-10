@@ -13,7 +13,10 @@ class EditUserModal extends PureComponent {
         passwordConfirmation: '',
         email: '',
         gender: 'MALE',
-        userType: 'EDITOR'
+        userType: 'EDITOR',
+
+        user: null,
+        editing: false
     }
 
     onChangeName = (event) => {
@@ -58,16 +61,57 @@ class EditUserModal extends PureComponent {
         });
     }
 
+    setElements(name, login, email, password, passwordConfirmation, gender, userType){
+        document.getElementById("edit-user-modal-name").value = name;
+        document.getElementById("edit-user-modal-login").value = login;
+        document.getElementById("edit-user-modal-email").value = email;
+        document.getElementById("edit-user-modal-password").value = password;
+        document.getElementById("edit-user-modal-password-confirm").value = passwordConfirmation;
+        document.getElementById("edit-user-modal-select-gender").value = gender;
+        document.getElementById("edit-user-modal-select-usertype").value = userType; 
+    }
+
     componentDidUpdate(){
 
         if(!this.props.active){
-            document.getElementById("edit-user-modal-name").value = "";
-            document.getElementById("edit-user-modal-login").value = "";
-            document.getElementById("edit-user-modal-email").value = "";
-            document.getElementById("edit-user-modal-password").value = "";
-            document.getElementById("edit-user-modal-password-confirm").value = "";
-            document.getElementById("edit-user-modal-select-gender").value = "MALE";
-            document.getElementById("edit-user-modal-select-usertype").value = "EDITOR";
+
+            if(!this.state.editing || this.state.user != null){
+                this.setState({
+                    editing: false,
+                    user: null,
+
+                    name: "",
+                    login: "",
+                    email: "",
+                    password: "",
+                    passwordConfirmation: "",
+                    gender: "MALE",
+                    userType: "EDITOR",
+                });
+
+                this.setElements('','','','','','MALE', 'EDITOR');   
+            }
+
+        } else {
+            
+            if(this.props.user != null && !this.state.editing){
+
+                this.setState({
+                    editing: true,
+                    user: this.props.user,
+
+                    name: this.props.user.name,
+                    login: this.props.user.login,
+                    email: this.props.user.email,
+                    password: this.props.user.password,
+                    passwordConfirmation: this.props.user.password,
+                    gender: this.props.user.gender,
+                    userType: this.props.user.userType
+                });
+
+                const u = this.props.user;
+                this.setElements(u.name,u.login,u.email,u.password,u.password,u.gender, u.userType);
+            }
         }
     }
 

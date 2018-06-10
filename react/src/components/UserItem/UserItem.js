@@ -27,14 +27,11 @@ const userItem = ( props ) => {
                     <h3 style={{width : '33%', marginTop: '3px'}}>e-mail: <span className="user-item-span">{props.user.email}</span></h3>
 
                     <div className="user-item-div-options">
-                        <a className="fa fa-trash">{/**/}</a>
-                        <a className="fa fa-edit">{/**/}</a>                    
+                        <a className="fa fa-trash" onClick={props.removeAction} >{/**/}</a>
+                        <a className="fa fa-edit" onClick={props.editAction} >{/**/}</a>                    
                     </div>
                 </div>
-                
-                
-                
-
+            
             </div>            
         </div>       
     )

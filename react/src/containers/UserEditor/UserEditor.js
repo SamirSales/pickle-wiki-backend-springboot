@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
-import { getUsers, postUser } from "../../service/HttpHandler/HttpHandler";
+import { getUsers, postUser, putUser } from "../../service/HttpHandler/HttpHandler";
 
 import Aux from '../../hoc/Aux';
 import UserItem from '../../components/UserItem/UserItem';
@@ -13,14 +13,15 @@ class UserEditor extends Component {
       users: [],
       userModal: {
         active: false,
-        title: ''
+        title: '',
+        userToEdit: null
       }
     }
 
     componentDidMount(){
       // eslint-disable-next-line
       const users = getUsers().then(response => {
-        console.log(response);
+        // console.log(response);
         this.setState({users: response.data});
       });
 
@@ -54,7 +55,7 @@ class UserEditor extends Component {
 
       }else{
         const user = {
-          id: null,
+          id: this.state.userModal.userToEdit != null ? this.state.userModal.userToEdit.id : null,
           name: name.trim(),
           login: login.trim(),
           email: email.trim(),
@@ -63,20 +64,55 @@ class UserEditor extends Component {
           userType: userType
         };
 
-        postUser(user).then(res => {
-          getUsers().then(response => {
-            this.setState({users: response.data});
+        if(this.state.userModal.userToEdit == null){
+          // insert new user
+          postUser(user).then(res => {
+            getUsers().then(response => {
+              this.setState({users: response.data});
+            });
           });
-        });
+
+        }else{
+          // update user
+          putUser(user).then(res => {
+            getUsers().then(response => {
+              this.setState({
+                users: response.data,
+                userModal: ({
+                  userToEdit: null
+                })
+              });
+            });
+          });
+        }
 
         this.closeUserModal();
       }
     }
 
+    editUser = (user) => {
+
+      this.setState({
+        userModal: ({
+          active: true,
+          title: user.name,
+          userToEdit: user
+        })
+      });
+
+      console.log(user);
+    }
+
+    removeUser = (user) => {
+      console.log("remove "+user);
+    }
+
     render() {
     
       const users = this.state.users.map(user => {
-        return <UserItem user={user} key={user.id}/>;
+        return <UserItem user={user} key={user.id}
+          removeAction={this.removeUser.bind(this, user)}
+          editAction={this.editUser.bind(this, user)} />;
       });
 
       const emptyFieldMessage = <p className='empty-content-message'>Nenhum editor foi adicionado.</p>;
@@ -94,6 +130,7 @@ class UserEditor extends Component {
               style={{marginTop: '10px'}}>Novo Editor</button>
 
             <EditUserModal 
+              user={this.state.userModal.userToEdit}
               title={this.state.userModal.title}
               active={this.state.userModal.active} 
               onSaveClick={this.saveNewUser}
