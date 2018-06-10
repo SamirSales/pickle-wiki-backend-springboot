@@ -20,7 +20,7 @@ class UserEditor extends Component {
     componentDidMount(){
       // eslint-disable-next-line
       const users = getUsers().then(response => {
-        console.log(response);
+        // console.log(response);
         this.setState({users: response.data});
       });
 
@@ -43,18 +43,21 @@ class UserEditor extends Component {
       })
     }
 
-    saveUser = () => {
+    saveNewUser = (name, login, email, gender, password, passwordConfirm, userType) => {
+
       const user = {
-        id: 6,
-        name: 'Aline Brito',
-        login: 'aline',
-        password: '1122334455',
-        email: 'aline@email.com',
-        gender: 'FEMALE',
-        userType: 'USER'
+        id: null,
+        name: name,
+        login: login,
+        email: email,
+        password: password,
+        gender: gender,
+        userType: userType
       };
 
-      postUser(user);
+      // postUser(user);
+      console.log("----------------");
+      console.log(user);
     }
 
     render() {
@@ -80,6 +83,7 @@ class UserEditor extends Component {
             <EditUserModal 
               title={this.state.userModal.title}
               active={this.state.userModal.active} 
+              onSaveClick={this.saveNewUser}
               cancel={this.closeUserModal}/>
         </Aux>
       );

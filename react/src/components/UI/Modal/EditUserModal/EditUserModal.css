@@ -5,9 +5,9 @@
     margin-left: calc(50% - 350px);
 
     width: 350px;    
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 110; /* Stay on top */
-    top: 100px;
+    position: fixed; 
+    z-index: 110;
+    top: calc(50% - 236px);
 }
 
 .editUserModal h3{

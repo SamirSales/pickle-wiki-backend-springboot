@@ -22,13 +22,13 @@ public class FakeUserDaoImpl implements UserDao {
                 put((long) 1, new User(1L, "Samir Sales", "samir",
                         "samir@email.com","123456", Gender.MALE, UserType.ADMIN));
                 put((long) 2, new User(2L, "Andrio Antônio", "andrio",
-                        "andrio@email.com","111111", Gender.MALE, UserType.USER));
+                        "andrio@email.com","111111", Gender.MALE, UserType.EDITOR));
                 put((long) 3, new User(3L, "Diego Maia", "diego",
-                        "diego@email.com","222222", Gender.MALE, UserType.USER));
+                        "diego@email.com","222222", Gender.MALE, UserType.EDITOR));
                 put((long) 4, new User(4L, "John Alisson", "john",
-                        "john@email.com","333333", Gender.MALE, UserType.USER));
+                        "john@email.com","333333", Gender.MALE, UserType.EDITOR));
                 put((long) 5, new User(5L, "Fabiana Ângelo", "fabi",
-                        "fabi@email.com","333333", Gender.FEMALE, UserType.USER));
+                        "fabi@email.com","333333", Gender.FEMALE, UserType.EDITOR));
             }
         };
     }
