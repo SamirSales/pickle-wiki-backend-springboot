@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
-import { getUsers, postUser, putUser } from "../../service/HttpHandler/HttpHandler";
+import { getUsers, postUser, putUser, deleteUser } from "../../service/HttpHandler/HttpHandler";
 
 import Aux from '../../hoc/Aux';
 import UserItem from '../../components/UserItem/UserItem';
 import EditUserModal from '../../components/UI/Modal/EditUserModal/EditUserModal';
+import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
 import './UserEditor.css';
  
 class UserEditor extends Component {
@@ -15,6 +16,12 @@ class UserEditor extends Component {
         active: false,
         title: '',
         userToEdit: null
+      },
+      confirmModal: {
+        title: '',
+        question: '',
+        active: false,
+        userToDelete: null
       }
     }
 
@@ -99,19 +106,45 @@ class UserEditor extends Component {
           userToEdit: user
         })
       });
-
-      console.log(user);
     }
 
-    removeUser = (user) => {
-      console.log("remove "+user);
+    removeUser = () => {  
+      deleteUser(this.state.confirmModal.userToDelete.id).then(res =>{  
+        getUsers().then(response => {
+          this.setState({users: response.data});
+        });
+
+        this.closeConfirmModal();
+      });
+    }
+
+    modalConfirmRemove = (user) => {
+      const art = user.gender === 'MALE' ? 'o' : 'a';
+
+      this.setState({
+        confirmModal:{
+          title: 'Remover usuário',
+          question: 'Tem certeza que deseja remover '+art+' '+user.name+'?',
+          active: true,
+          userToDelete: user
+        }
+      });
+    }
+
+    closeConfirmModal = () =>{
+      this.setState({
+        confirmModal:{
+          active: false,
+          userToDelete: null
+        }
+      });
     }
 
     render() {
     
       const users = this.state.users.map(user => {
         return <UserItem user={user} key={user.id}
-          removeAction={this.removeUser.bind(this, user)}
+          removeAction={this.modalConfirmRemove.bind(this, user)}
           editAction={this.editUser.bind(this, user)} />;
       });
 
@@ -119,22 +152,32 @@ class UserEditor extends Component {
 
       return (
         <Aux>
-            <h1 className='simple-template-title'><i className="fa fa-users"></i> Editores</h1>
-            <div className='article-builder-div-content user-editor-div-user-list' style={{marginTop: '10px'}}>
-              {users}
-              {this.state.users.length === 0 ? emptyFieldMessage : null}
-            </div>
 
-            <button className='article-btn article-btn-topic' 
-              onClick={this.openUserModal.bind(this, 'Novo Editor')} 
-              style={{marginTop: '10px'}}>Novo Editor</button>
+          <ConfirmModal 
+              title={this.state.confirmModal.title}
+              question={this.state.confirmModal.question}
+              active={this.state.confirmModal.active}
+              confirm={this.removeUser} 
+              cancel={this.closeConfirmModal} />
 
-            <EditUserModal 
-              user={this.state.userModal.userToEdit}
-              title={this.state.userModal.title}
-              active={this.state.userModal.active} 
-              onSaveClick={this.saveNewUser}
-              cancel={this.closeUserModal}/>
+          <h1 className='simple-template-title'><i className="fa fa-users"></i> Editores</h1>
+          <div className='article-builder-div-content user-editor-div-user-list' style={{marginTop: '10px'}}>
+            {users}
+            {this.state.users.length === 0 ? emptyFieldMessage : null}
+          </div>
+
+          <button className='article-btn article-btn-topic' 
+            onClick={this.openUserModal.bind(this, 'Novo Editor')} 
+            style={{marginTop: '10px'}}>Novo Editor</button>
+
+          <EditUserModal 
+            user={this.state.userModal.userToEdit}
+            title={this.state.userModal.title}
+            active={this.state.userModal.active} 
+            onSaveClick={this.saveNewUser}
+            cancel={this.closeUserModal}/>
+
+          
         </Aux>
       );
     }

@@ -13,3 +13,7 @@ export const postUser = function(user){
 export const putUser = function(user){
     return axios.put(url + '/users/', user);
 }
+
+export const deleteUser = function(id){
+    return axios.delete(url + '/users/'+id);
+}

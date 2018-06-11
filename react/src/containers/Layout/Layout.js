@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Aux from '../../hoc/Aux';
 import NavBar from '../NavBar/NavBar';
 import TopBar from '../TopBar/TopBar';
-import LogoutModal from '../../components/UI/Modal/LogoutModal/LogoutModal';
+import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
 import LoginModal from '../../components/UI/Modal/LoginModal/LoginModal';
 
 import './Layout.css';
@@ -126,12 +126,16 @@ class Layout extends Component {
                     <main id='container'>{this.props.children}</main>
                 </div>
    
-                <LogoutModal 
+                <ConfirmModal 
+                    title="Fazer logout"
+                    question="Tem certeza que deseja fazer logout?"
                     active={this.state.dialogLogout.active}
                     confirm={this.state.dialogLogout.funConfirm} 
                     cancel={this.closeDialogLogout} />
 
                 <LoginModal 
+                    title="Fazer logout"
+                    question="Tem certeza que deseja fazer logout?"
                     active={this.state.dialogLogin.active}
                     confirm={this.login} 
                     cancel={this.closeDialogLogin} />

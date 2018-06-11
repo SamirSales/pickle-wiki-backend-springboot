@@ -14,7 +14,6 @@ class EditUserModal extends PureComponent {
         email: '',
         gender: 'MALE',
         userType: 'EDITOR',
-
         user: null,
         editing: false
     }
@@ -79,7 +78,6 @@ class EditUserModal extends PureComponent {
                 this.setState({
                     editing: false,
                     user: null,
-
                     name: "",
                     login: "",
                     email: "",
@@ -99,7 +97,6 @@ class EditUserModal extends PureComponent {
                 this.setState({
                     editing: true,
                     user: this.props.user,
-
                     name: this.props.user.name,
                     login: this.props.user.login,
                     email: this.props.user.email,
