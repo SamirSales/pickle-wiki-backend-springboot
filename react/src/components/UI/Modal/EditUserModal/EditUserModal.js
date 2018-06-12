@@ -134,7 +134,7 @@ class EditUserModal extends PureComponent {
 
                         <select id="edit-user-modal-select-usertype" onChange={this.onChangeUserType}>
                             <option value="EDITOR">Editor</option>
-                            <option value="ADMIN">Administrado</option>
+                            <option value="ADMIN">Administrador</option>
                         </select>
 
                         <input id="edit-user-modal-password" type="password" placeholder="Senha" onChange={this.onChangePassword} />

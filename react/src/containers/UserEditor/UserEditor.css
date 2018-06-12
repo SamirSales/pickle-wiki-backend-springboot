@@ -1,3 +1,8 @@
+.user-editor-main-div{
+    position: fixed;
+    width: calc(100% - 215px);
+}
+
 .user-editor-div-user-list{
     height: 300px;
     overflow-y: scroll;

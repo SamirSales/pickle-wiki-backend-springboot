@@ -134,8 +134,6 @@ class Layout extends Component {
                     cancel={this.closeDialogLogout} />
 
                 <LoginModal 
-                    title="Fazer logout"
-                    question="Tem certeza que deseja fazer logout?"
                     active={this.state.dialogLogin.active}
                     confirm={this.login} 
                     cancel={this.closeDialogLogin} />

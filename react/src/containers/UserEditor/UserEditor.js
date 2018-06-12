@@ -5,7 +5,7 @@ import { getUsers, postUser, putUser, deleteUser } from "../../service/HttpHandl
 import Aux from '../../hoc/Aux';
 import UserItem from '../../components/UserItem/UserItem';
 import EditUserModal from '../../components/UI/Modal/EditUserModal/EditUserModal';
-import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
+import ConfirmModal from './ConfirmModal/ConfirmModal';
 import './UserEditor.css';
  
 class UserEditor extends Component {
@@ -154,11 +154,11 @@ class UserEditor extends Component {
         <Aux>
 
           <ConfirmModal 
-              title={this.state.confirmModal.title}
-              question={this.state.confirmModal.question}
-              active={this.state.confirmModal.active}
-              confirm={this.removeUser} 
-              cancel={this.closeConfirmModal} />
+            title={this.state.confirmModal.title}
+            question={this.state.confirmModal.question}
+            active={this.state.confirmModal.active}
+            confirm={this.removeUser} 
+            cancel={this.closeConfirmModal} />
 
           <h1 className='simple-template-title'><i className="fa fa-users"></i> Editores</h1>
           <div className='article-builder-div-content user-editor-div-user-list' style={{marginTop: '10px'}}>
@@ -177,7 +177,6 @@ class UserEditor extends Component {
             onSaveClick={this.saveNewUser}
             cancel={this.closeUserModal}/>
 
-          
         </Aux>
       );
     }

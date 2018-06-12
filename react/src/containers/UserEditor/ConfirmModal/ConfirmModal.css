@@ -1,0 +1,76 @@
+/* Modal Content/Box */
+.user-editor-modal-content {
+    position: fixed;
+    background-color: #fefefe;
+    /* margin: 15% auto; */
+    padding: 10px;
+    border: 1px solid #888;
+    width: 400px; /* Could be more or less, depending on screen size */
+    animation-name: animatezoom;
+    animation-duration: 0.4s;
+    z-index: 300; /* Sit on top */
+
+    margin-top: 10%;
+    margin-left: calc(50% - 400px);
+}
+
+.user-editor-modal-content h3{
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 200;
+}
+
+.user-editor-modal-content button{
+    height: 30px;
+    width: 80px;
+    margin-left: 5px;
+    float: right;
+
+    border: solid 1px #707070;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+.user-editor-modal-content button:active{
+    background-color: #98b9db;
+}
+
+button.cancel{
+    color: #ffffff;
+    background-color: #326fad;
+    border: solid 1px #2d639b;
+}
+
+button.cancel:active{
+    background-color: #6f9ac5;
+    border-color: #6f9ac5;
+}
+
+button:focus {
+    outline: -webkit-focus-ring-color auto 0px;
+}
+
+.buttons{
+    display: block;
+    height: 35px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
