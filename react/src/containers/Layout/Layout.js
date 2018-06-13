@@ -137,6 +137,8 @@ class Layout extends Component {
                     active={this.state.dialogLogin.active}
                     confirm={this.login} 
                     cancel={this.closeDialogLogin} />
+
+                <div id="snackbar"></div>
             </Aux>
         );
     }  
