@@ -6,6 +6,7 @@ import Aux from '../../hoc/Aux';
 import UserItem from '../../components/UserItem/UserItem';
 import EditUserModal from '../../components/UI/Modal/EditUserModal/EditUserModal';
 import ConfirmModal from './ConfirmModal/ConfirmModal';
+import ErrorModal from '../../components/UI/Modal/ErrorModal/ErrorModal';
 import './UserEditor.css';
  
 class UserEditor extends Component {
@@ -22,6 +23,11 @@ class UserEditor extends Component {
         question: '',
         active: false,
         userToDelete: null
+      },
+      errorModal: {
+        title: 'Error',
+        message: 'Não foi possível se conectar ao servidor.',
+        active: false
       }
     }
 
@@ -30,8 +36,22 @@ class UserEditor extends Component {
       const users = getUsers().then(response => {
         // console.log(response);
         this.setState({users: response.data});
+      }).catch(error => {
+
+        this.errorModal('Não foi possível carregar usuários.');
+        
       });
 
+    }
+
+    errorModal = (msg) =>{
+      this.setState({
+        errorModal: {
+          title: 'Error',
+          message: msg,
+          active: true
+        }
+      });
     }
 
     showSnackBar(text) {
@@ -64,14 +84,22 @@ class UserEditor extends Component {
       })
     }
 
+    closeErrorModal = () => {
+      this.setState({
+        errorModal:{
+          active: false
+        }
+      })
+    }
+
     saveNewUser = (name, login, email, gender, password, passwordConfirm, userType) => {
 
       if(name.trim() === '' || login.trim() === '' || email.trim() === '' || 
         password.trim() === ''){
-        console.log("Preencha todos os campos.");
+        this.showSnackBar('Preencha todos os campos.');
       
       }else if(password !== passwordConfirm){
-        console.log("A confirmação de senha falhou.");
+        this.showSnackBar('A confirmação de senha falhou.');
 
       }else{
         const user = {
@@ -90,7 +118,11 @@ class UserEditor extends Component {
             getUsers().then(response => {
               this.setState({users: response.data});
               this.showSnackBar('Usuário inserido com sucesso!');
+            }).catch(error => {
+              this.errorModal('Falha ao carregar usuários.');              
             });
+          }).catch(error => {
+            this.errorModal('Falha ao inserir usuário.'); 
           });
 
         }else{
@@ -105,7 +137,11 @@ class UserEditor extends Component {
               });
 
               this.showSnackBar('Usuário atualizado com sucesso!');
+            }).catch(error => {
+              this.errorModal('Falha ao carregar usuários.');              
             });
+          }).catch(error => {
+            this.errorModal('Falha ao atualizar usuário.');              
           });
         }
 
@@ -128,9 +164,13 @@ class UserEditor extends Component {
       deleteUser(this.state.confirmModal.userToDelete.id).then(res =>{  
         getUsers().then(response => {
           this.setState({users: response.data});          
+        }).catch(error => {
+          this.errorModal('Falha ao carregar usuários.');              
         });
         this.showSnackBar('Usuário removido com sucesso!');
         this.closeConfirmModal();
+      }).catch(error => {
+        this.errorModal('Falha ao remover o usuário.');              
       });
     }
 
@@ -176,6 +216,12 @@ class UserEditor extends Component {
             confirm={this.removeUser} 
             cancel={this.closeConfirmModal} />
 
+          <ErrorModal
+            title={this.state.errorModal.title}
+            message={this.state.errorModal.message}
+            active={this.state.errorModal.active}
+            cancel={this.closeErrorModal} />
+
           <h1 className='simple-template-title'><i className="fa fa-users"></i> Editores</h1>
           <div className='article-builder-div-content user-editor-div-user-list' style={{marginTop: '10px'}}>
             {users}
@@ -192,7 +238,7 @@ class UserEditor extends Component {
             active={this.state.userModal.active} 
             onSaveClick={this.saveNewUser}
             cancel={this.closeUserModal}/>
-
+            
         </Aux>
       );
     }
