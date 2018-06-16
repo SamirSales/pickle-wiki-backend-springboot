@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
-import Backdrop from '../../Backdrop/Backdrop';
-import Aux from '../../../../hoc/Aux';
+import Modal from '../Modal';
 
 import './LoginModal.css';
 
@@ -25,24 +24,23 @@ class LoginModal extends PureComponent {
 
     render(){
         return (
-            <Aux>
-                <Backdrop active={this.props.active} click={this.props.cancel} />
+            <Modal active={this.props.active} 
+            cancel={this.props.cancel} 
+            marginTop={this.props.marginTop}
+            marginLeft={this.props.marginLeft}>
                 
-                <div className="modal-content" 
-                    style={{ display: this.props.active ? 'block' : 'none' }}> 
-                    <h3><i className="fa fa-lock"></i> Entrar</h3>
+                <h3><i className="fa fa-lock"></i> Entrar</h3>
                     
-                    <input id='inputLoginModal' className="form-input" placeholder='Login' onChange={this.onChangeLogin}/>
-                    
-                    <input id='inputPasswordModal' type='password' className="form-input" placeholder='Senha' 
-                        onChange={this.onChangePassword} style={{marginTop: '10px'}}/>
-                    
-                    <div className="buttons" style={{marginTop: '10px'}}>
-                        <button className="cancel" onClick={this.props.cancel}>Não</button>
-                        <button onClick={this.props.confirm.bind(this, this.state.login, this.state.password)}>Sim</button>                    
-                    </div>
+                <input id='inputLoginModal' className="form-input" placeholder='Login' onChange={this.onChangeLogin}/>
+                
+                <input id='inputPasswordModal' type='password' className="form-input" placeholder='Senha' 
+                    onChange={this.onChangePassword} style={{marginTop: '10px'}}/>
+                
+                <div className="buttons" style={{marginTop: '10px'}}>
+                    <button className="cancel" onClick={this.props.cancel}>Não</button>
+                    <button onClick={this.props.confirm.bind(this, this.state.login, this.state.password)}>Sim</button>                    
                 </div>
-            </Aux>        
+            </Modal>        
         );
     }
     

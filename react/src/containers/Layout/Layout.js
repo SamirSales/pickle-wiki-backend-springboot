@@ -12,6 +12,15 @@ import { ScreenStatus } from '../App';
 
 export const AuthContext = React.createContext(false);
 
+export const showSnackBar = (text) => {
+    var x = document.getElementById("snackbar");
+    x.innerHTML = text;
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+
 class Layout extends Component {
 
     state = {
@@ -67,12 +76,15 @@ class Layout extends Component {
             });
 
             this.closeDialogLogin();
+            showSnackBar('Bem vindo!!!');
             return true;
         }
         
-        console.log("login = "+login);
-        console.log("password = "+password);
-        console.log("Acesso negado.");
+        // console.log("login = "+login);
+        // console.log("password = "+password);
+        // console.log("Acesso negado.");
+        showSnackBar('Acesso Negado');
+
         return false;
     }
 
@@ -137,6 +149,8 @@ class Layout extends Component {
 
                 <LoginModal 
                     active={this.state.dialogLogin.active}
+                    marginTop='15%'
+                    marginLeft='calc(50% - 221px)'
                     confirm={this.login} 
                     cancel={this.closeDialogLogin} />
 

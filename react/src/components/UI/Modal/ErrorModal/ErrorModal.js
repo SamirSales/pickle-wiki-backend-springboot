@@ -1,20 +1,19 @@
 
 import React from 'react';
-import Backdrop from '../../Backdrop/Backdrop';
-import Aux from '../../../../hoc/Aux';
+import Modal from '../Modal';
 
 const errorModal = ( props ) => {
 
     return (
-        <Aux>
-            <Backdrop active={props.active} click={props.cancel} />
+        <Modal active={props.active} 
+            cancel={props.cancel}
+            marginTop={props.marginTop}
+            marginLeft={props.marginLeft} >
             
-            <div className="user-editor-modal-content" 
-                style={{ display: props.active ? 'block' : 'none' }}> 
-                <h3>{props.title}</h3>
-                <p>{props.message}</p>
-            </div>
-        </Aux>        
+            <h3>{props.title}</h3>
+            <p>{props.message}</p>
+
+        </Modal>        
     )
 };
 export default errorModal;

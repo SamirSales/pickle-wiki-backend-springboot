@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
 import { getUsers, postUser, putUser, deleteUser } from "../../service/HttpHandler/HttpHandler";
+import { showSnackBar } from '../../containers/Layout/Layout';
 
 import Aux from '../../hoc/Aux';
 import UserItem from '../../components/UserItem/UserItem';
 import EditUserModal from '../../components/UI/Modal/EditUserModal/EditUserModal';
-import ConfirmModal from './ConfirmModal/ConfirmModal';
+import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
 import ErrorModal from '../../components/UI/Modal/ErrorModal/ErrorModal';
 import './UserEditor.css';
  
@@ -54,19 +55,6 @@ class UserEditor extends Component {
       });
     }
 
-    showSnackBar(text) {
-      // Get the snackbar DIV
-      var x = document.getElementById("snackbar");
-      
-      x.innerHTML = text;
-  
-      // Add the "show" class to DIV
-      x.className = "show";
-  
-      // After 3 seconds, remove the show class from DIV
-      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-  }
-
     openUserModal = (title) => {
       this.setState({
         userModal:{
@@ -96,10 +84,10 @@ class UserEditor extends Component {
 
       if(name.trim() === '' || login.trim() === '' || email.trim() === '' || 
         password.trim() === ''){
-        this.showSnackBar('Preencha todos os campos.');
+        showSnackBar('Preencha todos os campos.');
       
       }else if(password !== passwordConfirm){
-        this.showSnackBar('A confirmação de senha falhou.');
+        showSnackBar('A confirmação de senha falhou.');
 
       }else{
         const user = {
@@ -117,7 +105,7 @@ class UserEditor extends Component {
           postUser(user).then(res => {
             getUsers().then(response => {
               this.setState({users: response.data});
-              this.showSnackBar('Usuário inserido com sucesso!');
+              showSnackBar('Usuário inserido com sucesso!');
             }).catch(error => {
               this.errorModal('Falha ao carregar usuários.');              
             });
@@ -136,7 +124,7 @@ class UserEditor extends Component {
                 })
               });
 
-              this.showSnackBar('Usuário atualizado com sucesso!');
+              showSnackBar('Usuário atualizado com sucesso!');
             }).catch(error => {
               this.errorModal('Falha ao carregar usuários.');              
             });
@@ -167,7 +155,7 @@ class UserEditor extends Component {
         }).catch(error => {
           this.errorModal('Falha ao carregar usuários.');              
         });
-        this.showSnackBar('Usuário removido com sucesso!');
+        showSnackBar('Usuário removido com sucesso!');
         this.closeConfirmModal();
       }).catch(error => {
         this.errorModal('Falha ao remover o usuário.');              
@@ -213,12 +201,16 @@ class UserEditor extends Component {
             title={this.state.confirmModal.title}
             question={this.state.confirmModal.question}
             active={this.state.confirmModal.active}
+            marginLeft='calc(50% - 404px)'
+            marginTop='10%'
             confirm={this.removeUser} 
             cancel={this.closeConfirmModal} />
 
           <ErrorModal
             title={this.state.errorModal.title}
             message={this.state.errorModal.message}
+            marginLeft='calc(50% - 404px)'
+            marginTop='10%'
             active={this.state.errorModal.active}
             cancel={this.closeErrorModal} />
 
@@ -227,7 +219,7 @@ class UserEditor extends Component {
             title={this.state.userModal.title}
             active={this.state.userModal.active} 
             onSaveClick={this.saveNewUser}
-            marginLeft='calc(50% - 400px)'
+            marginLeft='calc(50% - 404px)'
             cancel={this.closeUserModal}/>
 
           <h1 className='simple-template-title'><i className="fa fa-users"></i> Editores</h1>
