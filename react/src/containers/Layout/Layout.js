@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Aux from '../../hoc/Aux';
+import Aux from '../../hoc/Aux/Aux';
 import NavBar from '../NavBar/NavBar';
 import TopBar from '../TopBar/TopBar';
 import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';

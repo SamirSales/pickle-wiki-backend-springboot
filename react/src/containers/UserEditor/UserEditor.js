@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { getUsers, postUser, putUser, deleteUser } from "../../axios";
 import { showSnackBar } from '../../containers/Layout/Layout';
 
-import Aux from '../../hoc/Aux';
+import Aux from '../../hoc/Aux/Aux';
 import UserItem from '../../components/UserItem/UserItem';
 import EditUserModal from '../../components/UI/Modal/EditUserModal/EditUserModal';
 import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
