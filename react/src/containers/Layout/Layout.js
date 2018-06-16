@@ -5,6 +5,7 @@ import NavBar from '../NavBar/NavBar';
 import TopBar from '../TopBar/TopBar';
 import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
 import LoginModal from '../../components/UI/Modal/LoginModal/LoginModal';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 import './Layout.css';
 
@@ -35,7 +36,8 @@ class Layout extends Component {
         },
         dialogLogin:{
             active: false
-        }
+        },
+        loading: false
     }
     
     /* Log in Methods */
@@ -138,6 +140,11 @@ class Layout extends Component {
                     <main id='container'>{this.props.children}</main>
                 </div>
    
+                <Spinner
+                    marginTop='13%'
+                    marginLeft='calc(50% - 221px)'
+                    active={this.state.loading} />
+
                 <ConfirmModal 
                     title="Fazer logout"
                     question="Tem certeza que deseja fazer logout?"

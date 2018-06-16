@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
-import { getUsers, postUser, putUser, deleteUser } from "../../service/HttpHandler/HttpHandler";
+import { getUsers, postUser, putUser, deleteUser } from "../../axios";
 import { showSnackBar } from '../../containers/Layout/Layout';
 
 import Aux from '../../hoc/Aux';
@@ -8,6 +8,7 @@ import UserItem from '../../components/UserItem/UserItem';
 import EditUserModal from '../../components/UI/Modal/EditUserModal/EditUserModal';
 import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
 import ErrorModal from '../../components/UI/Modal/ErrorModal/ErrorModal';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import './UserEditor.css';
  
 class UserEditor extends Component {
@@ -29,16 +30,19 @@ class UserEditor extends Component {
         title: 'Error',
         message: 'Não foi possível se conectar ao servidor.',
         active: false
-      }
+      },
+      loading: false
     }
 
     componentDidMount(){
+      this.setState({loading: true});
       // eslint-disable-next-line
       const users = getUsers().then(response => {
         // console.log(response);
         this.setState({users: response.data});
+        this.setState({loading: false});
       }).catch(error => {
-
+        this.setState({loading: false});
         this.errorModal('Não foi possível carregar usuários.');
         
       });
@@ -100,20 +104,27 @@ class UserEditor extends Component {
           userType: userType
         };
 
+        this.setState({loading: true});
+
         if(this.state.userModal.userToEdit == null){
+
           // insert new user
           postUser(user).then(res => {
             getUsers().then(response => {
               this.setState({users: response.data});
+              this.setState({loading: false});
               showSnackBar('Usuário inserido com sucesso!');
             }).catch(error => {
+              this.setState({loading: false});
               this.errorModal('Falha ao carregar usuários.');              
             });
           }).catch(error => {
+            this.setState({loading: false});
             this.errorModal('Falha ao inserir usuário.'); 
           });
 
         }else{
+          
           // update user
           putUser(user).then(res => {
             getUsers().then(response => {
@@ -124,11 +135,14 @@ class UserEditor extends Component {
                 })
               });
 
+              this.setState({loading: false});
               showSnackBar('Usuário atualizado com sucesso!');
             }).catch(error => {
+              this.setState({loading: false});
               this.errorModal('Falha ao carregar usuários.');              
             });
           }).catch(error => {
+            this.setState({loading: false});
             this.errorModal('Falha ao atualizar usuário.');              
           });
         }
@@ -149,15 +163,20 @@ class UserEditor extends Component {
     }
 
     removeUser = () => {  
+      this.setState({loading: true});
+
       deleteUser(this.state.confirmModal.userToDelete.id).then(res =>{  
         getUsers().then(response => {
           this.setState({users: response.data});          
         }).catch(error => {
+          this.setState({loading: false});
           this.errorModal('Falha ao carregar usuários.');              
         });
+        this.setState({loading: false});
         showSnackBar('Usuário removido com sucesso!');
         this.closeConfirmModal();
       }).catch(error => {
+        this.setState({loading: false});
         this.errorModal('Falha ao remover o usuário.');              
       });
     }
@@ -196,6 +215,10 @@ class UserEditor extends Component {
 
       return (
         <Aux>
+          <Spinner
+            marginLeft='calc(50% - 404px)'
+            marginTop='8%'
+            active={this.state.loading} />
 
           <ConfirmModal 
             title={this.state.confirmModal.title}
@@ -232,8 +255,6 @@ class UserEditor extends Component {
             onClick={this.openUserModal.bind(this, 'Novo Editor')} 
             style={{marginTop: '10px'}}>Novo Editor</button>
 
-  
-            
         </Aux>
       );
     }
