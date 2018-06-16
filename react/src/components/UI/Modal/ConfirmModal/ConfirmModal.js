@@ -1,26 +1,19 @@
 
 import React from 'react';
-import Backdrop from '../../Backdrop/Backdrop';
-import Aux from '../../../../hoc/Aux';
-
-import './ConfirmModal.css';
+import Modal from '../Modal';
 
 const confirmModal = ( props ) => {
 
     return (
-        <Aux>
-            <Backdrop active={props.active} click={props.cancel} />
-            
-            <div className="modal-content" 
-                style={{ display: props.active ? 'block' : 'none' }}> 
-                <h3>{props.title}</h3>
-                <p>{props.question}</p>
-                <div className="buttons">
-                    <button className="cancel" onClick={props.cancel}>Não</button>
-                    <button onClick={props.confirm}>Sim</button>                    
-                </div>
+        <Modal active={props.active} cancel={props.cancel}>
+            <h3>{props.title}</h3>
+            <p>{props.question}</p>
+            <div className="buttons">
+                <button className="cancel" onClick={props.cancel}>Não</button>
+                <button onClick={props.confirm}>Sim</button>                    
             </div>
-        </Aux>        
+        </Modal>        
     )
 };
+
 export default confirmModal;
