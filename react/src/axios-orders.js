@@ -1,7 +1,14 @@
 import axios from 'axios';
 
+const instance = axios.create({
+    baseURL: 'http://localhost:8080'
+});
+
+export default instance;
+
 const url = "http://localhost:8080";
 
+// eslint-disable-next-line
 export const getUsers = function(){
     return axios.get(url + '/users/');
 }
@@ -15,5 +22,5 @@ export const putUser = function(user){
 }
 
 export const deleteUser = function(id){
-    return axios.delete(url + '/users/'+id);
+    return axios.delete(url + '/userss/'+id);
 }

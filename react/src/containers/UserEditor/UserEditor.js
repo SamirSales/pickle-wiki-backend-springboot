@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
-import { getUsers, postUser, putUser, deleteUser } from "../../axios";
+import { getUsers, postUser, putUser, deleteUser } from "../../axios-orders";
 import { showSnackBar } from '../../containers/Layout/Layout';
 
 import Aux from '../../hoc/Aux/Aux';
