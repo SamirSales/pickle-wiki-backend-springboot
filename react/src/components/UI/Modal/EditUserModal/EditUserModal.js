@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import Aux from '../../../../hoc/Aux';
-import Backdrop from '../../Backdrop/Backdrop';
+import Modal from '../Modal';
 import './EditUserModal.css';
 
 class EditUserModal extends PureComponent {
@@ -115,40 +114,39 @@ class EditUserModal extends PureComponent {
     render(){
 
         return (
-            <Aux>
-                <Backdrop active={this.props.active} click={this.props.cancel} />
+            <Modal active={this.props.active} 
+                cancel={this.props.cancel}
+                marginTop={this.props.marginTop}
+                marginLeft={this.props.marginLeft} >
                 
-                <div className="editUserModal edit-user-modal-animation" 
-                    style={{ display: this.props.active ? 'block' : 'none' }}>      
-    
-                    <div className="container">
-                        <h3>{this.props.title}</h3>
-                        <input id="edit-user-modal-name" type="text" placeholder="Nome" onChange={this.onChangeName}/>
-                        <input id="edit-user-modal-login" type="text" placeholder="Login" onChange={this.onChangeLogin} />
-                        <input id="edit-user-modal-email" type="text" placeholder="E-mail" onChange={this.onChangeEmail} />
+                <div className="container editUserModal">
+                    <h3>{this.props.title}</h3>
+                    <input id="edit-user-modal-name" type="text" placeholder="Nome" onChange={this.onChangeName}/>
+                    <input id="edit-user-modal-login" type="text" placeholder="Login" onChange={this.onChangeLogin} />
+                    <input id="edit-user-modal-email" type="text" placeholder="E-mail" onChange={this.onChangeEmail} />
 
-                        <select id="edit-user-modal-select-gender" onChange={this.onChangeGender}>
-                            <option value="MALE">Masculino</option>
-                            <option value="FEMALE">Feminino</option>
-                        </select>
+                    <select id="edit-user-modal-select-gender" onChange={this.onChangeGender}>
+                        <option value="MALE">Masculino</option>
+                        <option value="FEMALE">Feminino</option>
+                    </select>
 
-                        <select id="edit-user-modal-select-usertype" onChange={this.onChangeUserType}>
-                            <option value="EDITOR">Editor</option>
-                            <option value="ADMIN">Administrador</option>
-                        </select>
+                    <select id="edit-user-modal-select-usertype" onChange={this.onChangeUserType}>
+                        <option value="EDITOR">Editor</option>
+                        <option value="ADMIN">Administrador</option>
+                    </select>
 
-                        <input id="edit-user-modal-password" type="password" placeholder="Senha" onChange={this.onChangePassword} />
-                        <input id="edit-user-modal-password-confirm" type="password" placeholder="Confirme a senha" 
-                            onChange={this.onChangePasswordConfirmation}/>
-    
-                        <button onClick={this.props.onSaveClick.bind(this, 
-                            this.state.name, this.state.login, this.state.email,
-                            this.state.gender, this.state.password, 
-                            this.state.passwordConfirmation,
-                            this.state.userType)} >Salvar</button>
-                    </div>
-                </div>    
-            </Aux>   
+                    <input id="edit-user-modal-password" type="password" placeholder="Senha" 
+                        onChange={this.onChangePassword} />
+                    <input id="edit-user-modal-password-confirm" type="password" placeholder="Confirme a senha" 
+                        onChange={this.onChangePasswordConfirmation}/>
+
+                    <button onClick={this.props.onSaveClick.bind(this, 
+                        this.state.name, this.state.login, this.state.email,
+                        this.state.gender, this.state.password, 
+                        this.state.passwordConfirmation,
+                        this.state.userType)} >Salvar</button>
+                </div>  
+            </Modal>   
         );
     }
 

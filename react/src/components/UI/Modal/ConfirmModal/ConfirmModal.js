@@ -5,7 +5,11 @@ import Modal from '../Modal';
 const confirmModal = ( props ) => {
 
     return (
-        <Modal active={props.active} cancel={props.cancel}>
+        <Modal active={props.active} 
+            cancel={props.cancel} 
+            marginTop={props.marginTop}
+            marginLeft={props.marginLeft}>
+            
             <h3>{props.title}</h3>
             <p>{props.question}</p>
             <div className="buttons">

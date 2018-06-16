@@ -130,6 +130,8 @@ class Layout extends Component {
                     title="Fazer logout"
                     question="Tem certeza que deseja fazer logout?"
                     active={this.state.dialogLogout.active}
+                    marginTop='15%'
+                    marginLeft='calc(50% - 221px)'
                     confirm={this.state.dialogLogout.funConfirm} 
                     cancel={this.closeDialogLogout} />
 

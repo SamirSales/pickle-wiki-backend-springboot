@@ -1,12 +1,12 @@
 /* Modal Content/Box */
 .modal-content {
-    position: relative;
+    position: fixed;
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    /* margin: 15% auto;  */
     padding: 10px;
     border: 1px solid #888;
     width: 400px; /* Could be more or less, depending on screen size */
-    animation-name: animatetop;
+    animation-name: animatezoom;
     animation-duration: 0.4s;
     z-index: 300; /* Sit on top */
 }
@@ -15,6 +15,22 @@
 @keyframes animatetop {
     from {top: -300px; opacity: 0}
     to {top: 0; opacity: 1}
+}
+
+/* Add Zoom Animation */
+/* .edit-user-modal-animation {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+} */
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
 }
 
 
@@ -26,8 +42,7 @@
 }
 
 .modal-content button{
-    height: 30px;
-    width: 80px;
+    padding: 10px 20px;
     margin-left: 5px;
     float: right;
 

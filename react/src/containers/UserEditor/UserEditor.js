@@ -222,6 +222,14 @@ class UserEditor extends Component {
             active={this.state.errorModal.active}
             cancel={this.closeErrorModal} />
 
+          <EditUserModal 
+            user={this.state.userModal.userToEdit}
+            title={this.state.userModal.title}
+            active={this.state.userModal.active} 
+            onSaveClick={this.saveNewUser}
+            marginLeft='calc(50% - 400px)'
+            cancel={this.closeUserModal}/>
+
           <h1 className='simple-template-title'><i className="fa fa-users"></i> Editores</h1>
           <div className='article-builder-div-content user-editor-div-user-list' style={{marginTop: '10px'}}>
             {users}
@@ -232,12 +240,7 @@ class UserEditor extends Component {
             onClick={this.openUserModal.bind(this, 'Novo Editor')} 
             style={{marginTop: '10px'}}>Novo Editor</button>
 
-          <EditUserModal 
-            user={this.state.userModal.userToEdit}
-            title={this.state.userModal.title}
-            active={this.state.userModal.active} 
-            onSaveClick={this.saveNewUser}
-            cancel={this.closeUserModal}/>
+  
             
         </Aux>
       );
