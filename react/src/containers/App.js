@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 import Layout from './Layout/Layout'
 import SimpleTemplate from '../components/SimpleTemplate/SimpleTemplate';
@@ -63,15 +64,17 @@ class App extends PureComponent {
     }
 
     return (
-      <Layout
-        url={this.state.url} 
-        appName={this.state.appName}
-        navItemClick={this.setSimpleTemplate}
-        screenStatusEvent={this.setScreenStatus}
-        screenStatus={this.state.screenStatus} >
+      <BrowserRouter>
+        <Layout
+          url={this.state.url} 
+          appName={this.state.appName}
+          navItemClick={this.setSimpleTemplate}
+          screenStatusEvent={this.setScreenStatus}
+          screenStatus={this.state.screenStatus} >
 
-        {screen}
-      </Layout>
+          {screen}
+        </Layout>
+      </BrowserRouter>
     );
   }
 }
