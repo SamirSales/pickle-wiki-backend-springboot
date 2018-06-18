@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-import Layout from './Layout/Layout'
-import SimpleTemplate from '../components/SimpleTemplate/SimpleTemplate';
+import Layout from './Layout/Layout';
 import ArticleBuilder from './ArticleBuilder/ArticleBuilder';
 import UserEditor from './UserEditor/UserEditor';
+import Welcome from '../components/Welcome/Welcome';
 
 export const ScreenStatus = {
   SimpleTemplate: 0,
@@ -17,10 +17,6 @@ class App extends PureComponent {
   state = {
     url: 'http://localhost:3000/',
     appName: 'Pickle Wiki',
-    simpleTemplate:{
-        title: 'Bem vindo ao Pickle Wiki',
-        text: 'Sistema Wiki que tem como foco seu funcionamento em intranets empresarias e blá blá blá...'
-    },
     screenStatus: ScreenStatus.UsersEdition
   }
 
@@ -41,28 +37,6 @@ class App extends PureComponent {
   }
 
   render() {
-
-    let screen = null;
-
-    switch (this.state.screenStatus){
-      case ScreenStatus.SimpleTemplate:
-        screen = <SimpleTemplate 
-          title={this.state.simpleTemplate.title} 
-          text={this.state.simpleTemplate.text} />;
-        break;
-
-      case ScreenStatus.ArticleBuilder:
-        screen = <ArticleBuilder />;
-        break;
-
-      case ScreenStatus.UsersEdition:
-        screen = <UserEditor />;
-        break;
-
-      default:
-        console.log("unknown screen");
-    }
-
     return (
       <BrowserRouter>
         <Layout
@@ -72,7 +46,14 @@ class App extends PureComponent {
           screenStatusEvent={this.setScreenStatus}
           screenStatus={this.state.screenStatus} >
 
-          {screen}
+          <Route path='/'exact component={Welcome} />
+          <Route path='/article' exact component={Welcome} />
+          
+          <Route path='/edit-article' component={ArticleBuilder} />
+          <Route path='/new-article' exact component={ArticleBuilder} />
+
+          <Route path='/user-editor' exact component={UserEditor} />
+
         </Layout>
       </BrowserRouter>
     );

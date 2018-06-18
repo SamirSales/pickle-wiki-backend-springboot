@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 
 import TextEditor from '../../components/TextEditor/TextEditor';
@@ -55,10 +54,7 @@ class ArticleBuilder extends Component {
                 <br/><br/><br/><br/>
             </Aux>
         )
-    }
-
-    
+    }    
 }
-
 
 export default ArticleBuilder;

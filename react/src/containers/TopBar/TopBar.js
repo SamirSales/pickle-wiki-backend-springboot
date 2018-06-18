@@ -1,13 +1,24 @@
 import React, { PureComponent } from 'react';
-
+import { Link, withRouter } from 'react-router-dom';
 import './TopBar.css';
-
 import { AuthContext } from '../Layout/Layout';
-import { ScreenStatus } from '../App';
 
 class TopBar extends PureComponent {
 
+  isPath(path){
+    return this.props.location.pathname.substring(0, path.length) === path;
+  }
+
+  isRootPath(){
+    return this.props.location.pathname === '/';
+  }
+
+  isReadingScreen(){
+    return this.isPath("/article") || this.isRootPath();
+  }
+
   render() {
+
     let userAuthenticated = (
       <div className="topTopBar">
         <a onClick={this.props.logout}>Sair</a>
@@ -22,17 +33,26 @@ class TopBar extends PureComponent {
       </div>
     );
 
-    let tabRead = <div
-      className={this.props.screenStatus === ScreenStatus.SimpleTemplate ? 'tab active' : 'tab'} 
-      onClick={this.props.screenStatusEvent.bind(this, ScreenStatus.SimpleTemplate)} >Leitura</div>;
+    let tabRead = <Link
+      className={this.isReadingScreen() ? 'tab active' : 'tab'} 
+      to='/article' >Leitura</Link>;
 
-    let tabAddArticle = <div
-      className={this.props.screenStatus === ScreenStatus.ArticleBuilder ? 'tab active' : 'tab'} 
-      onClick={this.props.screenStatusEvent.bind(this, ScreenStatus.ArticleBuilder)} >Novo Artigo</div>;
+    let tabAddArticle = <Link
+      className={this.isPath("/new-article") ? 'tab active' : 'tab'} 
+      to='/new-article' >Novo Artigo</Link>;
 
-    let tabAddNewUser = <div 
-      className={this.props.screenStatus === ScreenStatus.UsersEdition ? 'tab active' : 'tab'} 
-      onClick={this.props.screenStatusEvent.bind(this, ScreenStatus.UsersEdition)} >Editores</div>;
+    let tabAddNewUser = <Link
+      className={this.isPath("/user-editor") ? 'tab active' : 'tab'} 
+      to='/user-editor' >Editores</Link>;
+
+    let divSearch = null;
+
+    if(this.isReadingScreen()){
+      divSearch = <div className="divSearch">
+          <input type="text" placeholder="Pesquisar..." />
+          <i className="fa fa-search search-icon"></i>
+        </div>;
+    }
 
     return (
         <div className="topBar">
@@ -45,10 +65,7 @@ class TopBar extends PureComponent {
           </AuthContext.Consumer>
 
           <div className="bottomTopBar">
-            <div className="divSearch">
-              <input type="text" placeholder="Pesquisar..." />
-              <i className="fa fa-search search-icon"></i>
-            </div>
+            {divSearch}
 
             <AuthContext.Consumer>
               { auth => auth ? tabRead : null}
@@ -68,4 +85,4 @@ class TopBar extends PureComponent {
   }
 }
 
-export default TopBar;
+export default withRouter(TopBar);

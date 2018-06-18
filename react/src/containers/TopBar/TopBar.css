@@ -82,6 +82,7 @@
   color: #f0f0f0;
   cursor: pointer;
   background-color: #c0c0c0;
+  text-decoration: none;
 
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
