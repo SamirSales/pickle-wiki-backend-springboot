@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import './TopBar.css';
 import { AuthContext } from '../Layout/Layout';
 
@@ -33,17 +33,11 @@ class TopBar extends PureComponent {
       </div>
     );
 
-    let tabRead = <Link
-      className={this.isReadingScreen() ? 'tab active' : 'tab'} 
-      to='/article' >Leitura</Link>;
+    let tabRead = <NavLink className='tab' to='/article' >Leitura</NavLink>;
 
-    let tabAddArticle = <Link
-      className={this.isPath("/new-article") ? 'tab active' : 'tab'} 
-      to='/new-article' >Novo Artigo</Link>;
+    let tabAddArticle = <NavLink className='tab' to='/new-article' >Novo Artigo</NavLink>;
 
-    let tabAddNewUser = <Link
-      className={this.isPath("/user-editor") ? 'tab active' : 'tab'} 
-      to='/user-editor' >Editores</Link>;
+    let tabAddNewUser = <NavLink className='tab' to='/user-editor' >Editores</NavLink>;
 
     let divSearch = null;
 
