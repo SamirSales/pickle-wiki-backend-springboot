@@ -5,6 +5,8 @@ import Layout from './Layout/Layout';
 import ArticleBuilder from './ArticleBuilder/ArticleBuilder';
 import UserEditor from './UserEditor/UserEditor';
 import Welcome from '../components/Welcome/Welcome';
+// import SimpleTemplate from '../components/SimpleTemplate/SimpleTemplate';
+import FullPost from '../components/FullPost/FullPost';
 
 export const ScreenStatus = {
   SimpleTemplate: 0,
@@ -48,6 +50,7 @@ class App extends PureComponent {
 
           <Route path='/'exact component={Welcome} />
           <Route path='/article' exact component={Welcome} />
+          <Route path='/article/:tag' exact component={FullPost} />
           
           <Route path='/edit-article' component={ArticleBuilder} />
           <Route path='/new-article' exact component={ArticleBuilder} />
