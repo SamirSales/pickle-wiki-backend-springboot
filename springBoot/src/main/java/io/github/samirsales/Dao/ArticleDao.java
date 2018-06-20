@@ -10,7 +10,7 @@ public interface ArticleDao {
 
     Collection<Article> getTopVisitedArticles(int range);
 
-    Collection<Article> getAllArticlesBySearch(String search);
+    Collection<Article> getArticlesBySearch(String search);
 
     Article getArticleByUrl(String url);
 

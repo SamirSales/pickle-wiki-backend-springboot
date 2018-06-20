@@ -22,5 +22,31 @@ export const putUser = function(user){
 }
 
 export const deleteUser = function(id){
-    return axios.delete(url + '/userss/'+id);
+    return axios.delete(url + '/users/'+id);
+}
+
+// articles
+
+export const getArticles = function(){
+    return axios.get(url + '/articles/');
+}
+
+export const getArticleByUrl = function(url1){
+    return axios.get(url + '/articles/'+url1);
+}
+
+export const getArticleBySearch = function(search){
+    return axios.get(url + '/articles/search/'+search);
+}
+
+export const postArticle = function(article){
+    return axios.post(url + '/articles/', article);
+}
+
+export const putArticle = function(article){
+    return axios.put(url + '/articles/', article);
+}
+
+export const deleteArticle = function(id){
+    return axios.delete(url + '/articles/'+id);
 }

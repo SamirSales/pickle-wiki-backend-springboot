@@ -27,7 +27,7 @@ public class FakeArticleDaoImpl implements ArticleDao {
         articles.add(new Article((long) 2, "Git", "Sobre Git...", "git", 0,
                 tool, new ArrayList<>()));
 
-        articles.add(new Article((long) 3, "Java", "Sobre Java...", "java", 0,
+        articles.add(new Article((long) 3, "Java", "Sobre Java...\n...\n\nTestando", "java", 0,
                 language, new ArrayList<>()));
     }
     
@@ -60,7 +60,7 @@ public class FakeArticleDaoImpl implements ArticleDao {
     }
 
     @Override
-    public Collection<Article> getAllArticlesBySearch(String search) {
+    public Collection<Article> getArticlesBySearch(String search) {
         ArrayList<Article> arraySearch = new ArrayList<>();
 
         search = search.toLowerCase();

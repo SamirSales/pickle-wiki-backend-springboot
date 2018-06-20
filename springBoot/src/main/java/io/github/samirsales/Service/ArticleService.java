@@ -19,8 +19,8 @@ public class ArticleService {
         return articleDao.getAllArticles();
     }
 
-    public Collection<Article> getAllArticlesBySearch(String search){
-        return articleDao.getAllArticlesBySearch(search);
+    public Collection<Article> getArticlesBySearch(String search){
+        return articleDao.getArticlesBySearch(search);
     }
 
     protected Collection<Article> getTopVisitedArticles(int range){

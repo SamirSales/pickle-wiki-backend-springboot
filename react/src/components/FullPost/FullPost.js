@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import {getArticleByUrl} from '../../axios-orders';
+
 import Aux from '../../hoc/Aux/Aux';
 
 class FullPost extends Component{
@@ -10,7 +12,19 @@ class FullPost extends Component{
     }
 
     componentDidMount(){
-        console.log("test",this.props.match.params.tag);
+        
+        const url = this.props.match.params.tag;
+        console.log("url", url);
+        
+        getArticleByUrl(url).then(res => {
+            console.log(res);
+            this.setState({
+                title: res.data.title,
+                body: res.data.body
+            })
+        }).catch(err =>{
+            console.log(err);
+        });
     }
 
     render(){

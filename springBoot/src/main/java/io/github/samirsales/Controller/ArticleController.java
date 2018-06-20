@@ -26,8 +26,8 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/search/{search}", method = RequestMethod.GET)
-    public Collection<Article>  getArticleBySearch(@PathVariable("search") String search){
-        return articleService.getAllArticlesBySearch(search);
+    public Collection<Article>  getArticlesBySearch(@PathVariable("search") String search){
+        return articleService.getArticlesBySearch(search);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
