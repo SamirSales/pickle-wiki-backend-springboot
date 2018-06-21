@@ -27,7 +27,10 @@ public class FakeArticleDaoImpl implements ArticleDao {
         articles.add(new Article((long) 2, "Git", "Sobre Git...", "git", 0,
                 tool, new ArrayList<>()));
 
-        articles.add(new Article((long) 3, "Java", "Sobre Java...\n...\n\nTestando", "java", 0,
+        articles.add(new Article((long) 3, "Java",
+                "soiasjoixjsaojs\r## Sobre Java\r...\r" +
+                "testando parágrago\r" +
+                "> Testando *blá* e **blá blá**", "java", 0,
                 language, new ArrayList<>()));
     }
     

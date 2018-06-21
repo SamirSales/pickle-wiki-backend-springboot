@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import {getArticleByUrl} from '../../axios-orders';
-
+import ReactMarkdown from 'react-markdown';
 import Aux from '../../hoc/Aux/Aux';
 
 class FullPost extends Component{
@@ -11,10 +11,10 @@ class FullPost extends Component{
         body: 'Carregando artigo...'
     }
 
-    componentDidMount(){
+    componentDidMount(){        
         
+
         const url = this.props.match.params.tag;
-        console.log("url", url);
         
         getArticleByUrl(url).then(res => {
             console.log(res);
@@ -31,7 +31,7 @@ class FullPost extends Component{
         return (
             <Aux>
                 <h1 className='simple-template-title'>{this.state.title}</h1>
-                <p className='simple-template-p'>{this.state.body}</p>
+                <div className='text-editor-markdown'><ReactMarkdown source={this.state.body} /></div>
             </Aux>
         );
     }
