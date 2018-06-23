@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Layout from './Layout/Layout';
 import ArticleBuilder from './ArticleBuilder/ArticleBuilder';
@@ -48,7 +48,10 @@ class App extends PureComponent {
           screenStatus={this.state.screenStatus} >
 
           <Switch>
+            <Redirect exact from='/' to='/welcome' />
+
             <Route path='/'exact component={Welcome} />
+            <Route path='/welcome'exact component={Welcome} />
             <Route path='/article' exact component={Welcome} />
             <Route path='/article/:tag' exact component={FullPost} />
             
