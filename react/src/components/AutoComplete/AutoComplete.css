@@ -1,0 +1,23 @@
+/* .autocomplete{
+
+} */
+
+.div-autocomplete-list{
+    position: fixed;
+    width: 400px;
+    background-color: #fefefe;
+    padding: 0px;
+    margin: 0;
+    z-index: 50;
+    margin-top: 0px;
+}
+
+.div-autocomplete-list p{
+    padding: 10px 12px 10px 12px;
+    margin: 0;
+    font-size: 15px;
+}
+
+.div-autocomplete-list p:hover{
+    background-color: #c0c0c0;
+}
