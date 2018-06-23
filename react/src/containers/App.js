@@ -56,10 +56,7 @@ class App extends PureComponent {
             <Route path='/new-article' exact component={ArticleBuilder} />
 
             <Route path='/user-editor' exact component={UserEditor} />
-          </Switch>
-
-          
-
+          </Switch>        
         </Layout>
       </BrowserRouter>
     );

@@ -32,7 +32,9 @@ class TextEditor extends Component {
     onChangeContent = (event) =>{
         this.setState( {
             content: event.target.value
-        })
+        });
+
+        this.props.onChangeBody(event);
     }
 
     getContent(){

@@ -39,7 +39,7 @@ export const getArticleBySearch = function(search){
     return axios.get(url + '/articles/search/'+search);
 }
 
-export const postArticle = function(article){
+export const insertArticle = function(article){
     return axios.post(url + '/articles/', article);
 }
 
