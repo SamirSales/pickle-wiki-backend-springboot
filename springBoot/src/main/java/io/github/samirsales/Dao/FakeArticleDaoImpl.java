@@ -1,7 +1,6 @@
 package io.github.samirsales.Dao;
 
 import io.github.samirsales.Entity.Article;
-import io.github.samirsales.Entity.Category;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
@@ -17,21 +16,19 @@ public class FakeArticleDaoImpl implements ArticleDao {
     private static ArrayList<Article> articles = new ArrayList<>();
     
     public FakeArticleDaoImpl(){
-        Category animal = new Category(1L, "Animal");
-        Category tool = new Category(2L, "Ferramenta de versionamento");
-        Category language = new Category(3L, "linguagem de programação");
 
-        articles.add(new Article((long) 1, "Rato", "Sobre rato...", "rato", 0,
-                animal, new ArrayList<>()));
+        articles.add(new Article((long) 1, "Rato", "Sobre rato...","rato", "mamífero",
+                "Samir Sales", 0, new ArrayList<>()));
 
-        articles.add(new Article((long) 2, "Git", "Sobre Git...", "git", 0,
-                tool, new ArrayList<>()));
+        articles.add(new Article((long) 2, "Git", "Sobre Git...", "git",
+                "ferramenta de versionamento", "Samir Sales",
+                0, new ArrayList<>()));
 
         articles.add(new Article((long) 3, "Java",
                 "soiasjoixjsaojs\r## Sobre Java\r...\r" +
                 "testando parágrago\r" +
-                "> Testando *blá* e **blá blá**", "java", 0,
-                language, new ArrayList<>()));
+                "> Testando *blá* e **blá blá**", "java", "linguagem de programação",
+                "Samir Sales", 0, new ArrayList<>()));
     }
     
     private Map<String, Article> getArticleMap(){
@@ -70,7 +67,7 @@ public class FakeArticleDaoImpl implements ArticleDao {
 
         for(Article article : articles){
             if(article.getTitle().toLowerCase().contains(search) ||
-                    article.getCategory().getName().toLowerCase().contains(search)){
+                    article.getContext().toLowerCase().contains(search)){
                 arraySearch.add(article);
             }
         }

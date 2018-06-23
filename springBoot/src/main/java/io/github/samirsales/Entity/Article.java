@@ -8,22 +8,22 @@ public class Article {
     private String title;
     private String body;
     private String url;
+    private String context;
     private String lastEditor;
     private int views;
 
-    private Category category;
-
     private List<Picture> pictures;
 
-    public Article(Long id, String title, String body, String url, int views, Category category, List<Picture> pictures) {
+    public Article(Long id, String title, String body, String url, String context, String lastEditor, int views,
+                   List<Picture> pictures) {
         this.id = id;
         this.title = title;
         this.body = body;
         this.url = url;
+        this.context = context;
+        this.lastEditor = lastEditor;
         this.views = views;
-        this.category = category;
         this.pictures = pictures;
-        this.lastEditor = "";
     }
 
     public Article(){}
@@ -84,11 +84,11 @@ public class Article {
         this.lastEditor = lastEditor;
     }
 
-    public Category getCategory() {
-        return category;
+    public String getContext() {
+        return context;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setContext(String context) {
+        this.context = context;
     }
 }
