@@ -1,0 +1,17 @@
+.not-found-page{
+    text-align:center
+}
+
+.not-found-page h2{
+    color: #a0a0a0;
+    font-size: 35px;
+}
+
+.not-found-page p{
+    color: #909090;
+}
+
+.not-found-page img{
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}

@@ -6,6 +6,7 @@ import ArticleBuilder from './ArticleBuilder/ArticleBuilder';
 import UserEditor from './UserEditor/UserEditor';
 import Welcome from '../components/Welcome/Welcome';
 import FullPost from '../components/FullPost/FullPost';
+import NotFoundPage from '../components/NotFoundPage/NotFoundPage';
 
 export const ScreenStatus = {
   SimpleTemplate: 0,
@@ -59,6 +60,9 @@ class App extends PureComponent {
             <Route path='/new-article' exact component={ArticleBuilder} />
 
             <Route path='/user-editor' exact component={UserEditor} />
+
+            <Route component={NotFoundPage} />
+            {/* <Route render={() => <h1>Página não encontrada.</h1>} /> */}
           </Switch>        
         </Layout>
       </BrowserRouter>
