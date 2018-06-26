@@ -1,0 +1,25 @@
+.full-post-icon-link-div{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.full-post-icon-link{
+    color: #ffffff;
+    background-color: #c0c0c0;
+    margin-left: 10px;
+    font-size: 15px;
+    padding: 4px 12px 4px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.full-post-icon-link:hover{
+    background-color: #98b7d6;
+}
+
+.full-post-icon-link:active{
+    background-color: #326fad;
+}
