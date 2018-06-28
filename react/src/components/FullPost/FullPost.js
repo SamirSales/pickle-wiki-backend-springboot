@@ -18,19 +18,21 @@ class FullPost extends Component{
             title: '',
             question: '',
             active: false
-        }
+        },
+        fullArticle: null
     }
 
     componentDidMount(){        
         const url = this.props.match.params.tag;
         
         getArticleByUrl(url).then(res => {
-            console.log(res);
+            // console.log(res);
             if(res.data !== ""){
                 this.setState({
                     articleId: res.data.id,
                     title: res.data.title,
-                    body: res.data.body
+                    body: res.data.body,
+                    fullArticle: res.data
                 });
             }else{
                 this.notFoundArticle();
@@ -78,6 +80,14 @@ class FullPost extends Component{
         });
     }
 
+    onEditClick = () =>{
+        this.props.history.push({pathname: '/edit-article', 
+            state: {
+                article: this.state.fullArticle
+            }
+        });
+    }
+
     render(){
         return (
             <Aux>
@@ -94,7 +104,7 @@ class FullPost extends Component{
                     <h1 className='simple-template-title'>{this.state.title}</h1>
 
                     <div className="full-post-icon-link-div">
-                        <i className="full-post-icon-link fa fa-edit"> editar artigo</i>
+                        <i className="full-post-icon-link fa fa-edit" onClick={this.onEditClick}> editar artigo</i>
                         <i className="full-post-icon-link fa fa-trash" onClick={this.onModalConfirmRemove}> excluir artigo</i>
                     </div>
                     

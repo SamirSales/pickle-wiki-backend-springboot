@@ -11,6 +11,16 @@ class TextEditor extends Component {
         shownPreview: true
     }
  
+    componentDidMount(){
+        // console.log('this.props.content',this.props);
+        if(this.props.content){
+            this.setState({
+                content: this.props.content
+            });
+        }
+        
+    }
+
     updateContent(newContent) {
         this.setState({
             content: newContent
