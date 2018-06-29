@@ -24,7 +24,18 @@ class FullPost extends Component{
 
     componentDidMount(){        
         const url = this.props.match.params.tag;
-        
+        this.setPostByURL(url);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+
+        // updating url...
+        if(prevProps.match.params.tag !== this.props.match.params.tag){
+            this.setPostByURL(this.props.match.params.tag);
+        }
+    }
+
+    setPostByURL(url){
         getArticleByUrl(url).then(res => {
             // console.log(res);
             if(res.data !== ""){

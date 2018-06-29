@@ -41,18 +41,32 @@
     width: 100%;
     max-width: 280px;
     background-color: #fefefe;
-    padding: 8px 0px 0px 0px;
+    padding: 6px 0px 6px 0px;
     right: 21px;
     margin-top: 23px;
 }
 
-.div-autocomplete-list p{
-    padding: 10px 12px 10px 12px;
+.div-autocomplete-list .auto-complete-item{
     margin: 0;
-    font-size: 15px;
+    padding: 6px 0px;
     cursor: pointer;
+    border-bottom: solid 1px #f0f0f0;
 }
 
-.div-autocomplete-list p:hover{
-    background-color: #c0c0c0;
+.div-autocomplete-list .auto-complete-item:hover{
+    background-color: #e6ece7;
 }
+
+.div-autocomplete-list .auto-complete-item-title{
+    margin: 0;
+    padding: 0px 10px 2px 10px;
+    font-size: 15px;
+}
+
+.div-autocomplete-list .auto-complete-item-context{
+    margin: 0;
+    padding: 0px 10px;
+    font-size: 13px;
+    color: #888888;
+}
+

@@ -62,7 +62,6 @@ class App extends PureComponent {
             <Route path='/user-editor' exact component={UserEditor} />
 
             <Route component={NotFoundPage} />
-            {/* <Route render={() => <h1>Página não encontrada.</h1>} /> */}
           </Switch>        
         </Layout>
       </BrowserRouter>
