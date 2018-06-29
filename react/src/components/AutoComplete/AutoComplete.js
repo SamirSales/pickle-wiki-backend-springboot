@@ -24,12 +24,14 @@ class AutoComplete extends PureComponent {
 
     search = (event) =>{
 
-        if(event.target.value.trim().length >= 2){
+        if(event.target.value.trim().length >= 1){
             getArticleBySearch(event.target.value.trim()).then(res => {
                 this.setState({foundArticles: res.data});    
             }).catch(err => {
                 console.log('error',err);
             });
+        }else{
+            this.setState({foundArticles: []}); 
         }
     }
 
