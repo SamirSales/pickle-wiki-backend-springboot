@@ -35,40 +35,6 @@
   padding-top: 12px;
 }
 
-.divSearch{
-  border: solid 1px #777777;
-  border-radius: 2px;
-  background-color: #ffffff;
-  /* padding: 4px; */
-  width: 100%;
-  max-width: 280px;
-  float: right;
-  display: inline-block;
-  height: 21px;
-}
-
-.divSearch:focus-within{
-  border-color: #32b0de;
-}
-
-.divSearch input{
-  border-width: 0px;
-  width: calc(100% - 30px);
-  padding-left: 5px;
-  margin-top: 2px;
-}
-
-.divSearch input:focus{
-  outline-color: transparent;
-}
-
-.divSearch .search-icon{
-  font-size: 13px;
-  height: 13px;
-  width: 13px;
-  color: #555555;
-}
-
 .tab{
   /* display: inline-block; */
   float: left;

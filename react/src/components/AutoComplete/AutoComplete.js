@@ -29,16 +29,23 @@ class AutoComplete extends PureComponent {
             <Aux>
                 <Backdrop active={this.state.active} click={this.cancel} />
 
-                <div className="autocomplete">
-                    <input onClick={this.inputClick} className="form-input" 
-                        id={this.props.id} style={{zIndex: zIndex}}
-                        type="text" placeholder={this.props.placeholder} />
+                <div className="auto-complete-background">
+                    <div className="divSearch" style={{zIndex : zIndex}}>
+                    
+                        <input type="text" 
+                            placeholder="Pesquisar..."                         
+                            onClick={this.inputClick} />
+
+                        <i className="fa fa-search search-icon"></i>
+                    </div>
+
                     <div className="div-autocomplete-list" style={{display : display, zIndex : zIndex}}>
                         <p>Context 1</p>
                         <p>Context 2</p>
                         <p>Context 3</p>
                     </div>
                 </div>
+ 
             </Aux>
         );
     }

@@ -3,6 +3,8 @@ import { NavLink, withRouter } from 'react-router-dom';
 import './TopBar.css';
 import { AuthContext } from '../Layout/Layout';
 
+import AutoComplete from '../../components/AutoComplete/AutoComplete';
+
 class TopBar extends PureComponent {
 
   isPath(path){
@@ -42,10 +44,7 @@ class TopBar extends PureComponent {
     let divSearch = null;
 
     if(this.isReadingScreen()){
-      divSearch = <div className="divSearch">
-          <input type="text" placeholder="Pesquisar..." />
-          <i className="fa fa-search search-icon"></i>
-        </div>;
+      divSearch = <AutoComplete />;
     }
 
     return (
