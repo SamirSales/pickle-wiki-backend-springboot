@@ -2,18 +2,21 @@
 import React, { Component } from 'react';
 
 import './NavBar.css';
-
+import { Link } from 'react-router-dom';
 import logo from '../../assets/img/pickle-wiki.png';
 
 class NavBar extends Component {
 
   state = {
     navItems: [
-      { title: 'Início', key: '1', text: 'Hello início...'},
-      { title: 'Sobre', key: '2', text: 'Hello sobre...'},
-      { title: 'Ajuda', key: '3', text: 'Hello ajuda...'},
-      { title: 'Github', key: '4', text: 'Hello github...'},
-      { title: 'Informar erro', key: '5', text: 'Hello informar erro...'}
+      { title: 'Início', key: '1', url: '/welcome'},
+      { title: 'Sobre', key: '2', url: '/welcome'},
+      { title: 'Ajuda', key: '3', url: '/welcome'},
+      { title: 'GitHub', key: '4', url: '/welcome'},
+      { title: 'Informar erro', key: '5', url: '/welcome'},
+      // { title: 'Ajuda', key: '3', text: 'Hello ajuda...'},
+      // { title: 'Github', key: '4', text: 'Hello github...'},
+      // { title: 'Informar erro', key: '5', text: 'Hello informar erro...'}
     ]
   }
 
@@ -25,8 +28,8 @@ class NavBar extends Component {
   render() {
 
     let items = this.state.navItems.map((item) => {
-      return <a align="left" 
-        key={item.key} onClick={this.props.itemClick.bind(this, item.title, item.text)}>{item.title}</a>;
+      return <Link align="left" to={item.url}
+        key={item.key} onClick={this.props.itemClick.bind(this, item.title, item.text)}>{item.title}</Link>;
     });
 
     return (
