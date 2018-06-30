@@ -57,6 +57,10 @@
     background-color: #e6ece7;
 }
 
+.auto-complete-selected-item{
+    background-color: #e6ece7;
+}
+
 .div-autocomplete-list .auto-complete-item-title{
     margin: 0;
     padding: 0px 10px 2px 10px;

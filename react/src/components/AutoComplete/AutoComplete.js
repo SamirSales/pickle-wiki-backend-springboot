@@ -11,7 +11,8 @@ class AutoComplete extends PureComponent {
 
     state = {
         foundArticles : [],
-        active: false
+        active: false,
+        selectedItem: -1
     }
 
     inputClick = () =>{
@@ -20,9 +21,12 @@ class AutoComplete extends PureComponent {
 
     cancel = () =>{
         this.setState({active: false});
+        document.getElementById("auto-complete-input").blur();
+        document.getElementById("auto-complete-input").value = "";
     }
 
     search = (event) =>{
+        console.log('event',event.prop);
 
         if(event.target.value.trim().length >= 1){
             getArticleBySearch(event.target.value.trim()).then(res => {
@@ -37,7 +41,64 @@ class AutoComplete extends PureComponent {
 
     searchItemSelect(url){
         this.cancel();
+        this.setState({
+            foundArticles : [],
+            active: false,
+            selectedItem: -1
+        })
         this.props.history.push({pathname: '/article/' + url});
+    }
+
+    onKeyUp = (event) =>{
+
+        // ARROW DOWN KEY
+        if(event.keyCode === 40){
+            if(this.state.foundArticles.length > 0){
+                if(this.state.selectedItem === -1){
+                    this.setState({selectedItem: this.state.foundArticles[0].id});
+                }else{
+                    let i;
+                    for (i = 0; i < this.state.foundArticles.length; i++) {
+                        if(this.state.foundArticles[i].id === this.state.selectedItem &&
+                            i+1 < this.state.foundArticles.length){
+                                this.setState({selectedItem: this.state.foundArticles[i+1].id});
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // ARROW UP KEY
+        if(event.keyCode === 38){
+            console.log("up");
+            if(this.state.foundArticles.length > 0){
+                if(this.state.selectedItem !== -1){
+                    let i;
+                    for (i = this.state.foundArticles.length-1; i > 0; i--) {
+                        if(this.state.foundArticles[i].id === this.state.selectedItem &&
+                            i-1 < this.state.foundArticles.length){
+                                this.setState({selectedItem: this.state.foundArticles[i-1].id});
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // ENTER KEY
+        if(event.keyCode === 13){
+            
+            if(this.state.selectedItem !== -1){
+                console.log(this.state.foundArticles);
+                for(let art of this.state.foundArticles){
+                    if(art.id === this.state.selectedItem){
+                        this.searchItemSelect(art.url);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     render(){
@@ -45,8 +106,11 @@ class AutoComplete extends PureComponent {
         const zIndex = this.state.active ? '120' : '90';
 
         const articles = this.state.foundArticles.map(art => {
+            let itemDivClass = art.id === this.state.selectedItem ? ' auto-complete-selected-item' : '';
+            itemDivClass = 'auto-complete-item'.concat(itemDivClass);
+
             return (
-                <div className='auto-complete-item' key={art.id} onClick={this.searchItemSelect.bind(this, art.url)}>
+                <div className={itemDivClass} key={art.id} onClick={this.searchItemSelect.bind(this, art.url)}>
                     <p className='auto-complete-item-title'>{art.title}</p>
                     <p className='auto-complete-item-context'><i>{art.context}</i></p>
                 </div>);
@@ -59,8 +123,9 @@ class AutoComplete extends PureComponent {
                 <div className="auto-complete-background">
                     <div className="divSearch" style={{zIndex : zIndex}}>
 
-                        <input type="text" 
-                            placeholder="Pesquisar..."                         
+                        <input type="text" id="auto-complete-input"
+                            placeholder="Pesquisar..."   
+                            onKeyUp={this.onKeyUp}                      
                             onClick={this.inputClick} onChange={this.search} />
 
                         <i className="fa fa-search search-icon"></i>
