@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
 import Aux from '../../hoc/Aux/Aux';
 import NavBar from '../NavBar/NavBar';
 import TopBar from '../TopBar/TopBar';
@@ -128,11 +129,11 @@ class Layout extends Component {
                     itemClick={this.props.navItemClick} />
 
                 <div id='main-content'>
-                    <AuthContext.Provider value={this.state.user !== null}>
+                    <AuthContext.Provider value={this.props.usr !== null}>
                         <TopBar home={this.state.url} 
-                            user={this.state.user}
+                            user={this.props.usr}
                             logout={this.dialogLogout}
-                            login={this.dialogLogin}
+                            login={this.props.onLogin}
                             screenStatus={this.props.screenStatus}
                             screenStatusEvent={this.props.screenStatusEvent} />
                     </AuthContext.Provider>
@@ -167,4 +168,16 @@ class Layout extends Component {
     }  
 }
 
-export default Layout;
+const mapStateToProps = state => {
+    return{
+        usr: state.user
+    };
+}
+
+const mapDispathToProps = dispatch => {
+    return{
+        onLogin: () => dispatch({type: 'USER_LOGIN'})
+    };
+}
+
+export default connect(mapStateToProps, mapDispathToProps)(Layout);
