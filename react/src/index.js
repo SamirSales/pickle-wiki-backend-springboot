@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
+import reducer from './store/reducer';
 import './index.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 import App from './containers/App';
@@ -17,6 +19,8 @@ import registerServiceWorker from './registerServiceWorker';
 // }, error =>{
 //     return Promise.reject(error);
 // })
+
+const store = createStore(reducer);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
