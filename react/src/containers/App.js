@@ -17,7 +17,6 @@ export const ScreenStatus = {
 class App extends PureComponent {
 
   state = {
-    url: 'http://localhost:3000/',
     appName: 'Pickle Wiki',
     screenStatus: ScreenStatus.UsersEdition
   }
@@ -51,8 +50,8 @@ class App extends PureComponent {
           <Switch>
             <Redirect exact from='/' to='/welcome' />
 
-            <Route path='/'exact component={Welcome} />
-            <Route path='/welcome'exact component={Welcome} />
+            <Route path='/' exact component={Welcome} />
+            <Route path='/welcome' exact component={Welcome} />
             <Route path='/article' exact component={Welcome} />
             <Route path='/article/:tag' exact component={FullPost} />
             

@@ -14,9 +14,6 @@ class NavBar extends Component {
       { title: 'Ajuda', key: '3', url: '/welcome'},
       { title: 'GitHub', key: '4', url: '/welcome'},
       { title: 'Informar erro', key: '5', url: '/welcome'},
-      // { title: 'Ajuda', key: '3', text: 'Hello ajuda...'},
-      // { title: 'Github', key: '4', text: 'Hello github...'},
-      // { title: 'Informar erro', key: '5', text: 'Hello informar erro...'}
     ]
   }
 

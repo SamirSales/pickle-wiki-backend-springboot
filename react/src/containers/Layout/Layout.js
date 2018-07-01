@@ -35,6 +35,12 @@ class Layout extends Component {
         },
         loading: false
     }
+
+    // shouldComponentUpdate(nextProps, nextState){
+    //     console.log('nextProps', nextProps);
+    //     console.log('nextState', nextState);
+    //     return true;
+    // }
     
     /* Log in Methods */
 
@@ -59,7 +65,7 @@ class Layout extends Component {
     }
 
     login = (login, password) => {
-        if(login === 'admin' && password === '123456'){
+        if(login === 'admin' && password === 'admin'){
         
             this.props.onLogin({
                 name: 'Francisco',
@@ -99,9 +105,10 @@ class Layout extends Component {
         this.setState( {
             dialogLogout: {
                 active: false
-            },
-            user: null
+            }
         });
+
+        this.props.onLogin(null);
 
         this.props.screenStatusEvent(ScreenStatus.SimpleTemplate);
     }
@@ -120,7 +127,8 @@ class Layout extends Component {
                             logout={this.dialogLogout}
                             login={this.dialogLogin}
                             screenStatus={this.props.screenStatus}
-                            screenStatusEvent={this.props.screenStatusEvent} />
+                            screenStatusEvent={this.props.screenStatusEvent}
+                            {...this.props} />
                     </AuthContext.Provider>
 
                     <main id='container'>{this.props.children}</main>
@@ -165,4 +173,4 @@ const mapDispathToProps = dispatch => {
     };
 }
 
-export default connect(mapStateToProps, mapDispathToProps)(Layout);
+export default connect(mapStateToProps, mapDispathToProps, null, {pure:false})(Layout);
