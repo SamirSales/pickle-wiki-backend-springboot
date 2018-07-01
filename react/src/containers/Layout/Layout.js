@@ -26,11 +26,6 @@ export const showSnackBar = (text) => {
 class Layout extends Component {
 
     state = {
-        user: {
-            name: 'Francisco',
-            login: 'chico',
-            password: '123456'
-        },
         dialogLogout:{
             active: false,
             funConfirm: null
@@ -65,17 +60,11 @@ class Layout extends Component {
 
     login = (login, password) => {
         if(login === 'admin' && password === '123456'){
-            
-            console.log("login = "+login);
-            console.log("password = "+password);
-            console.log("Acesso autorizado.");
-
-            this.setState( {
-                user: {
-                    name: 'Francisco',
-                    login: 'chico',
-                    password: '123456'
-                }
+        
+            this.props.onLogin({
+                name: 'Francisco',
+                login: 'chico',
+                password: '123456'
             });
 
             this.closeDialogLogin();
@@ -83,11 +72,7 @@ class Layout extends Component {
             return true;
         }
         
-        // console.log("login = "+login);
-        // console.log("password = "+password);
-        // console.log("Acesso negado.");
         showSnackBar('Acesso Negado');
-
         return false;
     }
 
@@ -133,7 +118,7 @@ class Layout extends Component {
                         <TopBar home={this.state.url} 
                             user={this.props.usr}
                             logout={this.dialogLogout}
-                            login={this.props.onLogin}
+                            login={this.dialogLogin}
                             screenStatus={this.props.screenStatus}
                             screenStatusEvent={this.props.screenStatusEvent} />
                     </AuthContext.Provider>
@@ -176,7 +161,7 @@ const mapStateToProps = state => {
 
 const mapDispathToProps = dispatch => {
     return{
-        onLogin: () => dispatch({type: 'USER_LOGIN'})
+        onLogin: (usr) => dispatch({type: 'USER_LOGIN', user: usr})
     };
 }
 
