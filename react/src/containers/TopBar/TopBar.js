@@ -21,7 +21,6 @@ class TopBar extends PureComponent {
   }
 
   render() {
-    console.log('this.props', this.props);
 
     let userAuthenticated = (
       <div className="topTopBar">

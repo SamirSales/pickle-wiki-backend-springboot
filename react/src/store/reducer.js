@@ -1,6 +1,7 @@
 import * as actionTypes from './actions';
 
 const initialState = {
+    appName: 'Pickle Wiki',
     user: {
         name: 'Francisco',
         login: 'chico',
@@ -8,13 +9,21 @@ const initialState = {
     }
 }
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {      
 
-    if(action.type === actionTypes.USER_LOGIN){
-        return{
-            ...state,
-            user: action.user
-        };        
+    switch(action.type){
+        case actionTypes.USER_LOGIN:
+            return{
+                ...state,
+                user: action.user
+            };      
+        case actionTypes.APP_NAME:
+            return{
+                ...state,
+                appName: action.appName
+            }
+        default:
+            break;
     }
 
     return state;

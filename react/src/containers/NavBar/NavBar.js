@@ -26,7 +26,7 @@ class NavBar extends Component {
 
     let items = this.state.navItems.map((item) => {
       return <Link align="left" to={item.url}
-        key={item.key} onClick={this.props.itemClick.bind(this, item.title, item.text)}>{item.title}</Link>;
+        key={item.key} >{item.title}</Link>;
     });
 
     return (

@@ -11,8 +11,6 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actionTypes from '../../store/actions';
 import './Layout.css';
 
-import { ScreenStatus } from '../App';
-
 export const AuthContext = React.createContext(false);
 
 export const showSnackBar = (text) => {
@@ -36,12 +34,6 @@ class Layout extends Component {
         },
         loading: false
     }
-
-    // shouldComponentUpdate(nextProps, nextState){
-    //     console.log('nextProps', nextProps);
-    //     console.log('nextState', nextState);
-    //     return true;
-    // }
     
     /* Log in Methods */
 
@@ -110,8 +102,6 @@ class Layout extends Component {
         });
 
         this.props.onLogin(null);
-
-        this.props.screenStatusEvent(ScreenStatus.SimpleTemplate);
     }
 
     render() {
@@ -127,8 +117,6 @@ class Layout extends Component {
                             user={this.props.usr}
                             logout={this.dialogLogout}
                             login={this.dialogLogin}
-                            screenStatus={this.props.screenStatus}
-                            screenStatusEvent={this.props.screenStatusEvent}
                             {...this.props} />
                     </AuthContext.Provider>
 
@@ -164,13 +152,15 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
     return{
-        usr: state.user
+        usr: state.user,
+        appName: state.appName
     };
 }
 
 const mapDispathToProps = dispatch => {
     return{
-        onLogin: (usr) => dispatch({type: actionTypes.USER_LOGIN, user: usr})
+        onLogin: (usr) => dispatch({type: actionTypes.USER_LOGIN, user: usr}),
+        getAppName: () => dispatch({type: actionTypes.APP_NAME})
     };
 }
 

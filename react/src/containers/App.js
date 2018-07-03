@@ -8,45 +8,12 @@ import Welcome from '../components/Welcome/Welcome';
 import FullPost from '../components/FullPost/FullPost';
 import NotFoundPage from '../components/NotFoundPage/NotFoundPage';
 
-export const ScreenStatus = {
-  SimpleTemplate: 0,
-  ArticleBuilder: 1,
-  UsersEdition: 2
-}
-
 class App extends PureComponent {
-
-  state = {
-    appName: 'Pickle Wiki',
-    screenStatus: ScreenStatus.UsersEdition
-  }
-
-  setSimpleTemplate = (newTitle, newText) => {  
-    this.setState( {
-        simpleTemplate: {
-            title: newTitle,
-            text: newText
-        },
-        screenStatus: ScreenStatus.SimpleTemplate
-    });
-  }
-
-  setScreenStatus = (newScreenStatus) => {
-    this.setState( {
-      screenStatus: newScreenStatus
-    });
-  }
 
   render() {
     return (
       <BrowserRouter>
-        <Layout
-          url={this.state.url} 
-          appName={this.state.appName}
-          navItemClick={this.setSimpleTemplate}
-          screenStatusEvent={this.setScreenStatus}
-          screenStatus={this.state.screenStatus} >
-
+        <Layout>
           <Switch>
             <Redirect exact from='/' to='/welcome' />
 
