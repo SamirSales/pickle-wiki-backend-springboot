@@ -8,6 +8,7 @@ import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
 import LoginModal from '../../components/UI/Modal/LoginModal/LoginModal';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
+import * as actionTypes from '../../store/actions';
 import './Layout.css';
 
 import { ScreenStatus } from '../App';
@@ -169,7 +170,7 @@ const mapStateToProps = state => {
 
 const mapDispathToProps = dispatch => {
     return{
-        onLogin: (usr) => dispatch({type: 'USER_LOGIN', user: usr})
+        onLogin: (usr) => dispatch({type: actionTypes.USER_LOGIN, user: usr})
     };
 }
 

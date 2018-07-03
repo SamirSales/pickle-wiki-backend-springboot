@@ -1,3 +1,5 @@
+import * as actionTypes from './actions';
+
 const initialState = {
     user: {
         name: 'Francisco',
@@ -8,7 +10,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 
-    if(action.type === 'USER_LOGIN'){
+    if(action.type === actionTypes.USER_LOGIN){
         return{
             ...state,
             user: action.user

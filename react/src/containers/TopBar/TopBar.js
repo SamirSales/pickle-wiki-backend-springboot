@@ -8,19 +8,6 @@ import AutoComplete from '../../components/AutoComplete/AutoComplete';
 
 class TopBar extends PureComponent {
 
-  // shouldComponentUpdate(nextProps, nextState){
-  //   console.log('nextProps', nextProps);
-  //   console.log('nextState', nextState);
-
-  //   return true;
-  // }
-
-  constructor(props) {
-    super(props);
-    // this.update = this.update.bind(this)
-    // console.log(props);
-  }
-
   isPath(path){
     return this.props.location.pathname.substring(0, path.length) === path;
   }
