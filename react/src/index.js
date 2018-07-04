@@ -1,12 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import reducer from './store/reducer';
-import { Provider } from 'react-redux'
+
+import { createStore, combineReducers } from 'redux';
+// import reducer from './store/reducer';
+import { Provider } from 'react-redux';
+import applicationReducer from './store/reducers/application';
+import userReducer from './store/reducers/user';
+
 import './index.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
+
+
+
 
 // import axios from 'axios';
 
@@ -21,7 +28,12 @@ import registerServiceWorker from './registerServiceWorker';
 //     return Promise.reject(error);
 // })
 
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+    usr: userReducer,
+    app: applicationReducer
+})
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(<Provider store={store} ><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();

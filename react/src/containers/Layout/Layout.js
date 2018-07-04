@@ -7,8 +7,8 @@ import TopBar from '../TopBar/TopBar';
 import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
 import LoginModal from '../../components/UI/Modal/LoginModal/LoginModal';
 import Spinner from '../../components/UI/Spinner/Spinner';
-
 import * as actionTypes from '../../store/actions';
+
 import './Layout.css';
 
 export const AuthContext = React.createContext(false);
@@ -152,8 +152,8 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
     return{
-        usr: state.user,
-        appName: state.appName
+        usr: state.usr.user,
+        appName: state.app.appName
     };
 }
 
