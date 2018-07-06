@@ -98,8 +98,9 @@
     font-family: "Times New Roman", Times, serif;
     color: #333333;
     text-align: left;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 200;
+    margin: 25px 18px 10px 0px;
 
     border-bottom-style: solid;
     border-bottom-width: 1px;
@@ -111,4 +112,29 @@
     color: #333333;
     text-align: left;
     font-size: 14px;
+    line-height: 22px;
+    list-style-type: disc;
+    font-family: sans-serif;
+    border-spacing: 2px;
+}
+
+.text-editor-markdown ul{
+    color: #333333;
+    text-align: left;
+    font-size: 14px;
+    font-family: sans-serif;
+    border-spacing: 2px;
+}
+
+.text-editor-markdown a{
+    color: #0645ad;
+    text-decoration:none;
+}
+
+.text-editor-markdown a:hover{
+    text-decoration: underline;
+}
+
+.text-editor-markdown a:visited{
+    color: #0b0080;
 }

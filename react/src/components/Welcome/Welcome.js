@@ -9,9 +9,15 @@ const welcome = ( props ) => {
     "Seu código fonte encontra-se no github, atualmente, sob administração de seu criador, Samir Sales. "+
     "O Pickle Wiki é uma ferramenta de pesquisa com foco em redes internas.\r"+
     
-    "## De onde veio esse nome?\r"+
+    "## Origem do nome\r"+
     "O nome Pickle Wiki é uma paródia do nome *Wikipédia* combinada com a expressão *“Pickle Rick”* "+
-    "da animação americana Rick and Morty, criada por *Justin Roiland* e *Dan Harmon*.";
+    "da animação americana Rick and Morty, criada por *Justin Roiland* e *Dan Harmon*.\r\r"+
+    "![Bem vindo](/static/media/welcome_mini.9a3fd74d.png)\r"+
+    
+    "## Principais tecnologias utilizadas\r"+
+    "* ReactJS 16\r"+
+    "* Spring Boot\r"+
+    "* PostGreSQL";
 
     return (
         <div className='text-editor-markdown'><ReactMarkdown source={body} /></div>
