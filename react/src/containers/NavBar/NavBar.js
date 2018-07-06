@@ -7,15 +7,15 @@ import logo from '../../assets/img/pickle-wiki.png';
 
 class NavBar extends Component {
 
-  state = {
-    navItems: [
-      { title: 'Início', key: '1', url: '/welcome'},
-      { title: 'Sobre', key: '2', url: '/welcome'},
-      { title: 'Ajuda', key: '3', url: '/welcome'},
-      { title: 'GitHub', key: '4', url: '/welcome'},
-      { title: 'Informar erro', key: '5', url: '/welcome'},
-    ]
-  }
+  // state = {
+  //   navItems: [
+  //     { title: 'Início', key: '1', url: '/welcome'},
+  //     { title: 'Sobre', key: '2', url: '/welcome'},
+  //     { title: 'Ajuda', key: '3', url: '/welcome'},
+  //     { title: 'GitHub', key: '4', url: '/welcome'},
+  //     { title: 'Informar erro', key: '5', url: '/welcome'},
+  //   ]
+  // }
 
   shouldComponentUpdate(nextProps, nextState){
     // this component does not need to update
@@ -24,17 +24,21 @@ class NavBar extends Component {
 
   render() {
 
-    let items = this.state.navItems.map((item) => {
-      return <Link align="left" to={item.url}
-        key={item.key} >{item.title}</Link>;
-    });
+    // let items = this.state.navItems.map((item) => {
+    //   return <Link align="left" to={item.url}
+    //     key={item.key} >{item.title}</Link>;
+    // });
 
     return (
       <div className="navBar" align="center" >
         <img src={logo} alt="Pickle Wiki" height="106" width="106" />
         <h5 className="title">{this.props.title}</h5>
         <h4 className="quote"><i>Sua enciclopédia personalisada</i></h4>
-        {items}
+
+        <Link align="left" to='/welcome' >Início</Link>
+        <Link align="left" to='/welcome' >Ajuda</Link>
+        <a align='left' href="https://github.com/SamirSales/pickle-wiki" target="_blank">GitHub</a>
+        <a align='left' href="https://github.com/SamirSales/pickle-wiki/issues" target="_blank">Informar erro</a>
       </div>
     )
   }
