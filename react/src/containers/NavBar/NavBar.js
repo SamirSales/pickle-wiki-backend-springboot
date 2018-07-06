@@ -7,28 +7,18 @@ import logo from '../../assets/img/pickle-wiki.png';
 
 class NavBar extends Component {
 
-  // state = {
-  //   navItems: [
-  //     { title: 'Início', key: '1', url: '/welcome'},
-  //     { title: 'Sobre', key: '2', url: '/welcome'},
-  //     { title: 'Ajuda', key: '3', url: '/welcome'},
-  //     { title: 'GitHub', key: '4', url: '/welcome'},
-  //     { title: 'Informar erro', key: '5', url: '/welcome'},
-  //   ]
-  // }
-
   shouldComponentUpdate(nextProps, nextState){
     // this component does not need to update
     return false;
   }
-
+  
   render() {
 
-    // let items = this.state.navItems.map((item) => {
-    //   return <Link align="left" to={item.url}
-    //     key={item.key} >{item.title}</Link>;
-    // });
-
+    // eslint-disable-next-line
+    const gitHubLink = <a align='left' href="https://github.com/SamirSales/pickle-wiki" target="_blank">GitHub</a>;
+    // eslint-disable-next-line
+    const errorLink = <a align='left' href="https://github.com/SamirSales/pickle-wiki/issues" target="_blank">Informar erro</a>;
+    
     return (
       <div className="navBar" align="center" >
         <img src={logo} alt="Pickle Wiki" height="106" width="106" />
@@ -37,8 +27,9 @@ class NavBar extends Component {
 
         <Link align="left" to='/welcome' >Início</Link>
         <Link align="left" to='/welcome' >Ajuda</Link>
-        <a align='left' href="https://github.com/SamirSales/pickle-wiki" target="_blank">GitHub</a>
-        <a align='left' href="https://github.com/SamirSales/pickle-wiki/issues" target="_blank">Informar erro</a>
+        
+        {gitHubLink}
+        {errorLink}
       </div>
     )
   }
