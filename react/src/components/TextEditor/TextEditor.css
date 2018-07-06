@@ -145,3 +145,11 @@
     margin-right: auto;
     /* width: 50%; */
 }
+
+.text-editor-markdown pre{
+    padding: 5px 10px;
+    background-color: #333333;
+    color: #a0c0c0;
+    border: solid 1px #000;
+    border-radius: 2px;
+}
