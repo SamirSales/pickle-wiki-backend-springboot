@@ -245,7 +245,10 @@ class UserEditor extends Component {
             marginLeft='calc(50% - 404px)'
             cancel={this.closeUserModal}/>
 
-          <h1 className='simple-template-title'><i className="fa fa-users"></i> Editores</h1>
+          <div className='text-editor-markdown'>
+            <h1 className='simple-template-title'><i className="fa fa-users"></i> Editores</h1>
+          </div>
+          
           <div className='article-builder-div-content user-editor-div-user-list' style={{marginTop: '10px'}}>
             {users}
             {this.state.users.length === 0 ? emptyFieldMessage : null}

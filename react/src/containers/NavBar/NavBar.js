@@ -26,7 +26,7 @@ class NavBar extends Component {
         <h4 className="quote"><i>Sua enciclopédia personalisada</i></h4>
 
         <Link align="left" to='/welcome' >Início</Link>
-        <Link align="left" to='/mark-down-help' >Ajuda</Link>
+        <Link align="left" to='/mark-down-help' >Markdown</Link>
         
         {gitHubLink}
         {errorLink}

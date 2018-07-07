@@ -8,8 +8,8 @@ const notFoundPage = ( props ) => {
     return (
         <div className="not-found-page">
             <h2>Erro 404</h2>
-            <img src={logo} alt="Pickle Wiki" height="126" width="126" />
-            <p>A URL requisitada não pode ser encontrada.</p>
+            <img src={logo} alt="Pickle Wiki" height="200" width="200" />
+            <p>A URL requisitada não pôde ser encontrada.</p>
         </div>
     )
 };

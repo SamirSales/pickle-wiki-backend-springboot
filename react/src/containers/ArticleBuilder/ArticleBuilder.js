@@ -171,7 +171,9 @@ class ArticleBuilder extends Component {
     render() {
         return (
             <Aux>
-                <h1 className='simple-template-title'><i className="fa fa-edit"></i> {this.getTitle()}</h1>
+                <div className='text-editor-markdown'>
+                    <h1 className='simple-template-title'><i className="fa fa-edit"></i> {this.getTitle()}</h1>
+                </div>
                 <p className='article-builder-p'><b>Título</b></p>
                 <input id='input-article-title' className="form-input" 
                     placeholder='Insira um título...' onChange={this.onChangeTitle} />
@@ -183,7 +185,8 @@ class ArticleBuilder extends Component {
                 <TextEditor 
                     title={this.getTitle()} 
                     content={this.props.location.state ? this.props.location.state.article.body : ''}
-                    onChangeBody={this.onChangeBody}/>                
+                    onChangeBody={this.onChangeBody}
+                    linkHelp="true"/>                
     
                 <h2 className='article-builder-h2'>Imagens</h2>
                 <button className='article-btn article-btn-topic'

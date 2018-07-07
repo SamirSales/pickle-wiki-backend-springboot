@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-// import CKEditor from "react-ckeditor-component";
+import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import './TextEditor.css';
  
@@ -12,13 +12,11 @@ class TextEditor extends Component {
     }
  
     componentDidMount(){
-        // console.log('this.props.content',this.props);
         if(this.props.content){
             this.setState({
                 content: this.props.content
             });
-        }
-        
+        }        
     }
 
     updateContent(newContent) {
@@ -65,6 +63,13 @@ class TextEditor extends Component {
                 defaultValue={this.state.content} />;
         }
 
+        let linkHelp = null;
+
+        if(this.props.linkHelp){
+            linkHelp = <Link className='text-editor-link-help' to='/mark-down-help' target="_blank">
+                <i className="fa fa-question-circle"></i></Link>;
+        }
+
         return (
             <div className='text-editor-frame'>
                 <div className='text-editor-div-tabs'>
@@ -74,11 +79,8 @@ class TextEditor extends Component {
                     <button onClick={this.turnOnPreview}
                         className={this.state.shownPreview ? 'text-editor-div-tab-selected': ''} >
                         <i className="fa fa-eye"></i></button>
-                    
-                    <a className='text-editor-link-help' target="_blank" 
-                        href="https://rexxars.github.io/react-markdown/"
-                        rel="noopener noreferrer">
-                        <i className="fa fa-question-circle"></i></a>
+
+                    {linkHelp}
                 </div>
 
                 <div className='text-editor-div-content'>
