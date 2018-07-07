@@ -3,6 +3,8 @@ import ReactMarkdown from 'react-markdown';
 import TextEditor from '../TextEditor/TextEditor';
 import Aux from '../../hoc/Aux/Aux';
 
+import earthImage from '../../assets/img/earth.png';
+
 class MarkDownHelp extends Component{
 
     state = {
@@ -16,45 +18,56 @@ class MarkDownHelp extends Component{
             "símbolos do teclado, sem usar teclas de atalho, menus, selecionando o texto e sem aquele visual "+
             "complexo - para os que não estão acostumados - de HTML.\r"+
             
-            "## Mostruário Pickle Wiki\r",
+            "## Demonstração\r",
         
-        sampleText: "# Live demo\r"+
+        sampleText: "# Título\r"+
 
-        "Changes are automatically rendered as you type.\r"+        
-        "* Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)\r"+
-        "* Renders actual, \"native\" React DOM elements\r"+
-        "* Allows you to escape or skip HTML (try toggling the checkboxes above)\r"+
-        "* If you escape or skip the HTML, no `dangerouslySetInnerHTML` is used! Yay!\r\r"+
+        "Parágrago normal aqui...\r\r"+ 
+        "## Listas\r"+       
+        "* Primeiro item com [link do Google](https://google.com) para exemplo;\r"+
+        "* Segundo item com *itálico* para _exemplo_;\r"+
+        "* Terceiro item com **negrico** para __exemplo__;\r"+
+        "* Quarto item com ***negrito*** e ___itálico___ para exemplo;\r\r"+
+
+        "### Itens numerados\r"+
+        "1. Primeiro item com [link do Google](https://google.com) para exemplo;\r"+
+        "2. Segundo item com *itálico* para _exemplo_;\r"+
+        "3. Terceiro item com **negrico** para __exemplo__;\r"+
+        "4. Quarto item com ***negrito*** e ___itálico___ para exemplo;\r\r"+
+
+        "### Itens marcados ou não\r"+
+        "- [x] Primeiro item com [link do Google](https://google.com) para exemplo;\r"+
+        "- [ ] Segundo item com *itálico* para _exemplo_;\r"+
+        "- [x] Terceiro item com **negrico** para __exemplo__;\r"+
+        "- [ ] Quarto item com ***negrito*** e ___itálico___ para exemplo;\r\r"+
         
-        "## HTML block below\r"+        
-        "<blockquote>This blockquote will change based on the HTML settings above.</blockquote>\r\r"+
+        "## Citações\r"+        
+        "> *\"A vingança nunca é plena, mata a alma e envenena.\"* **MADRUGA, Seu.**\r\r"+
         
-        "## How about some code?\r"+
-        "```js\r"+
-        "var React = require('react');\r"+
-        "var Markdown = require('react-markdown');\r"+
-        
-        "React.render(\r"+
-            "  <Markdown source=\"# Your markdown here\" />,\r"+
-            "document.getElementById('content')\r"+
-            ");\r"+
-            "```\r"+
-        
-            "Pretty neat, eh?\r\r"+
-        
-            "## Tables?\r"+        
-            "| Feature | Support |\r"+
-            "| ------ | ----------- |\r"+
-            "| tables | ✔ |\r"+
-            "| alignment | ✔ |\r"+
-            "| wewt | ✔ |\r"+
-        
-            "## More info?\r"+        
-            "Read usage information and more on [GitHub](//github.com/rexxars/react-markdown)\r"+
-        
-            "---------------\r"+
-        
-            "A component by [VaffelNinja](http://vaffel.ninja) / Espen Hovlandsdal"
+        "## Códigos\r"+
+        "`Sample of code`\r\r"+
+
+        "```\r"+
+        "sampleFunction = () => {\r"+
+        "    var x = 3;\r"+
+        "    var y = 7;\r"+
+        "    return x + y;\r"+
+        "}\r"+
+        "```\r\r"+
+    
+        "## Tabelas\r"+        
+        "| Cabeçalho 1 | Cabeçalho 2 | Cabeçalho 3 |\r"+
+        "| --- | --- | --- |\r"+
+        "| exemplo 1 | Exemplo de coluna um pouco mais larga | ✔ |\r"+
+        "| exemplo 2 | exemplo 4  | ✔ |\r"+
+        "| exemplo 3 | exemplo 5  | ✔ |\r\r"+
+    
+        "## Imagens\r"+        
+        "![Bem vindo]("+earthImage+")\r\r"+
+
+        "---------------\r"+
+    
+        "Isso é tudo!"
     };
 
     onChangeBody = (event) => {
