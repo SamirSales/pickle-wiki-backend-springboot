@@ -112,7 +112,9 @@ class FullPost extends Component{
                     cancel={this.closeConfirmModal} />
 
                 <div style={{position: 'relative'}}>
-                    <h1 className='simple-template-title'>{this.state.title}</h1>
+                    <div className='text-editor-markdown'>
+                        <h1>{this.state.title}</h1>
+                    </div>
 
                     <div className="full-post-icon-link-div">
                         <i className="full-post-icon-link fa fa-edit" onClick={this.onEditClick}> editar artigo</i>
