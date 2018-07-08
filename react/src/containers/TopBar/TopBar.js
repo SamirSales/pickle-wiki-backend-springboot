@@ -21,7 +21,7 @@ class TopBar extends PureComponent {
   }
 
   render() {
-
+  
     let userAuthenticated = (
       <div className="topTopBar">
         <a onClick={this.props.logout}>Sair</a>
@@ -39,8 +39,12 @@ class TopBar extends PureComponent {
 
     let tabRead = <NavLink className='tab' to='/article' >Leitura</NavLink>;
     let tabAddArticle = <NavLink className='tab' to='/new-article' >Novo Artigo</NavLink>;
-    let tabAddNewUser = <NavLink className='tab' to='/user-editor' >Editores</NavLink>;
+    let tabAddNewUser = null;
     let divSearch = null;
+
+    if(this.props.user && this.props.user.type === 'ADMIN'){
+      tabAddNewUser = <NavLink className='tab' to='/user-editor' >Editores</NavLink>;
+    }
 
     if(this.isReadingScreen()){
       divSearch = <AutoComplete />;
@@ -83,5 +87,4 @@ const mapStateToProps = state => {
   };
 }
 
-// export default withRouter(TopBar);
 export default withRouter(connect(mapStateToProps)(TopBar))

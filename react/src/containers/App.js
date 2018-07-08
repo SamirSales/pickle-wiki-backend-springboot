@@ -9,9 +9,25 @@ import MarkDownHelp from '../components/MarkDownHelp/MarkDownHelp';
 import FullPost from '../components/FullPost/FullPost';
 import NotFoundPage from '../components/NotFoundPage/NotFoundPage';
 
+import { connect } from 'react-redux';
+import * as actionTypes from '../store/actions';
+
 class App extends PureComponent {
 
   render() {
+    let editArticlePage = <Route path='/edit-article' component={ArticleBuilder} />;
+    let newArticlePage = <Route path='/new-article' exact component={ArticleBuilder} />;
+    let editUsers = <Route path='/user-editor' exact component={UserEditor} />;
+
+    if(this.props.usr == null){
+      editArticlePage = <Redirect exact from='/edit-article' to='/welcome' />;
+      newArticlePage = <Redirect exact from='/new-article' to='/welcome' />;
+      editUsers = <Redirect exact from='/user-editor' to='/welcome'/>;
+
+    }else if(this.props.usr.type !== 'ADMIN'){
+      editUsers = <Redirect exact from='/user-editor' to='/welcome'/>;
+    }
+
     return (
       <BrowserRouter>
         <Layout>
@@ -24,10 +40,9 @@ class App extends PureComponent {
             <Route path='/article' exact component={Welcome} />
             <Route path='/article/:tag' exact component={FullPost} />
             
-            <Route path='/edit-article' component={ArticleBuilder} />
-            <Route path='/new-article' exact component={ArticleBuilder} />
-
-            <Route path='/user-editor' exact component={UserEditor} />
+            {editArticlePage}
+            {newArticlePage}
+            {editUsers}
 
             <Route component={NotFoundPage} />
           </Switch>        
@@ -37,6 +52,20 @@ class App extends PureComponent {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return{
+      usr: state.usr.user,
+      appName: state.app.appName
+  };
+}
+
+const mapDispathToProps = dispatch => {
+  return{
+      onLogin: (usr) => dispatch({type: actionTypes.USER_LOGIN, user: usr}),
+      getAppName: () => dispatch({type: actionTypes.APP_NAME})
+  };
+}
+
+export default connect(mapStateToProps, mapDispathToProps)(App);
 
   

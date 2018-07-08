@@ -63,7 +63,8 @@ class Layout extends Component {
             this.props.onLogin({
                 name: 'Francisco',
                 login: 'chico',
-                password: '123456'
+                password: '123456',
+                type: 'ADMIN'
             });
 
             this.closeDialogLogin();

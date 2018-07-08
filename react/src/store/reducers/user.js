@@ -4,7 +4,8 @@ const initialState = {
     user: {
         name: 'Francisco',
         login: 'chico',
-        password: '123456'
+        password: '123456',
+        type: 'ADMIN'
     }
 }
 
