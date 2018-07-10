@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import './TopBar.css';
 import { AuthContext } from '../Layout/Layout';
@@ -81,10 +80,4 @@ class TopBar extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
-  return{
-      usr: state.user,
-  };
-}
-
-export default withRouter(connect(mapStateToProps)(TopBar))
+export default withRouter(TopBar);
