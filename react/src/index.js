@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 // import reducer from './store/reducer';
 import { Provider } from 'react-redux';
 import applicationReducer from './store/reducers/application';
@@ -28,12 +28,24 @@ import registerServiceWorker from './registerServiceWorker';
 //     return Promise.reject(error);
 // })
 
+const logger = store =>{
+    return next =>{
+        return action =>{
+            console.log("[Middleware] Dispatching", action);
+            const result = next(action);
+            console.log("[Middleware] next state", store.getState());
+            return result;
+        }
+    }
+}
+
+
 const rootReducer = combineReducers({
     usr: userReducer,
     app: applicationReducer
 })
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(logger));
 
 ReactDOM.render(<Provider store={store} ><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();
