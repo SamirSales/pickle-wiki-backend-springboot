@@ -8,6 +8,8 @@ import ReactMarkdown from 'react-markdown';
 import Aux from '../../hoc/Aux/Aux';
 import './FullPost.css';
 
+import { connect } from 'react-redux';
+
 class FullPost extends Component{
 
     state = {
@@ -100,6 +102,16 @@ class FullPost extends Component{
     }
 
     render(){
+
+        let editorsButtons = null;
+
+        if(this.props.usr){
+            editorsButtons = (<div className="full-post-icon-link-div">
+                <i className="full-post-icon-link fa fa-edit" onClick={this.onEditClick}> editar artigo</i>
+                <i className="full-post-icon-link fa fa-trash" onClick={this.onModalConfirmRemove}> excluir artigo</i>
+            </div>);
+        }
+
         return (
             <Aux>
                 <ConfirmModal 
@@ -116,10 +128,7 @@ class FullPost extends Component{
                         <h1>{this.state.title}</h1>
                     </div>
 
-                    <div className="full-post-icon-link-div">
-                        <i className="full-post-icon-link fa fa-edit" onClick={this.onEditClick}> editar artigo</i>
-                        <i className="full-post-icon-link fa fa-trash" onClick={this.onModalConfirmRemove}> excluir artigo</i>
-                    </div>
+                    {editorsButtons}
                     
                     <div className='text-editor-markdown'><ReactMarkdown source={this.state.body} /></div> 
                 </div>
@@ -129,4 +138,11 @@ class FullPost extends Component{
     }
 }
 
-export default FullPost;
+const mapStateToProps = state => {
+    return{
+        usr: state.usr.user,
+        appName: state.app.appName
+    };
+}
+
+export default connect(mapStateToProps)(FullPost);
