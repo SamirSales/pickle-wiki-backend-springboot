@@ -1,12 +1,13 @@
 import * as actionTypes from '../actions';
 
 const initialState = {
-    user: {
-        name: 'Francisco',
-        login: 'chico',
-        password: '123456',
-        type: 'ADMIN'
-    }
+    // user: {
+    //     name: 'Francisco',
+    //     login: 'chico',
+    //     password: '123456',
+    //     type: 'ADMIN'
+    // }
+    user: null
 }
 
 const reducer = (state = initialState, action) => {      
