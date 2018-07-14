@@ -10,7 +10,7 @@ import FullPost from '../components/FullPost/FullPost';
 import NotFoundPage from '../components/NotFoundPage/NotFoundPage';
 
 import { connect } from 'react-redux';
-import * as actionTypes from '../store/actions/actions';
+import * as actionTypes from '../store/actions/actionTypes';
 
 class App extends PureComponent {
 
