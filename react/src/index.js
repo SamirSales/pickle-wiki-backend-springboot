@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 // import reducer from './store/reducer';
 import { Provider } from 'react-redux';
+
 import applicationReducer from './store/reducers/application';
 import userReducer from './store/reducers/user';
 
@@ -12,7 +14,7 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
 
-import * as authActions from './store/auth';
+import * as authActions from './store/actions/auth';
 
 
 // import axios from 'axios';
@@ -41,13 +43,12 @@ const logger = store =>{
     }
 }
 
-
 const rootReducer = combineReducers({
     usr: userReducer,
     app: applicationReducer
 })
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
 
 ReactDOM.render(<Provider store={store} ><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();

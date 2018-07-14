@@ -7,8 +7,9 @@ import TopBar from '../TopBar/TopBar';
 import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
 import LoginModal from '../../components/UI/Modal/LoginModal/LoginModal';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import * as actionTypes from '../../store/actions';
-import * as authActions from '../../store/auth';
+
+import * as actionCreators from '../../store/actions/actions';
+import * as authActions from '../../store/actions/auth';
 
 import './Layout.css';
 
@@ -61,7 +62,7 @@ class Layout extends Component {
     login = (login, password) => {
 
         this.props.onAuth("loginTest", "passwordTest");
-        // console.log(this.props.getAppName());
+        // console.log("test",this.props.getAppName());
 
         if(login === 'admin' && password === 'admin'){
         
@@ -165,8 +166,8 @@ const mapStateToProps = state => {
 
 const mapDispathToProps = dispatch => {
     return{
-        onLogin: (usr) => dispatch({type: actionTypes.USER_LOGIN, user: usr}),
-        getAppName: () => dispatch({type: actionTypes.APP_NAME}),
+        onLogin: (usr) => dispatch(actionCreators.userLogin(usr)),
+        getAppName: () => dispatch(actionCreators.appName()),
         onAuth: (login, password) => dispatch(authActions.auth(login, password))
     };
 }
