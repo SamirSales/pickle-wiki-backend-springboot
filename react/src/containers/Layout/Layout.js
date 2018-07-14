@@ -71,37 +71,23 @@ class Layout extends Component {
         }
 
         authentication(user).then(res => {
-            // console.log('user',res.data);
+            console.log('user',res.data);
 
-            if(res.data !== ''){
-                this.props.onLogin(res.data);
+            if(res.data.user !== ''){
+                this.props.onLogin(res.data.user);
 
                 this.closeDialogLogin();
-                showSnackBar('Bem vindo, '+res.data.name+'!');
+                showSnackBar('Bem vindo, '+res.data.user.name+'!');
                 return true;
             }
 
             
         }).catch(err =>{
-            console.log(err);
+            console.log("Error", err);
+
+            showSnackBar('Acesso Negado');
+            return false;
         });
-
-        // if(login === 'admin' && password === 'admin'){
-        
-        //     this.props.onLogin({
-        //         name: 'Francisco',
-        //         login: 'chico',
-        //         password: '123456',
-        //         type: 'ADMIN'
-        //     });
-
-        //     this.closeDialogLogin();
-        //     showSnackBar('Bem vindo!!!');
-        //     return true;
-        // }
-        
-        showSnackBar('Acesso Negado');
-        return false;
     }
 
     /* Log out methods */

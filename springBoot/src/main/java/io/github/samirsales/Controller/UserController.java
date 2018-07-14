@@ -1,11 +1,13 @@
 package io.github.samirsales.Controller;
 
+import io.github.samirsales.Authentication.LoginResponse;
 import io.github.samirsales.Entity.User;
 import io.github.samirsales.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import java.util.Collection;
 
 @RestController
@@ -26,8 +28,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/authentication", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User getUserByAuthentication(@RequestBody User user){
-        return userService.getUserByAuthentication(user);
+    public LoginResponse getUserByAuthentication(@RequestBody User user) throws ServletException {
+
+        User userResponse = userService.getUserByAuthentication(user);
+        if(userResponse != null){
+            return new LoginResponse(userResponse);
+        }
+
+        throw new ServletException("Login or password incorrect.");
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -44,4 +52,5 @@ public class UserController {
     public void insertUser(@RequestBody User user){
         userService.insertUser(user);
     }
+
 }

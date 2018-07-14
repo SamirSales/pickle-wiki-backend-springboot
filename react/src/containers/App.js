@@ -24,7 +24,7 @@ class App extends PureComponent {
       newArticlePage = <Redirect exact from='/new-article' to='/welcome' />;
       editUsers = <Redirect exact from='/user-editor' to='/welcome'/>;
 
-    }else if(this.props.usr.type !== 'ADMIN'){
+    }else if(this.props.usr.userType !== 'ADMIN'){
       editUsers = <Redirect exact from='/user-editor' to='/welcome'/>;
     }
 
