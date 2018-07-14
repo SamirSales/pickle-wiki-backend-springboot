@@ -9,6 +9,8 @@ public interface UserDao {
 
     User getUserById(long id);
 
+    User getUserByAuthentication(User user);
+
     void removeUserById(long id);
 
     void updateUser(User user);

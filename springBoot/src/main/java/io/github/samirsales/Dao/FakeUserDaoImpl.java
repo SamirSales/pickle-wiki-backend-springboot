@@ -6,6 +6,7 @@ import io.github.samirsales.Entity.User;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +20,8 @@ public class FakeUserDaoImpl implements UserDao {
     static {
         users = new HashMap<Long, User>(){
             {
-                put((long) 1, new User(1L, "Samir Sales", "samir",
-                        "samir@email.com","123456", Gender.MALE, UserType.ADMIN));
+                put((long) 1, new User(1L, "Samir Sales", "admin",
+                        "samir@email.com","admin", Gender.MALE, UserType.ADMIN));
                 put((long) 2, new User(2L, "Andrio Antônio", "andrio",
                         "andrio@email.com","111111", Gender.MALE, UserType.EDITOR));
                 put((long) 3, new User(3L, "Diego Maia", "diego",
@@ -33,14 +34,46 @@ public class FakeUserDaoImpl implements UserDao {
         };
     }
 
+    private User getSecureUserCopy(User user){
+        return new User(user.getId(),
+                user.getName(),
+                user.getLogin(),
+                user.getEmail(), "",
+                user.getGender(),
+                user.getUserType());
+    }
+
     @Override
     public Collection<User> getAllUsers(){
-        return this.users.values();
+
+        ArrayList<User> usersArrayList = new ArrayList<>();
+        Collection<User> users = this.users.values();
+
+        for(User user : users){
+            usersArrayList.add(getSecureUserCopy(user));
+        }
+
+        return usersArrayList;
     }
 
     @Override
     public User getUserById(long id){
         return this.users.get(id);
+    }
+
+    @Override
+    public User getUserByAuthentication(User inputUser) {
+
+        Collection<User> users = this.users.values();
+
+        for(User user : users){
+            if((user.getLogin().equals(inputUser.getLogin()) || user.getEmail().equals(inputUser.getLogin()))
+                    && user.getPassword().equals(inputUser.getPassword())){
+                return getSecureUserCopy(user);
+            }
+        }
+
+        return null;
     }
 
     @Override

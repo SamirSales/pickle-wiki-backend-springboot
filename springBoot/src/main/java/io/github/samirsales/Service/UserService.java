@@ -23,6 +23,10 @@ public class UserService {
         return this.userDao.getUserById(id);
     }
 
+    public User getUserByAuthentication(User user) {
+        return this.userDao.getUserByAuthentication(user);
+    }
+
     public void removeUserById(long id) {
         this.userDao.removeUserById(id);
     }

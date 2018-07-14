@@ -25,6 +25,11 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @RequestMapping(value = "/authentication", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public User getUserByAuthentication(@RequestBody User user){
+        return userService.getUserByAuthentication(user);
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void removeUserById(@PathVariable("id") long id){
         userService.removeUserById(id);
