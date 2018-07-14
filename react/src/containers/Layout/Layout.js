@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { authentication } from '../../axios-orders';
+
 import { connect } from 'react-redux';
 import Aux from '../../hoc/Aux/Aux';
 import NavBar from '../NavBar/NavBar';
@@ -61,21 +63,42 @@ class Layout extends Component {
     login = (login, password) => {
 
         this.props.onAuth("loginTest", "passwordTest");
-        console.log("test",this.props.getAppName());
+        // console.log("test",this.props.getAppName());
 
-        if(login === 'admin' && password === 'admin'){
-        
-            this.props.onLogin({
-                name: 'Francisco',
-                login: 'chico',
-                password: '123456',
-                type: 'ADMIN'
-            });
-
-            this.closeDialogLogin();
-            showSnackBar('Bem vindo!!!');
-            return true;
+        const user = {
+            login: login,
+            password: password
         }
+
+        authentication(user).then(res => {
+            // console.log('user',res.data);
+
+            if(res.data !== ''){
+                this.props.onLogin(res.data);
+
+                this.closeDialogLogin();
+                showSnackBar('Bem vindo, '+res.data.name+'!');
+                return true;
+            }
+
+            
+        }).catch(err =>{
+            console.log(err);
+        });
+
+        // if(login === 'admin' && password === 'admin'){
+        
+        //     this.props.onLogin({
+        //         name: 'Francisco',
+        //         login: 'chico',
+        //         password: '123456',
+        //         type: 'ADMIN'
+        //     });
+
+        //     this.closeDialogLogin();
+        //     showSnackBar('Bem vindo!!!');
+        //     return true;
+        // }
         
         showSnackBar('Acesso Negado');
         return false;

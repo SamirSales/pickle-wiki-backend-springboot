@@ -17,6 +17,10 @@ export const postUser = function(user){
     return axios.post(url + '/users/', user);
 }
 
+export const authentication = function(user){
+    return axios.post(url + '/users/authentication', user);
+}
+
 export const putUser = function(user){
     return axios.put(url + '/users/', user);
 }
