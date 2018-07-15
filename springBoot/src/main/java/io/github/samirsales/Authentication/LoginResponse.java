@@ -17,7 +17,7 @@ public class LoginResponse {
         token = Jwts.builder()
                 .setSubject(user.getLogin())
                 .signWith(SignatureAlgorithm.HS512, TokenFilter.TOKEN_KEY)
-                .setExpiration(new Date(System.currentTimeMillis() + 600000)) // 10 minutes of session expiration
+                .setExpiration(new Date(System.currentTimeMillis() + (10 * 60 * 1000))) // 10 minutes of session expiration
                 .compact();
     }
 

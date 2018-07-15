@@ -75,6 +75,7 @@ class Layout extends Component {
 
             if(res.data.user !== ''){
                 this.props.onLogin(res.data.user);
+                this.props.onToken(res.data.token);
 
                 this.closeDialogLogin();
                 showSnackBar('Bem vindo, '+res.data.user.name+'!');
@@ -168,13 +169,15 @@ class Layout extends Component {
 const mapStateToProps = state => {
     return{
         usr: state.usr.user,
-        appName: state.app.appName
+        appName: state.app.appName,
+        tkn: state.token
     };
 }
 
 const mapDispathToProps = dispatch => {
     return{
         onLogin: (usr) => dispatch(actionCreators.userLogin(usr)),
+        onToken: (tkn) => dispatch(actionCreators.token(tkn)),
         getAppName: () => dispatch(actionCreators.appName()),
         onAuth: (login, password) => dispatch(actionCreators.auth(login, password))
     };

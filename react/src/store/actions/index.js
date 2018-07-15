@@ -1,6 +1,9 @@
 export {
     userLogin,
-    appName
+    appName,
+    token
+    // setToken,
+    // getToken
 } from './default';
 
 export {

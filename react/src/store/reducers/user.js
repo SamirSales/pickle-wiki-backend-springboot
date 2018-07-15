@@ -7,7 +7,8 @@ const initialState = {
     //     password: '123456',
     //     type: 'ADMIN'
     // }
-    user: null
+    user: null,
+    token: ""
 }
 
 const reducer = (state = initialState, action) => {      
@@ -18,6 +19,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 user: action.user
             };  
+        case actionTypes.TOKEN:
+            return{
+                ...state,
+                token: action.token
+            }
         default:
             break;
     }
