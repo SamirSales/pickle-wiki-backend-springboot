@@ -9,6 +9,8 @@ public interface UserDao {
 
     User getUserById(long id);
 
+    User getUserByLogin(String login);
+
     User getUserByAuthentication(User user);
 
     void removeUserById(long id);

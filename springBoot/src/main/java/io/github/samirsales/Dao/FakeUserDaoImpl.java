@@ -4,6 +4,8 @@ import io.github.samirsales.Entity.Enum.Gender;
 import io.github.samirsales.Entity.Enum.UserType;
 import io.github.samirsales.Entity.User;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -62,6 +64,24 @@ public class FakeUserDaoImpl implements UserDao {
     }
 
     @Override
+    public User getUserByLogin(String login) {
+        Collection<User> users = this.users.values();
+
+        for(User user : users){
+            if(user.getLogin().equals(login) || user.getEmail().equals(login)){
+
+                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                String hashedPassword = passwordEncoder.encode(user.getPassword());
+                user.setPassword(hashedPassword);
+
+                return user;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
     public User getUserByAuthentication(User inputUser) {
 
         Collection<User> users = this.users.values();
@@ -69,7 +89,13 @@ public class FakeUserDaoImpl implements UserDao {
         for(User user : users){
             if((user.getLogin().equals(inputUser.getLogin()) || user.getEmail().equals(inputUser.getLogin()))
                     && user.getPassword().equals(inputUser.getPassword())){
-                return getSecureUserCopy(user);
+//                return getSecureUserCopy(user);
+
+                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                String hashedPassword = passwordEncoder.encode(user.getPassword());
+                user.setPassword(hashedPassword);
+
+                return user;
             }
         }
 
