@@ -1,7 +1,10 @@
 package io.github.samirsales.Entity;
 
 import io.github.samirsales.Entity.Enum.Gender;
-import io.github.samirsales.Entity.Enum.UserType;
+import io.github.samirsales.Entity.Enum.UserPermission;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class User {
 
@@ -12,16 +15,16 @@ public class User {
     private String password;
 
     private Gender gender;
-    private UserType userType;
+    private Set<UserPermission> userPermissions;
 
-    public User(Long id, String name, String login, String email, String password, Gender gender, UserType userType) {
+    public User(Long id, String name, String login, String email, String password, Gender gender) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.password = password;
         this.gender = gender;
-        this.userType = userType;
+        this.userPermissions = new HashSet<>();
     }
 
     public User() {}
@@ -74,11 +77,11 @@ public class User {
         this.gender = gender;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public Set<UserPermission> getUserPermissions() {
+        return userPermissions;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setUserPermissions(Set<UserPermission> userPermissions) {
+        this.userPermissions = userPermissions;
     }
 }
