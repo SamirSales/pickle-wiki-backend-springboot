@@ -4,6 +4,7 @@ import io.github.samirsales.Entity.Article;
 import io.github.samirsales.Service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -30,16 +31,19 @@ public class ArticleController {
         return articleService.getArticlesBySearch(search);
     }
 
+    @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void removeArticleById(@PathVariable("id") long id){
         articleService.removeArticleById(id);
     }
 
+    @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateArticle(@RequestBody Article article){
         articleService.updateArticle(article);
     }
 
+    @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void insertArticle(@RequestBody Article article){
         articleService.insertArticle(article);
