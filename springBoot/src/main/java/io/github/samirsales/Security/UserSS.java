@@ -36,8 +36,8 @@ public class UserSS implements UserDetails {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.authorities = userPermissions.stream().map(ut ->
-                new SimpleGrantedAuthority(ut.getValue())).collect(Collectors.toList());
+        this.authorities = userPermissions.stream().map(up ->
+                new SimpleGrantedAuthority(up.getValue())).collect(Collectors.toList());
     }
 
     @Override
