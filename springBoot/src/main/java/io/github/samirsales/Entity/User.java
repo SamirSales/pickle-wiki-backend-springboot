@@ -27,7 +27,9 @@ public class User {
         this.userPermissions = new HashSet<>();
     }
 
-    public User() {}
+    public User() {
+        this.userPermissions = new HashSet<>();
+    }
 
     public Long getId() {
         return id;

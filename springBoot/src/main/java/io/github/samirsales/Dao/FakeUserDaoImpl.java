@@ -87,11 +87,27 @@ public class FakeUserDaoImpl implements UserDao {
         for(User user : users){
             if(user.getLogin().equals(login) || user.getEmail().equals(login)){
 
-                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                String hashedPassword = passwordEncoder.encode(user.getPassword());
-                user.setPassword(hashedPassword);
+                User userToReturn = new User();
+                userToReturn.setId(user.getId());
+                userToReturn.setPassword(user.getPassword());
+                userToReturn.setLogin(user.getLogin());
+                userToReturn.setEmail(user.getEmail());
+                userToReturn.setGender(user.getGender());
 
-                return user;
+                if(user.getUserPermissions().contains(UserPermission.EDITOR)){
+                    userToReturn.getUserPermissions().add(UserPermission.EDITOR);
+                }
+
+                if(user.getUserPermissions().contains(UserPermission.ADMIN)){
+                    userToReturn.getUserPermissions().add(UserPermission.ADMIN);
+                }
+
+
+                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                String hashedPassword = passwordEncoder.encode(userToReturn.getPassword());
+                userToReturn.setPassword(hashedPassword);
+
+                return userToReturn;
             }
         }
 
