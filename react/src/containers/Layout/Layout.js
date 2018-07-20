@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { authentication } from '../../axios-orders';
+import * as axios from '../../axios-orders';
 
 import { connect } from 'react-redux';
 import Aux from '../../hoc/Aux/Aux';
@@ -69,20 +69,20 @@ class Layout extends Component {
             login: login,
             password: password
         }
+        console.log('user',user);
 
-        authentication(user).then(res => {
-            console.log('user',res.data);
+        axios.login(user).then(res => {
+            console.log('user',res);
 
-            if(res.data.user !== ''){
-                this.props.onLogin(res.data.user);
-                this.props.onToken(res.data.token);
+            // if(res.data.user !== ''){
+            //     this.props.onLogin(res.data.user);
+            //     this.props.onToken(res.data.token);
 
-                this.closeDialogLogin();
-                showSnackBar('Bem vindo, '+res.data.user.name+'!');
-                return true;
-            }
+            //     this.closeDialogLogin();
+            //     showSnackBar('Bem vindo, '+res.data.user.name+'!');
+            //     return true;
+            // }
 
-            
         }).catch(err =>{
             console.log("Error", err);
 
