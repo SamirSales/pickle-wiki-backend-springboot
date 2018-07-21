@@ -41,7 +41,7 @@ class TopBar extends PureComponent {
     let tabAddNewUser = null;
     let divSearch = null;
 
-    if(this.props.user && this.props.user.userType === 'ADMIN'){
+    if(this.props.user && this.props.user.userPermissions.indexOf("ADMIN") !== -1){
       tabAddNewUser = <NavLink className='tab' to='/user-editor' >Editores</NavLink>;
     }
 

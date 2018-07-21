@@ -62,30 +62,27 @@ class Layout extends Component {
 
     login = (login, password) => {
 
-        this.props.onAuth("loginTest", "passwordTest");
-        // console.log("test",this.props.getAppName());
-
         const user = {
             login: login,
             password: password
         }
-        console.log('user',user);
 
         axios.login(user).then(res => {
-            console.log('user',res);
 
-            // if(res.data.user !== ''){
-            //     this.props.onLogin(res.data.user);
-            //     this.props.onToken(res.data.token);
+            const token = res.headers.authorization;
+            this.props.onToken(token);
 
-            //     this.closeDialogLogin();
-            //     showSnackBar('Bem vindo, '+res.data.user.name+'!');
-            //     return true;
-            // }
+            axios.getAuthUser(token).then(res =>{
+                const userAuth = res.data;
+                this.props.onLogin(userAuth);
+
+                this.closeDialogLogin();
+                showSnackBar('Bem vindo, '+userAuth.name+'!');
+                return true;
+            });
 
         }).catch(err =>{
             console.log("Error", err);
-
             showSnackBar('Acesso Negado');
             return false;
         });
