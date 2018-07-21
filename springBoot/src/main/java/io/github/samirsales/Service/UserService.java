@@ -57,4 +57,14 @@ public class UserService {
     public void insertUser(User user) {
         this.userDao.insertUser(user);
     }
+
+    public User getUserByToken() {
+        UserSS userSS = UserService.authenticated();
+
+        if(userSS == null ){
+            throw new AuthorizationException("Access Denied");
+        }
+
+        return getUserById(userSS.getId());
+    }
 }

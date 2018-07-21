@@ -45,4 +45,9 @@ public class UserController {
         userService.insertUser(user);
     }
 
+    @RequestMapping(value = "/token", method = RequestMethod.POST)
+    public User getUserByToken(){
+        return userService.getUserByToken();
+    }
+
 }
