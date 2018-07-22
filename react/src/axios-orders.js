@@ -14,8 +14,9 @@ export const getUsers = function(token){
     {headers: {'Authorization': token}});
 }
 
-export const postUser = function(user){
-    return axios.post(url + '/users/', user);
+export const insertUser = function(user, token){
+    return axios.post(url + '/users/', user,
+    {headers: {'Authorization': token}});
 }
 
 export const login = function(user){
@@ -27,7 +28,7 @@ export const getAuthUser = function(token){
     {headers: {'Authorization': token}});
 }
 
-export const putUser = function(user, token){
+export const updateUser = function(user, token){
     return axios.put(url + '/users/', user,
     {headers: {'Authorization': token}});
 }

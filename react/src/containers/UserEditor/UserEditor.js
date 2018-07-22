@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import { getUsers, postUser, putUser, deleteUser } from "../../axios-orders";
+import { connect } from 'react-redux';
+import { getUsers, insertUser, updateUser, deleteUser } from "../../axios-orders";
 import { showSnackBar } from '../../containers/Layout/Layout';
 
 import Aux from '../../hoc/Aux/Aux';
@@ -37,16 +38,15 @@ class UserEditor extends Component {
     componentDidMount(){
       this.setState({loading: true});
       // eslint-disable-next-line
-      const users = getUsers(this.props.token).then(response => {
+      const users = getUsers(this.props.tkn).then(response => {
         // console.log(response);
         this.setState({users: response.data});
         this.setState({loading: false});
       }).catch(error => {
+        console.log("error", error);
         this.setState({loading: false});
         this.errorModal('Não foi possível carregar usuários.');
-        
       });
-
     }
 
     errorModal = (msg) =>{
@@ -109,8 +109,8 @@ class UserEditor extends Component {
         if(this.state.userModal.userToEdit == null){
 
           // insert new user
-          postUser(user).then(res => {
-            getUsers().then(response => {
+          insertUser(user, this.props.tkn).then(res => {
+            getUsers(this.props.tkn).then(response => {
               this.setState({users: response.data});
               this.setState({loading: false});
               showSnackBar('Usuário inserido com sucesso!');
@@ -119,6 +119,7 @@ class UserEditor extends Component {
               this.errorModal('Falha ao carregar usuários.');              
             });
           }).catch(error => {
+            console.log('error', error);
             this.setState({loading: false});
             this.errorModal('Falha ao inserir usuário.'); 
           });
@@ -126,8 +127,8 @@ class UserEditor extends Component {
         }else{
           
           // update user
-          putUser(user).then(res => {
-            getUsers().then(response => {
+          updateUser(user, this.props.tkn).then(res => {
+            getUsers(this.props.tkn).then(response => {
               this.setState({
                 users: response.data,
                 userModal: ({
@@ -142,6 +143,7 @@ class UserEditor extends Component {
               this.errorModal('Falha ao carregar usuários.');              
             });
           }).catch(error => {
+            console.log('error', error);
             this.setState({loading: false});
             this.errorModal('Falha ao atualizar usuário.');              
           });
@@ -165,10 +167,11 @@ class UserEditor extends Component {
     removeUser = () => {  
       this.setState({loading: true});
 
-      deleteUser(this.state.confirmModal.userToDelete.id).then(res =>{  
-        getUsers().then(response => {
+      deleteUser(this.state.confirmModal.userToDelete.id, this.props.tkn).then(res =>{  
+        getUsers(this.props.tkn).then(response => {
           this.setState({users: response.data});          
         }).catch(error => {
+          console.log('error', error);
           this.setState({loading: false});
           this.errorModal('Falha ao carregar usuários.');              
         });
@@ -176,6 +179,7 @@ class UserEditor extends Component {
         showSnackBar('Usuário removido com sucesso!');
         this.closeConfirmModal();
       }).catch(error => {
+        console.log('error', error);
         this.setState({loading: false});
         this.errorModal('Falha ao remover o usuário.');              
       });
@@ -263,4 +267,12 @@ class UserEditor extends Component {
     }
 }
 
-export default UserEditor;
+const mapStateToProps = state => {
+  return{
+      usr: state.usr.user,
+      appName: state.app.appName,
+      tkn: state.usr.token
+  };
+}
+
+export default connect(mapStateToProps)(UserEditor);
