@@ -9,8 +9,9 @@ export default instance;
 const url = "http://localhost:8080";
 
 // eslint-disable-next-line
-export const getUsers = function(){
-    return axios.get(url + '/users/');
+export const getUsers = function(token){
+    return axios.get(url + '/users/',
+    {headers: {'Authorization': token}});
 }
 
 export const postUser = function(user){
@@ -23,15 +24,17 @@ export const login = function(user){
 
 export const getAuthUser = function(token){
     return axios.post(url + '/users/token', null,
-    {headers: {'Authorization': token}} );
+    {headers: {'Authorization': token}});
 }
 
-export const putUser = function(user){
-    return axios.put(url + '/users/', user);
+export const putUser = function(user, token){
+    return axios.put(url + '/users/', user,
+    {headers: {'Authorization': token}});
 }
 
-export const deleteUser = function(id){
-    return axios.delete(url + '/users/'+id);
+export const deleteUser = function(id, token){
+    return axios.delete(url + '/users/'+id,
+    {headers: {'Authorization': token}});
 }
 
 // articles

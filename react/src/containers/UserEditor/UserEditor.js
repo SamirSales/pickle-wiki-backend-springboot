@@ -37,7 +37,7 @@ class UserEditor extends Component {
     componentDidMount(){
       this.setState({loading: true});
       // eslint-disable-next-line
-      const users = getUsers().then(response => {
+      const users = getUsers(this.props.token).then(response => {
         // console.log(response);
         this.setState({users: response.data});
         this.setState({loading: false});

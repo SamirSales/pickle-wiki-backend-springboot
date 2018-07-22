@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
 import {insertArticle, putArticle, getArticleByUrl} from '../../axios-orders';
 import TextEditor from '../../components/TextEditor/TextEditor';
 import Aux from '../../hoc/Aux/Aux';
@@ -117,7 +118,7 @@ class ArticleBuilder extends Component {
                 getArticleByUrl(url).then(res =>{
                     if(res.data === "" || res.data.id === this.state.fullArticle.id){
 
-                        putArticle(article).then(res =>{
+                        putArticle(article, this.props.tkn).then(res =>{
                             showSnackBar('Artigo salvo com sucesso!');
                             this.props.history.push({pathname: '/article/' + url});
                         }).catch(err => {
@@ -135,7 +136,7 @@ class ArticleBuilder extends Component {
                 getArticleByUrl(url).then(res =>{
                     if(res.data === ""){
 
-                        insertArticle(article).then(res =>{
+                        insertArticle(article, this.props.tkn).then(res =>{
                             showSnackBar('Artigo salvo com sucesso!');
                             this.props.history.push({pathname: '/article/' + url});
                         }).catch(err => {
@@ -210,4 +211,13 @@ class ArticleBuilder extends Component {
     }    
 }
 
-export default ArticleBuilder;
+const mapStateToProps = state => {
+    return{
+        usr: state.usr.user,
+        appName: state.app.appName,
+        tkn: state.usr.token
+    };
+}
+
+export default connect(mapStateToProps)(ArticleBuilder);
+
