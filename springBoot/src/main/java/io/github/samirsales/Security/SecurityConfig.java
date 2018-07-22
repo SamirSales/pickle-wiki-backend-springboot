@@ -34,9 +34,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private Environment env;
 
     private static final String[] PUBLIC_MATCHERS = {
-//            "/articles/**",
-//            "/users/**"
+            "/articles/**",
+            "/users/**"
     };
+
+    private static final String[] PUBLIC_MATCHERS_DELETE = {
+            "/articles/**",
+            "/users/**"
+    };
+
 
     private static final String[] PUBLIC_MATCHERS_GET = {
             "/articles/**",
@@ -54,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+                .antMatchers(HttpMethod.DELETE, PUBLIC_MATCHERS_DELETE).permitAll()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .anyRequest().authenticated();
 
@@ -70,7 +77,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+
+        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedMethod("GET");
+        corsConfiguration.addAllowedMethod("POST");
+        corsConfiguration.addAllowedMethod("PUT");
+        corsConfiguration.addAllowedMethod("DELETE");
+        corsConfiguration.addAllowedMethod("UPDATE");
+
+        source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
 

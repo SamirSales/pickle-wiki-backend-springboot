@@ -167,7 +167,7 @@ const mapStateToProps = state => {
     return{
         usr: state.usr.user,
         appName: state.app.appName,
-        tkn: state.token
+        tkn: state.usr.token
     };
 }
 

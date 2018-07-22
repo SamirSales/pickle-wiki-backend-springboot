@@ -1,14 +1,7 @@
 package io.github.samirsales;
 
-import io.github.samirsales.Authentication.TokenFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @SpringBootApplication
 public class Main {

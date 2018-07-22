@@ -76,11 +76,15 @@ class FullPost extends Component{
     }
 
     removeArticle = () =>{
-        deleteArticle(this.state.articleId).then(res =>{
+
+        console.log("test", this.props.tkn);
+
+        deleteArticle(this.state.articleId, this.props.tkn).then(res =>{
             this.props.history.push({pathname: '/welcome'});
             showSnackBar('Artigo excluído com sucesso!');
 
         }).catch(err => {
+            console.log('error', err);
             showSnackBar('Não foi possível excluir o artigo.');
         });
     }
@@ -104,6 +108,8 @@ class FullPost extends Component{
     render(){
 
         let editorsButtons = null;
+
+        // console.log("this.props", this.props);
 
         if(this.props.usr){
             editorsButtons = (<div className="full-post-icon-link-div">
@@ -141,7 +147,8 @@ class FullPost extends Component{
 const mapStateToProps = state => {
     return{
         usr: state.usr.user,
-        appName: state.app.appName
+        appName: state.app.appName,
+        tkn: state.usr.token
     };
 }
 

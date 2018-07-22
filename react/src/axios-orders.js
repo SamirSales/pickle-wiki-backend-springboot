@@ -48,14 +48,17 @@ export const getArticleBySearch = function(search){
     return axios.get(url + '/articles/search/'+search);
 }
 
-export const insertArticle = function(article){
-    return axios.post(url + '/articles/', article);
+export const insertArticle = function(article, token){
+    return axios.post(url + '/articles/', article,
+    {headers: {'Authorization': token}} );
 }
 
-export const putArticle = function(article){
-    return axios.put(url + '/articles/', article);
+export const putArticle = function(article, token){
+    return axios.put(url + '/articles/', article,
+    {headers: {'Authorization': token}} );
 }
 
-export const deleteArticle = function(id){
-    return axios.delete(url + '/articles/'+id);
+export const deleteArticle = function(id, token){
+    return axios.delete(url + '/articles/'+id,
+    {headers: {'Authorization': token}} );
 }
