@@ -39,7 +39,7 @@ class UserEditor extends Component {
       this.setState({loading: true});
       // eslint-disable-next-line
       const users = getUsers(this.props.tkn).then(response => {
-        console.log("users::", response);
+        // console.log("users::", response);
         this.setState({users: response.data});
         this.setState({loading: false});
       }).catch(error => {
@@ -84,7 +84,7 @@ class UserEditor extends Component {
       })
     }
 
-    saveNewUser = (name, login, email, gender, password, passwordConfirm, userPermissons) => {
+    saveNewUser = (name, login, email, gender, password, passwordConfirm, userPermissions) => {
 
       if(name.trim() === '' || login.trim() === '' || email.trim() === '' || 
         password.trim() === ''){
@@ -101,19 +101,12 @@ class UserEditor extends Component {
           email: email.trim(),
           password: password.trim(),
           gender: gender,
-          userPermissons: userPermissons
+          userPermissions: userPermissions
         };
 
         this.setState({loading: true});
 
         if(this.state.userModal.userToEdit == null){
-
-          // user.userPermissons = user.userPermissons.map(up => {
-          //   return 'ROLE_'+up;
-          // });
-
-          console.log("user...", user);
-
           // insert new user
           insertUser(user, this.props.tkn).then(res => {
             getUsers(this.props.tkn).then(response => {
