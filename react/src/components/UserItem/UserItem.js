@@ -5,8 +5,7 @@ import logo from '../../assets/img/profile.png';
 
 const userItem = ( props ) => {
 
-    const userType = props.user.userType === 'ADMIN' ? 
-        'administrador' : 'editor';
+    const userPermissions = props.user.userPermissions.indexOf("ADMIN") !== -1 ? 'administrador' : 'editor';
 
     return (
         <div className="userItem">            
@@ -23,7 +22,7 @@ const userItem = ( props ) => {
                 </div>
 
                 <div style={{width: '100%'}}>
-                    <h3 style={{width : '33%', marginTop: '3px'}}><span className="user-item-span">{userType}</span></h3>
+                    <h3 style={{width : '33%', marginTop: '3px'}}><span className="user-item-span">{userPermissions}</span></h3>
                     <h3 style={{width : '33%', marginTop: '3px'}}>e-mail: <span className="user-item-span">{props.user.email}</span></h3>
 
                     <div className="user-item-div-options">

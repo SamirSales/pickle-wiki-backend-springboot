@@ -12,7 +12,7 @@ class EditUserModal extends PureComponent {
         passwordConfirmation: '',
         email: '',
         gender: 'MALE',
-        userType: 'EDITOR',
+        userPermissions: ['EDITOR'],
         user: null,
         editing: false
     }
@@ -53,27 +53,36 @@ class EditUserModal extends PureComponent {
         });
     }
 
-    onChangeUserType = (event) => {
+    onChangeUserPermissions = (event) => {
+
         this.setState( {
-            userType : event.target.value
+            userPermissions : event.target.value === 'ADMIN' ? ['EDITOR', 'ADMIN'] : ['EDITOR']
         });
+
+        
     }
 
-    setElements(name, login, email, password, passwordConfirmation, gender, userType){
+    setElements(name, login, email, password, passwordConfirmation, gender, userPermissions){
         document.getElementById("edit-user-modal-name").value = name;
         document.getElementById("edit-user-modal-login").value = login;
         document.getElementById("edit-user-modal-email").value = email;
         document.getElementById("edit-user-modal-password").value = password;
         document.getElementById("edit-user-modal-password-confirm").value = passwordConfirmation;
         document.getElementById("edit-user-modal-select-gender").value = gender;
-        document.getElementById("edit-user-modal-select-usertype").value = userType; 
+
+        if(userPermissions.indexOf("ADMIN") !== -1){
+            document.getElementById("edit-user-modal-select-usertype").value = 'ADMIN'; 
+        }else{
+            document.getElementById("edit-user-modal-select-usertype").value = 'EDITOR'; 
+        }
+        
     }
 
     componentDidUpdate(){
 
         if(!this.props.active){
 
-            if(!this.state.editing || this.state.user != null){
+            if(this.state.editing || this.state.user != null){
                 this.setState({
                     editing: false,
                     user: null,
@@ -83,10 +92,10 @@ class EditUserModal extends PureComponent {
                     password: "",
                     passwordConfirmation: "",
                     gender: "MALE",
-                    userType: "EDITOR",
+                    userPermissions: ["EDITOR"]
                 });
 
-                this.setElements('','','','','','MALE', 'EDITOR');   
+                this.setElements('','','','','','MALE', ['EDITOR']);   
             }
 
         } else {
@@ -102,11 +111,11 @@ class EditUserModal extends PureComponent {
                     password: this.props.user.password,
                     passwordConfirmation: this.props.user.password,
                     gender: this.props.user.gender,
-                    userType: this.props.user.userType
+                    userPermissions: this.props.user.userPermissions
                 });
 
                 const u = this.props.user;
-                this.setElements(u.name,u.login,u.email,u.password,u.password,u.gender, u.userType);
+                this.setElements(u.name,u.login,u.email,u.password,u.password,u.gender, u.userPermissions);
             }
         }
     }
@@ -130,7 +139,7 @@ class EditUserModal extends PureComponent {
                         <option value="FEMALE">Feminino</option>
                     </select>
 
-                    <select id="edit-user-modal-select-usertype" onChange={this.onChangeUserType}>
+                    <select id="edit-user-modal-select-usertype" onChange={this.onChangeUserPermissions}>
                         <option value="EDITOR">Editor</option>
                         <option value="ADMIN">Administrador</option>
                     </select>
@@ -144,7 +153,7 @@ class EditUserModal extends PureComponent {
                         this.state.name, this.state.login, this.state.email,
                         this.state.gender, this.state.password, 
                         this.state.passwordConfirmation,
-                        this.state.userType)} >Salvar</button>
+                        this.state.userPermissions)} >Salvar</button>
                 </div>  
             </Modal>   
         );
