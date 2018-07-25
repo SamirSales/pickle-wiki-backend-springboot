@@ -21,6 +21,7 @@ class ArticleBuilder extends Component {
         url: '',
         lastEditor: '',
         fullArticle: null,
+        selectedFile: null,
         // ---------------------
         errorModal: {
             title: 'Error',
@@ -167,6 +168,16 @@ class ArticleBuilder extends Component {
 
     imageUpload = () =>{
         console.log("image upload");
+        const fd = new FormData();
+        fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
+
+        //post request here...
+    }
+
+    fileSelectedHandler = event => {
+        this.setState({
+            selectedFile: event.target.files[0]
+        });
     }
  
     render() {
@@ -190,8 +201,9 @@ class ArticleBuilder extends Component {
                     linkHelp="true"/>                
     
                 <h2 className='article-builder-h2'>Imagens</h2>
-                <button className='article-btn article-btn-topic'
-                    onClick={this.imageUpload}>Fazer upload de imagem</button>
+                <input className='fileContainer' type="file" onChange={this.fileSelectedHandler} />
+                <button className='article-btn article-btn-topic' onClick={this.imageUpload} >Carregar imagem</button>
+                    
                 <div className='article-builder-div-content' style={{marginTop: '10px'}}>
                     <p className='empty-content-message'>Nenhuma imagem foi importada para esse artigo.</p>
                 </div>
