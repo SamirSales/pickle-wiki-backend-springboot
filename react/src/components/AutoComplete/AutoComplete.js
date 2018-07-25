@@ -26,8 +26,6 @@ class AutoComplete extends PureComponent {
     }
 
     search = (event) =>{
-        console.log('event',event.prop);
-
         if(event.target.value.trim().length >= 1){
             getArticleBySearch(event.target.value.trim()).then(res => {
                 this.setState({foundArticles: res.data});    
@@ -90,7 +88,7 @@ class AutoComplete extends PureComponent {
         if(event.keyCode === 13){
             
             if(this.state.selectedItem !== -1){
-                console.log(this.state.foundArticles);
+                // console.log(this.state.foundArticles);
                 for(let art of this.state.foundArticles){
                     if(art.id === this.state.selectedItem){
                         this.searchItemSelect(art.url);

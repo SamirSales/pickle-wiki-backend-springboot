@@ -98,7 +98,7 @@ class ArticleBuilder extends Component {
             // mount url
             const url = this.getURLFormat(this.state.title) + '-' 
                 + this.getURLFormat(this.state.context);
-            console.log('url', url);
+            // console.log('url', url);
 
             const article = {
                 id: this.state.id,

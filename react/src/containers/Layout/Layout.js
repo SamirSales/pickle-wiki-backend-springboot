@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import * as axios from '../../axios-orders';
+import * as cookie from '../../cookie-handler';
 
 import { connect } from 'react-redux';
 import Aux from '../../hoc/Aux/Aux';
@@ -26,6 +27,21 @@ export const showSnackBar = (text) => {
 }
 
 class Layout extends Component {
+
+    componentDidMount(){
+        //getting token from cookies
+        const token = cookie.getToken();
+
+        if(token !== null && token !== ''){
+            this.props.onToken(token);
+            axios.getAuthUser(cookie.getToken()).then(res =>{
+                const userAuth = res.data;
+                this.props.onLogin(userAuth);
+            }).catch(err =>{
+                console.log('Sessão expirou.');
+            });
+        }
+    }
 
     state = {
         dialogLogout:{
@@ -71,6 +87,7 @@ class Layout extends Component {
 
             const token = res.headers.authorization;
             this.props.onToken(token);
+            cookie.saveToken(token);
 
             axios.getAuthUser(token).then(res =>{
                 const userAuth = res.data;

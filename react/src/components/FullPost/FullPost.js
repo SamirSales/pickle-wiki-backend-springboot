@@ -76,9 +76,6 @@ class FullPost extends Component{
     }
 
     removeArticle = () =>{
-
-        console.log("test", this.props.tkn);
-
         deleteArticle(this.state.articleId, this.props.tkn).then(res =>{
             this.props.history.push({pathname: '/welcome'});
             showSnackBar('Artigo excluído com sucesso!');
@@ -106,10 +103,7 @@ class FullPost extends Component{
     }
 
     render(){
-
         let editorsButtons = null;
-
-        // console.log("this.props", this.props);
 
         if(this.props.usr){
             editorsButtons = (<div className="full-post-icon-link-div">
