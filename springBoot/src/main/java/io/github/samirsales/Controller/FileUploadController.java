@@ -1,8 +1,10 @@
 package io.github.samirsales.Controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,9 +19,13 @@ import java.io.IOException;
 @RequestMapping("/upload")
 public class FileUploadController {
 
+    @Value("${uploading.image.path}")
+    private String imagePath;
+
+    @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(value = "/image",method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> uploadFile(@RequestParam("file")MultipartFile file) throws IOException {
-        String path = "/home/samir/Imagens/test/test_"+file.getOriginalFilename();
+        String path = imagePath+"/test_"+file.getOriginalFilename();
         File convertFile = new File(path);
         System.out.println(path);
         convertFile.createNewFile();
