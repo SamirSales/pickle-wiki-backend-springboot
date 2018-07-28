@@ -3,39 +3,19 @@ package io.github.samirsales.Entity;
 public class Picture {
 
     private Long id;
-    private String url;
-    private String name;
-    private Long articleId;
+    private String label;
 
-    public Picture(Long id, String url, String name, Long articleId) {
+    public Picture(Long id, String label) {
         this.id = id;
-        this.url = url;
-        this.name = name;
-        this.articleId = articleId;
+        this.label = label;
     }
 
-    public Long getArticleId() {
-        return articleId;
+    public String getLabel() {
+        return label;
     }
 
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public Long getId() {
