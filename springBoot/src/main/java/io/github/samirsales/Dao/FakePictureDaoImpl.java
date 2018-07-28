@@ -14,13 +14,13 @@ public class FakePictureDaoImpl implements PictureDao {
     private static ArrayList<Picture> pictures = new ArrayList<>();
 
     public FakePictureDaoImpl(){
-        Picture picture1 = new Picture(1L, "Desenho 1");
+        Picture picture1 = new Picture(1L, "Desenho 1","1.png");
         pictures.add(picture1);
 
-        Picture picture2 = new Picture(2L, "Image 2");
+        Picture picture2 = new Picture(2L, "Image 2","2.jpg");
         pictures.add(picture2);
 
-        Picture picture3 = new Picture(3L, "Figura 3");
+        Picture picture3 = new Picture(3L, "Figura 3", "3.jpeg");
         pictures.add(picture3);
     }
 
@@ -54,7 +54,7 @@ public class FakePictureDaoImpl implements PictureDao {
     }
 
     @Override
-    public void insertPicture(Picture picture) {
+    public Picture insertPicture(Picture picture) {
         long newId = 1;
 
         for(Picture pic : pictures){
@@ -63,6 +63,7 @@ public class FakePictureDaoImpl implements PictureDao {
 
         picture.setId(newId + 1);
         pictures.add(picture);
+        return picture;
     }
 
     @Override

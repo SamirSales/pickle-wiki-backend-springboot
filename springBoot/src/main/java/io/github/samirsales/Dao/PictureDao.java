@@ -12,7 +12,7 @@ public interface PictureDao {
 
     List<Picture> getPicturesByToken(String token);
 
-    void insertPicture(Picture picture);
+    Picture insertPicture(Picture picture);
 
     void deletePicture(Picture picture);
 
