@@ -35,22 +35,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS = {
             "/articles/**",
-            "/users/**"
+            "/users/**",
+            "/pictures/**"
     };
 
     private static final String[] PUBLIC_MATCHERS_DELETE = {
             "/articles/**",
-            "/users/**"
+            "/users/**",
+            "/pictures/**"
     };
 
 
     private static final String[] PUBLIC_MATCHERS_GET = {
             "/articles/**",
-            "/users/**"
+            "/users/**",
+            "/pictures/**"
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {
-            "/pictures/upload/**"
+            "/pictures/**"
     };
 
     @Override

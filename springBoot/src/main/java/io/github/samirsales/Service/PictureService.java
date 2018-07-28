@@ -24,20 +24,20 @@ public class PictureService {
         return pictureDao.getAll();
     }
 
-    public List<Picture> getPicturesByToken(String token) {
-        return pictureDao.getPicturesByToken(token);
+    public List<Picture> getPicturesBySearch(String search) {
+        return pictureDao.getPicturesBySearch(search);
     }
 
     public Picture insertPicture(Picture picture) {
         return pictureDao.insertPicture(picture);
     }
 
-    public void deletePicture(Picture picture) {
-        pictureDao.deletePicture(picture);
+    public void removePictureById(long id) {
+        pictureDao.removePictureById(id);
     }
 
-    public void editPicture(Picture picture) {
-        pictureDao.editPicture(picture);
+    public void updatePicture(Picture picture) {
+        pictureDao.updatePicture(picture);
     }
 
     public String getFileExtension(String fullName) {

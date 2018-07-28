@@ -10,11 +10,11 @@ public interface PictureDao {
 
     List<Picture> getAll();
 
-    List<Picture> getPicturesByToken(String token);
+    List<Picture> getPicturesBySearch(String search);
 
     Picture insertPicture(Picture picture);
 
-    void deletePicture(Picture picture);
+    void removePictureById(long id);
 
-    void editPicture(Picture picture);
+    void updatePicture(Picture picture);
 }

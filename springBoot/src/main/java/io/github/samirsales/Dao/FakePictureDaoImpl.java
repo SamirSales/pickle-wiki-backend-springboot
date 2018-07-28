@@ -14,14 +14,17 @@ public class FakePictureDaoImpl implements PictureDao {
     private static ArrayList<Picture> pictures = new ArrayList<>();
 
     public FakePictureDaoImpl(){
-        Picture picture1 = new Picture(1L, "Desenho 1","1.png");
+        Picture picture1 = new Picture(1L, "Lua","1.png");
         pictures.add(picture1);
 
-        Picture picture2 = new Picture(2L, "Image 2","2.jpg");
+        Picture picture2 = new Picture(2L, "Vênus","2.jpg");
         pictures.add(picture2);
 
-        Picture picture3 = new Picture(3L, "Figura 3", "3.jpeg");
+        Picture picture3 = new Picture(3L, "Saturno", "3.jpeg");
         pictures.add(picture3);
+
+        Picture picture4 = new Picture(4L, "Terra", "4.gif");
+        pictures.add(picture4);
     }
 
     @Override
@@ -41,11 +44,11 @@ public class FakePictureDaoImpl implements PictureDao {
     }
 
     @Override
-    public List<Picture> getPicturesByToken(String token) {
+    public List<Picture> getPicturesBySearch(String search) {
         ArrayList<Picture> pictureArrayList = new ArrayList<>();
 
         for(Picture picture : pictures){
-            if(picture.getLabel().contains(token)){
+            if(picture.getLabel().toLowerCase().contains(search.toLowerCase())){
                 pictureArrayList.add(picture);
             }
         }
@@ -67,10 +70,10 @@ public class FakePictureDaoImpl implements PictureDao {
     }
 
     @Override
-    public void deletePicture(Picture picture) {
+    public void removePictureById(long id) {
 
         for(int i = 0; i<pictures.size(); i++){
-            if(pictures.get(i).getId().equals(picture.getId())){
+            if(pictures.get(i).getId().equals(id)){
                 pictures.remove(i);
                 break;
             }
@@ -78,7 +81,7 @@ public class FakePictureDaoImpl implements PictureDao {
     }
 
     @Override
-    public void editPicture(Picture picture) {
+    public void updatePicture(Picture picture) {
         for(int i = 0; i<pictures.size(); i++){
             if(pictures.get(i).getId().equals(picture.getId())){
                 pictures.remove(i);
