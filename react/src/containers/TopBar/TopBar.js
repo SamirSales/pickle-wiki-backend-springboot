@@ -39,10 +39,15 @@ class TopBar extends PureComponent {
     let tabRead = <NavLink className='tab' to='/article' >Leitura</NavLink>;
     let tabAddArticle = <NavLink className='tab' to='/new-article' >Novo Artigo</NavLink>;
     let tabAddNewUser = null;
+    let tabPictureManager = null;
     let divSearch = null;
 
-    if(this.props.user && this.props.user.userPermissions.indexOf("ADMIN") !== -1){
-      tabAddNewUser = <NavLink className='tab' to='/user-editor' >Editores</NavLink>;
+    if(this.props.user){
+      if(this.props.user.userPermissions.indexOf("ADMIN") !== -1){
+        tabAddNewUser = <NavLink className='tab' to='/user-editor' >Editores</NavLink>;
+      }
+      
+      tabPictureManager = <NavLink className='tab' to='/picture-manager' >Imagens</NavLink>;
     }
 
     if(this.isReadingScreen()){
@@ -68,6 +73,10 @@ class TopBar extends PureComponent {
 
             <AuthContext.Consumer>
               { auth => auth ? tabAddArticle : null}
+            </AuthContext.Consumer>
+
+            <AuthContext.Consumer>
+              { auth => auth ? tabPictureManager : null}
             </AuthContext.Consumer>
 
             <AuthContext.Consumer>
