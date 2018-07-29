@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
+import * as axios from '../../axios-orders';
+
 import { connect } from 'react-redux';
+import Thumbnail from '../../components/Thumbnail/Thumbnail';
 import Aux from '../../hoc/Aux/Aux';
 import './PictureManager.css';
 
@@ -9,8 +12,23 @@ import './PictureManager.css';
 class PictureManager extends Component {
 
     state = {
-        
+        loading: false,
+        pictures: []
     }
+
+    componentDidMount(){
+        this.setState({loading: true});
+        // eslint-disable-next-line
+        axios.getPictures(this.props.tkn).then(res => {
+          console.log("pictures", res.data);
+          this.setState({pictures: res.data});
+          this.setState({loading: false});
+        }).catch(error => {
+          console.log("error", error);
+          this.setState({loading: false});
+          this.errorModal('Não foi possível carregar as imagens.');
+        });
+      }
 
     imageUpload = () =>{
         console.log("image upload");
@@ -27,14 +45,24 @@ class PictureManager extends Component {
     }
  
     render() {
+
+        let thumbnails = this.state.pictures.map(pic => {
+            return <Thumbnail key={pic.id} fileName={pic.fileName} alt={pic.label} />;
+        });
+
+        if(this.state.pictures.length === 0){
+            thumbnails = <p className='empty-content-message'>Nenhuma imagem foi importada para esse artigo.</p>;
+        }
+
         return (
             <Aux>
                 <div className='text-editor-markdown'>
                     <h1 className='simple-template-title'><i className="fa fa-image"></i> Imagens</h1>
                 </div>  
 
-                <div className='article-builder-div-content' style={{marginTop: '10px'}}>
-                    <p className='empty-content-message'>Nenhuma imagem foi importada para esse artigo.</p>
+                {/* className='article-builder-div-content' */}
+                <div style={{marginTop: '10px'}}>
+                    {thumbnails}
                 </div>           
 
                 <br/>

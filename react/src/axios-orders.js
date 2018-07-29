@@ -66,3 +66,10 @@ export const deleteArticle = function(id, token){
     return axios.delete(url + '/articles/'+id,
     {headers: {'Authorization': token}} );
 }
+
+// pictures
+
+export const getPictures = function(token){
+    return axios.get(url + '/pictures/',
+    {headers: {'Authorization': token}});
+}

@@ -26,7 +26,7 @@ const welcome = ( props ) => {
     "## Principais tecnologias\r"+
     "| Tecnologia | Aplicação | Linguagem | Versão |\r"+
     "| --- | --- | --- |\r"+
-    "| ReactJS | Front-end | Javascript |16 |\r"+
+    "| ReactJS | Front-end | JavaScript |16 |\r"+
     "| Spring Boot | Back-end | Java | ? |\r"+
     "| PostgreSQL | Banco de dados  | SQL | ? |\r";
 
