@@ -13,21 +13,21 @@ const welcome = ( props ) => {
     "## Origem do nome\r"+
     "O nome Pickle Wiki é uma paródia do nome *Wikipédia* combinada com a expressão *“Pickle Rick”* "+
     "da animação americana [Rick and Morty](https://en.wikipedia.org/wiki/Rick_and_Morty) "+
-    "(criada por *Justin Roiland* e *Dan Harmon*). No terceiro "+
-    "episódio da terceira temporada o personagem *Rick Sanchez* se transforma em um picles, na "+
+    "(criada por *Justin Roiland* e *Dan Harmon*). No terceiro episódio da terceira temporada "+
+    "dessa séria, o personagem *Rick Sanchez* se transforma em um picles, na "+
     "intenção de escapar de uma sessão de terapia familiar. A genial sugestão do nome foi feita por "+
     "[John Alisson](https://github.com/JohnSoares), durante um *brainstorm*.\r"+
 
     "## Manipulação de texto\r"+
     "A manipulação de texto do Pickle Wiki é feita por meio de *markdown*, uma linguagem de marcação "+
-    "que permite a criação e o manueio de textos de forma simples, ao mesmo tempo que mantém o padrão "+
+    "que permite a criação e o manuseio de textos de forma simples, ao mesmo tempo que mantém o padrão "+
     "de escrita.\r"+
 
     "## Principais tecnologias\r"+
     "| Tecnologia | Aplicação | Linguagem | Versão |\r"+
     "| --- | --- | --- |\r"+
-    "| ReactJS | Frontend | Javascript |16 |\r"+
-    "| Spring Boot | Backend | Java | ? |\r"+
+    "| ReactJS | Front-end | Javascript |16 |\r"+
+    "| Spring Boot | Back-end | Java | ? |\r"+
     "| PostgreSQL | Banco de dados  | SQL | ? |\r";
 
     return (
