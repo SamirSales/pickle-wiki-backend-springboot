@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8080'
+    baseURL: 'http://localhost:8090'
 });
 
 export default instance;
 
-const url = "http://localhost:8080";
+const url = "http://localhost:8090";
 
 // eslint-disable-next-line
 export const getUsers = function(token){
