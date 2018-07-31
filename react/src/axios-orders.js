@@ -73,3 +73,8 @@ export const getPictures = function(token){
     return axios.get(url + '/pictures/',
     {headers: {'Authorization': token}});
 }
+
+export const addPicture = function(token, file){
+    return axios.post(url + '/pictures/', file,
+    {headers: {'Authorization': token}});
+}

@@ -1,0 +1,20 @@
+.image-modal-content{
+    position: fixed;
+    animation-name: imageanimatezoom;
+    animation-duration: 0.4s;
+    z-index: 500; /* Sit on top */
+}
+
+.image-modal-content img{
+    display: block;
+    position: fixed;
+}
+
+.image-modal-content h3{
+    color: #ffffff;
+}
+
+@keyframes imageanimatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}

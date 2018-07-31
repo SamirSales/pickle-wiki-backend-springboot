@@ -4,6 +4,7 @@ import * as axios from '../../axios-orders';
 
 import { connect } from 'react-redux';
 import Thumbnail from '../../components/Thumbnail/Thumbnail';
+import ImageModal from '../../components/UI/Modal/ImageModal/ImageModal';
 import Aux from '../../hoc/Aux/Aux';
 import './PictureManager.css';
 
@@ -13,7 +14,13 @@ class PictureManager extends Component {
 
     state = {
         loading: false,
-        pictures: []
+        pictures: [],
+        imageModal: {
+            active: false,
+            title: '',
+            idImage: -1,
+            src: ''
+        }
     }
 
     componentDidMount(){
@@ -43,11 +50,31 @@ class PictureManager extends Component {
             selectedFile: event.target.files[0]
         });
     }
+
+    imageModal = (picture) =>{
+        console.log("picture", picture);
+        this.setState({
+            imageModal: {
+                active: true,
+                title: picture.label,
+                idImage: picture.id,
+                src: picture.fileName
+            }
+        });
+    }
  
+    cancelImageModal = event =>{
+        this.setState({
+            imageModal: {
+                active: false
+            }
+        });
+    }
+
     render() {
 
         let thumbnails = this.state.pictures.map(pic => {
-            return <Thumbnail key={pic.id} fileName={pic.fileName} alt={pic.label} />;
+            return <Thumbnail key={pic.id} fileName={pic.fileName} alt={pic.label} onClick={this.imageModal.bind(this, pic)}/>;
         });
 
         if(this.state.pictures.length === 0){
@@ -56,11 +83,14 @@ class PictureManager extends Component {
 
         return (
             <Aux>
+                <ImageModal active={this.state.imageModal.active} 
+                    cancel={this.cancelImageModal}
+                    src={this.state.imageModal.src} />
+
                 <div className='text-editor-markdown'>
                     <h1 className='simple-template-title'><i className="fa fa-image"></i> Imagens</h1>
                 </div>  
 
-                {/* className='article-builder-div-content' */}
                 <div style={{marginTop: '10px'}}>
                     {thumbnails}
                 </div>           
