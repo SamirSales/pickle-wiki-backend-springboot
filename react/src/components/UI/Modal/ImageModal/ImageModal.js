@@ -1,29 +1,35 @@
 
-import React from 'react';
+import React,{PureComponent} from 'react';
 import Aux from '../../../../hoc/Aux/Aux';
 import Backdrop from '../../Backdrop/Backdrop';
 import * as config from '../../../../config';
 
-const imageModal = ( props ) => {
+class ImageModal extends PureComponent {
 
-    const src = config.URL_IMAGES+"/"+props.src;
+    onStopPropagation = event =>{
+        event.stopPropagation();
+        event.nativeEvent.stopImmediatePropagation();
+    }
 
-    const marginLeft = 'calc(50% - 300px)';
-    const marginTop = props.marginTop ? props.marginTop :'0px';
-    const display = props.active ? 'block' : 'none';
+    render(){
+        const src = config.URL_IMAGES+"/"+this.props.src;
+        const marginLeft = 'calc(50% - 300px)';
+        const marginTop = this.props.marginTop ? this.props.marginTop :'0px';
+        const display = this.props.active ? 'block' : 'none';
 
-    return (
-        <Aux>
-            <Backdrop active={props.active} click={props.cancel} />
-            
-            <div className="image-modal-content" 
-                style={{ display: display, marginLeft: marginLeft, marginTop: marginTop}} >
+        return (
+            <Aux>
+                <Backdrop active={this.props.active} click={this.props.cancel} />
+                
+                <div className="image-modal-content" 
+                    style={{display: display, marginLeft: marginLeft, marginTop: marginTop}} >
 
-                {/* <h3>{props.title}</h3> */}
-                <img src={src} height="400" width="400" alt={props.title}/>    
-            </div>
-        </Aux> 
-    )
-};
+                    <img src={src} style={{position: 'fixed', zIndex: '120'}} height="400" width="400" 
+                        alt={this.props.title}/>    
+                </div>
+            </Aux> 
+        );
+    }
+}
 
-export default imageModal;
+export default ImageModal;
