@@ -1,17 +1,26 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 
 import * as config from '../../config';
 import './Thumbnail.css';
 
-const thumbnail = ( props ) => {
+class Thumbnail extends PureComponent {
 
-    const source = config.URL_IMAGES+"/"+props.fileName;
+    onStopPropagation = event =>{
+        this.props.onDeleteClick(event);
+        event.stopPropagation();
+        event.nativeEvent.stopImmediatePropagation();
+    }
 
-    return (
-        <div className="thumbnail-image" onClick={props.onClick}>             
-            <img src={source} alt={props.alt} height="90" width="90" />
-            <div className="delete-image">x</div>
-        </div>
-    )
-};
-export default thumbnail;
+    render(){
+        const source = config.URL_IMAGES+"/"+this.props.fileName;
+
+        return (
+            <div className="thumbnail-image" onClick={this.props.onClick}>             
+                <img src={source} alt={this.props.alt} height="90" width="90" />
+                <div className="delete-image" onClick={this.onStopPropagation}>x</div>
+            </div>
+        );
+    }
+}
+
+export default Thumbnail;

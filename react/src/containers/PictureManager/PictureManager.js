@@ -5,6 +5,8 @@ import * as axios from '../../axios-orders';
 import { connect } from 'react-redux';
 import Thumbnail from '../../components/Thumbnail/Thumbnail';
 import ImageModal from '../../components/UI/Modal/ImageModal/ImageModal';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
 import Aux from '../../hoc/Aux/Aux';
 import './PictureManager.css';
 
@@ -20,6 +22,11 @@ class PictureManager extends Component {
             title: '',
             idImage: -1,
             src: ''
+        },
+        confirmModal: {
+            title: '',
+            question: '',
+            active: false
         }
     }
 
@@ -71,10 +78,18 @@ class PictureManager extends Component {
         });
     }
 
+    onConfirmImageModal = (pic) =>{
+        console.log("image", pic);
+        // event.stopPropagation();
+        // event.nativeEvent.stopImmediatePropagation();
+    }
+
     render() {
 
         let thumbnails = this.state.pictures.map(pic => {
-            return <Thumbnail key={pic.id} fileName={pic.fileName} alt={pic.label} onClick={this.imageModal.bind(this, pic)}/>;
+            return <Thumbnail key={pic.id} fileName={pic.fileName} 
+                alt={pic.label} onClick={this.imageModal.bind(this, pic)}
+                onDeleteClick={this.onConfirmImageModal.bind(this,pic)}/>;
         });
 
         if(this.state.pictures.length === 0){
@@ -83,6 +98,20 @@ class PictureManager extends Component {
 
         return (
             <Aux>
+                <Spinner
+                    marginLeft='calc(50% - 404px)'
+                    marginTop='8%'
+                    active={this.state.loading} />
+
+                <ConfirmModal 
+                    title={this.state.confirmModal.title}
+                    question={this.state.confirmModal.question}
+                    active={this.state.confirmModal.active}
+                    marginLeft='calc(50% - 404px)'
+                    marginTop='10%'
+                    confirm={this.removeUser} 
+                    cancel={this.closeConfirmModal} />
+
                 <ImageModal active={this.state.imageModal.active} 
                     cancel={this.cancelImageModal}
                     src={this.state.imageModal.src} />
