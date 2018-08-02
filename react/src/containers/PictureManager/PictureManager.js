@@ -7,6 +7,7 @@ import Thumbnail from '../../components/Thumbnail/Thumbnail';
 import ImageModal from '../../components/UI/Modal/ImageModal/ImageModal';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
+import EditImageModal from '../../components/UI/Modal/EditImageModal/EditImageModal';
 import Aux from '../../hoc/Aux/Aux';
 import './PictureManager.css';
 
@@ -113,6 +114,7 @@ class PictureManager extends Component {
                     cancel={this.closeConfirmModal} />
 
                 <ImageModal active={this.state.imageModal.active} 
+                    title={this.state.imageModal.title}
                     cancel={this.cancelImageModal}
                     src={this.state.imageModal.src} />
 
