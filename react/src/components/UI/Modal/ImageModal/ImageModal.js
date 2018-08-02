@@ -22,9 +22,10 @@ class ImageModal extends PureComponent {
                     <h3>{this.props.title}</h3>
 
                     <div className="image-modal-buttons">
-                        <div><i class="fa fa-edit"></i></div>
-                        <div><i class="fa fa-trash"></i></div>
-                        <div><i class="fa fa-times"></i></div>
+                        <div><i class="fa fa-edit"></i> Editar</div>
+                        <div><i class="fa fa-trash"></i> Remover</div>                        
+                        <div><i class="fa fa-copy"></i> Cópiar endereço</div>
+                        <div><i class="fa fa-times"></i> Fechar</div>
                     </div>
                 </div>
             </Aux> 
