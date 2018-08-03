@@ -8,7 +8,12 @@ import './ImageModal.css';
 class ImageModal extends PureComponent {
 
     render(){
-        const src = config.URL_IMAGES+"/"+this.props.src;
+        let src = null;
+
+        if(this.props.src){
+            src = config.URL_IMAGES+"/"+this.props.src;
+        }
+
         const marginTop = this.props.marginTop ? this.props.marginTop :'0px';
         const display = this.props.active ? 'block' : 'none';
 
@@ -22,10 +27,9 @@ class ImageModal extends PureComponent {
                     <h3>{this.props.title}</h3>
 
                     <div className="image-modal-buttons">
-                        <div><i class="fa fa-edit"></i> Editar</div>
-                        <div><i class="fa fa-trash"></i> Remover</div>                        
-                        <div><i class="fa fa-copy"></i> Cópiar endereço</div>
-                        <div><i class="fa fa-times"></i> Fechar</div>
+                        <div onClick={this.props.clickEdit}><i className="fa fa-edit"></i> Editar</div>
+                        <div onClick={this.props.clickDelete}><i className="fa fa-trash"></i> Remover</div>       
+                        <div onClick={this.props.cancel}><i className="fa fa-times"></i> Fechar</div>
                     </div>
                 </div>
             </Aux> 

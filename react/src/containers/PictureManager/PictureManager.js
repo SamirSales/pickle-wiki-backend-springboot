@@ -18,12 +18,8 @@ class PictureManager extends Component {
     state = {
         loading: false,
         pictures: [],
-        imageModal: {
-            active: false,
-            title: '',
-            idImage: -1,
-            src: ''
-        },
+        activeImageModal: false,
+        selectedPicture: null,
         confirmModal: {
             title: '',
             question: '',
@@ -60,37 +56,36 @@ class PictureManager extends Component {
     }
 
     imageModal = (picture) =>{
-        console.log("picture", picture);
+        // console.log("picture", picture);
         this.setState({
-            imageModal: {
-                active: true,
-                title: picture.label,
-                idImage: picture.id,
-                src: picture.fileName
-            }
+            activeImageModal: true,
+            selectedPicture: picture,
         });
     }
  
-    cancelImageModal = event =>{
+    cancelImageModal = () => {
         this.setState({
-            imageModal: {
-                active: false
-            }
+            activeImageModal: false
         });
     }
 
     onConfirmImageModal = (pic) =>{
         console.log("image", pic);
-        // event.stopPropagation();
-        // event.nativeEvent.stopImmediatePropagation();
+    }
+
+    onConfirmEditImageModal = () =>{
+        console.log("Edit", this.state.selectedPicture);
+    }
+
+    onConfirmDeleteImageModal = () =>{
+        console.log("Delete", this.state.selectedPicture);
     }
 
     render() {
 
         let thumbnails = this.state.pictures.map(pic => {
             return <Thumbnail key={pic.id} fileName={pic.fileName} 
-                alt={pic.label} onClick={this.imageModal.bind(this, pic)}
-                onDeleteClick={this.onConfirmImageModal.bind(this,pic)}/>;
+                alt={pic.label} onClick={this.imageModal.bind(this, pic)} />;
         });
 
         if(this.state.pictures.length === 0){
@@ -105,7 +100,7 @@ class PictureManager extends Component {
                     active={this.state.loading} />
 
                 <ConfirmModal 
-                    title={this.state.confirmModal.title}
+                    title={this.state.selectedPicture ? this.state.selectedPicture.fileName : null}
                     question={this.state.confirmModal.question}
                     active={this.state.confirmModal.active}
                     marginLeft='calc(50% - 404px)'
@@ -113,10 +108,12 @@ class PictureManager extends Component {
                     confirm={this.removeUser} 
                     cancel={this.closeConfirmModal} />
 
-                <ImageModal active={this.state.imageModal.active} 
-                    title={this.state.imageModal.title}
+                <ImageModal active={this.state.activeImageModal} 
+                    title={this.state.selectedPicture ? this.state.selectedPicture.label : null}
                     cancel={this.cancelImageModal}
-                    src={this.state.imageModal.src} />
+                    src={this.state.selectedPicture ? this.state.selectedPicture.fileName : null}
+                    clickEdit={this.onConfirmEditImageModal.bind(this)}
+                    clickDelete={this.onConfirmDeleteImageModal.bind(this)} />
 
                 <div className='text-editor-markdown'>
                     <h1 className='simple-template-title'><i className="fa fa-image"></i> Imagens</h1>
