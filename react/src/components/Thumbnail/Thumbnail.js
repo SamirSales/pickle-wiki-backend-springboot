@@ -17,7 +17,6 @@ class Thumbnail extends PureComponent {
         return (
             <div className="thumbnail-image" onClick={this.props.onClick}>             
                 <img src={source} alt={this.props.alt} height="90" width="90" />
-                <div className="delete-image" onClick={this.onStopPropagation}>x</div>
             </div>
         );
     }

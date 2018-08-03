@@ -7,11 +7,10 @@ import Thumbnail from '../../components/Thumbnail/Thumbnail';
 import ImageModal from '../../components/UI/Modal/ImageModal/ImageModal';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
-import EditImageModal from '../../components/UI/Modal/EditImageModal/EditImageModal';
 import Aux from '../../hoc/Aux/Aux';
 import './PictureManager.css';
 
-// import { showSnackBar } from '../Layout/Layout';
+import { showSnackBar } from '../Layout/Layout';
 
 class PictureManager extends Component {
 
@@ -23,23 +22,28 @@ class PictureManager extends Component {
         confirmModal: {
             title: '',
             question: '',
-            active: false
+            active: false,
+            clickActionConfirm: null
         }
     }
 
     componentDidMount(){
+        this.refreshImages();
+      }
+
+    refreshImages = () => {
         this.setState({loading: true});
         // eslint-disable-next-line
         axios.getPictures(this.props.tkn).then(res => {
-          console.log("pictures", res.data);
-          this.setState({pictures: res.data});
-          this.setState({loading: false});
-        }).catch(error => {
-          console.log("error", error);
-          this.setState({loading: false});
-          this.errorModal('Não foi possível carregar as imagens.');
-        });
-      }
+            // console.log("pictures", res.data);
+            this.setState({pictures: res.data});
+            this.setState({loading: false});
+          }).catch(error => {
+            console.log("error", error);
+            this.setState({loading: false});
+            this.errorModal('Não foi possível carregar as imagens.');
+          });
+    }
 
     imageUpload = () =>{
         console.log("image upload");
@@ -55,37 +59,59 @@ class PictureManager extends Component {
         });
     }
 
-    imageModal = (picture) =>{
-        // console.log("picture", picture);
+    imageModal = (picture) => {
         this.setState({
             activeImageModal: true,
             selectedPicture: picture,
         });
     }
  
+    /* Confirm Modal */
+
+    cancelConfirmModal = () =>{
+        this.setState({
+            confirmModal:{active: false}
+        })
+    }
+
+    deleteSelectedPicture = () =>{
+        axios.deletePicture(this.props.tkn, this.state.selectedPicture.id).then(res =>{
+            this.refreshImages();
+            this.cancelConfirmModal();
+            showSnackBar("Imagem removida com sucesso!");
+        }).catch(err => {
+            console.log("error", err);
+        });
+    }
+
+    /* ImageModal */
+
+    onConfirmDeleteImageModal = () =>{
+        this.cancelImageModal();
+        this.setState({
+            confirmModal: {
+                title: this.state.selectedPicture.label,
+                question: 'Tem certeza que deseja remover essa image?',
+                active: true,
+                clickActionConfirm: this.deleteSelectedPicture.bind(this)
+            }
+        });
+    }
+
     cancelImageModal = () => {
         this.setState({
             activeImageModal: false
         });
     }
 
-    onConfirmImageModal = (pic) =>{
-        console.log("image", pic);
-    }
-
-    onConfirmEditImageModal = () =>{
-        console.log("Edit", this.state.selectedPicture);
-    }
-
-    onConfirmDeleteImageModal = () =>{
-        console.log("Delete", this.state.selectedPicture);
-    }
-
     render() {
 
         let thumbnails = this.state.pictures.map(pic => {
-            return <Thumbnail key={pic.id} fileName={pic.fileName} 
-                alt={pic.label} onClick={this.imageModal.bind(this, pic)} />;
+            return (
+                <Thumbnail key={pic.id} 
+                    fileName={pic.fileName} 
+                    alt={pic.label} 
+                    onClick={this.imageModal.bind(this, pic)} />);
         });
 
         if(this.state.pictures.length === 0){
@@ -100,19 +126,18 @@ class PictureManager extends Component {
                     active={this.state.loading} />
 
                 <ConfirmModal 
-                    title={this.state.selectedPicture ? this.state.selectedPicture.fileName : null}
+                    title={this.state.confirmModal.title}
                     question={this.state.confirmModal.question}
                     active={this.state.confirmModal.active}
                     marginLeft='calc(50% - 404px)'
                     marginTop='10%'
-                    confirm={this.removeUser} 
-                    cancel={this.closeConfirmModal} />
+                    confirm={this.state.confirmModal.clickActionConfirm}
+                    cancel={this.cancelConfirmModal.bind(this)} />
 
                 <ImageModal active={this.state.activeImageModal} 
                     title={this.state.selectedPicture ? this.state.selectedPicture.label : null}
                     cancel={this.cancelImageModal}
                     src={this.state.selectedPicture ? this.state.selectedPicture.fileName : null}
-                    clickEdit={this.onConfirmEditImageModal.bind(this)}
                     clickDelete={this.onConfirmDeleteImageModal.bind(this)} />
 
                 <div className='text-editor-markdown'>

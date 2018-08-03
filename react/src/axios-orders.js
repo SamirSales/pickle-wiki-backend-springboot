@@ -78,3 +78,8 @@ export const addPicture = function(token, file){
     return axios.post(url + '/pictures/', file,
     {headers: {'Authorization': token}});
 }
+
+export const deletePicture = function(token, fileId){
+    return axios.delete(url + '/pictures/'+fileId,
+    {headers: {'Authorization': token}});
+}
