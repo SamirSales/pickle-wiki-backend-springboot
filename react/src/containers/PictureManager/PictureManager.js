@@ -25,7 +25,8 @@ class PictureManager extends Component {
             question: '',
             active: false,
             clickActionConfirm: null
-        }
+        },
+        fileName: ""
     }
 
     componentDidMount(){
@@ -50,10 +51,12 @@ class PictureManager extends Component {
         if(this.state.selectedUploadFile){
             const fd = new FormData();
             fd.append('file', this.state.selectedUploadFile);
+            fd.append('fileName', this.state.fileName);
 
             axios.addPicture(this.props.tkn, fd).then(res => {
                 // console.log("res:", res);
                 this.refreshImages();
+                this.setState({fileName: ""});
                 showSnackBar("Upload realizado com sucesso");
             }).catch(err => {console.log("error", err)});
         }else{
@@ -63,7 +66,8 @@ class PictureManager extends Component {
 
     fileSelectedHandler = event => {
         this.setState({
-            selectedUploadFile: event.target.files[0]
+            selectedUploadFile: event.target.files[0],
+            fileName: event.target.files[0].name.split('.').slice(0, -1).join('.')
         });
     }
 
@@ -112,6 +116,12 @@ class PictureManager extends Component {
         });
     }
 
+    onFileNameChange = event => {
+        this.setState({
+            fileName: event.target.value
+        });
+    }
+
     render() {
 
         let thumbnails = this.state.pictures.map(pic => {
@@ -157,8 +167,23 @@ class PictureManager extends Component {
                 </div>           
 
                 <br/>
-                <input className='fileContainer' type="file" onChange={this.fileSelectedHandler} />
-                <button className='article-btn article-btn-topic' onClick={this.imageUpload} >Carregar imagem</button>
+
+                <div className="picture-manager-upload-div">
+                    <input type="text" className="picture-manager-input-file-name"
+                        value={this.state.fileName} 
+                        placeholder="Nome do arquivo de imagem"
+                        onChange={this.onFileNameChange} />
+                        
+                        <br/>
+                    <input className='fileContainer' type="file" onChange={this.fileSelectedHandler} />
+                    <button className='article-btn article-btn-topic' onClick={this.imageUpload} >Enviar imagem</button>
+
+                    {/* <label class="fileContainer">
+                        Click here to trigger the file uploader!
+                        <input type="file"/>
+                    </label> */}
+                </div>
+                
             </Aux>
         )
     }    

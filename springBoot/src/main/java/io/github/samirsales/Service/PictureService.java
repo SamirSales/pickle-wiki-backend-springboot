@@ -36,9 +36,10 @@ public class PictureService {
         return pictureDao.getPicturesBySearch(search);
     }
 
-    public Picture insertPicture(MultipartFile file) throws IOException {
+    public Picture insertPicture(MultipartFile file, String fileName) throws IOException {
 
         Picture picture = pictureDao.insertPicture(new Picture());
+        picture.setLabel(fileName);
         picture.setFileName(picture.getId()+"."+getFileExtension(file.getOriginalFilename()));
 
         String path = imagePath+"/"+picture.getFileName();
