@@ -104,14 +104,3 @@
 
     margin-top: 33px;
 }
-
-.fileContainer {
-    background-color: #e0e0e0;
-    padding: 4px 15px 4px 15px;
-    border: solid 1px #c0c0c0;
-}
-
-.fileContainer [type=file] {
-    cursor: inherit;
-    background-color: #d74226;
-}

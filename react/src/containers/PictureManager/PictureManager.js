@@ -49,16 +49,20 @@ class PictureManager extends Component {
 
     imageUpload = () => {
         if(this.state.selectedUploadFile){
-            const fd = new FormData();
-            fd.append('file', this.state.selectedUploadFile);
-            fd.append('fileName', this.state.fileName);
 
-            axios.addPicture(this.props.tkn, fd).then(res => {
-                // console.log("res:", res);
-                this.refreshImages();
-                this.setState({fileName: ""});
-                showSnackBar("Upload realizado com sucesso");
-            }).catch(err => {console.log("error", err)});
+            if(this.state.fileName.trim() !== ""){
+                const fd = new FormData();
+                fd.append('file', this.state.selectedUploadFile);
+                fd.append('fileName', this.state.fileName);
+
+                axios.addPicture(this.props.tkn, fd).then(res => {
+                    this.refreshImages();
+                    this.setState({fileName: ""});
+                    showSnackBar("Upload realizado com sucesso");
+                }).catch(err => {console.log("error", err)});
+            }else{
+                showSnackBar("Preencha o nome do arquivo de imagem.");
+            }            
         }else{
             showSnackBar("Nenhum arquivo foi selecionado.");
         }
@@ -174,14 +178,9 @@ class PictureManager extends Component {
                         placeholder="Nome do arquivo de imagem"
                         onChange={this.onFileNameChange} />
                         
-                        <br/>
+                        <br/> 
                     <input className='fileContainer' type="file" onChange={this.fileSelectedHandler} />
                     <button className='article-btn article-btn-topic' onClick={this.imageUpload} >Enviar imagem</button>
-
-                    {/* <label class="fileContainer">
-                        Click here to trigger the file uploader!
-                        <input type="file"/>
-                    </label> */}
                 </div>
                 
             </Aux>
