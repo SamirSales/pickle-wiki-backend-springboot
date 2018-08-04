@@ -22,7 +22,7 @@ public class PictureController {
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(value = "/upload",method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> uploadFile(@RequestParam("file")MultipartFile file) throws Exception {
+    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
         pictureService.insertPicture(file);
         return new ResponseEntity<>("File is upload successfully", HttpStatus.OK);
     }

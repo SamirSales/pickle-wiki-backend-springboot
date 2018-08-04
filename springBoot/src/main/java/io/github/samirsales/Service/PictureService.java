@@ -56,7 +56,7 @@ public class PictureService {
             throw ioException;
         }
 
-        return pictureDao.insertPicture(picture);
+        return picture;
     }
 
     public void removePictureById(long id) throws IOException {

@@ -19,6 +19,7 @@ class PictureManager extends Component {
         pictures: [],
         activeImageModal: false,
         selectedPicture: null,
+        selectedUploadFile: null,
         confirmModal: {
             title: '',
             question: '',
@@ -45,17 +46,24 @@ class PictureManager extends Component {
           });
     }
 
-    imageUpload = () =>{
-        console.log("image upload");
-        const fd = new FormData();
-        fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
+    imageUpload = () => {
+        if(this.state.selectedUploadFile){
+            const fd = new FormData();
+            fd.append('file', this.state.selectedUploadFile);
 
-        //post request here...
+            axios.addPicture(this.props.tkn, fd).then(res => {
+                // console.log("res:", res);
+                this.refreshImages();
+                showSnackBar("Upload realizado com sucesso");
+            }).catch(err => {console.log("error", err)});
+        }else{
+            showSnackBar("Nenhum arquivo foi selecionado.");
+        }
     }
 
     fileSelectedHandler = event => {
         this.setState({
-            selectedFile: event.target.files[0]
+            selectedUploadFile: event.target.files[0]
         });
     }
 
