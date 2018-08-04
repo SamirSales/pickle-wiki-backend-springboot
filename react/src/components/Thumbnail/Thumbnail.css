@@ -1,6 +1,6 @@
 .thumbnail-image{
     display: inline-block;
-    margin: 2px;
+    margin: 5px;
     cursor: pointer;
     position: relative;
 }
@@ -17,4 +17,26 @@
     border: solid 1px #a0a0a0;
     opacity: 1;
     filter: alpha(opacity=100);
+}
+
+.thumbnail-image-label{
+    width: 90px;
+    left: 0;
+    top:85px;
+    padding-bottom: 8px;
+}
+
+.thumbnail-image a{
+    font-size: 12px;   
+    color: #454545;
+    text-decoration:none;
+}
+
+.thumbnail-image:hover a{
+    color: #0645ad;
+    
+}
+
+.thumbnail-image a:hover{
+    text-decoration: underline;
 }
