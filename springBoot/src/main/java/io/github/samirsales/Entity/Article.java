@@ -1,7 +1,5 @@
 package io.github.samirsales.Entity;
 
-import java.util.List;
-
 public class Article {
 
     private Long id;
@@ -9,13 +7,10 @@ public class Article {
     private String body;
     private String url;
     private String context;
-    private String lastEditor;
+    private User lastEditor;
     private int views;
 
-    private List<Picture> pictures;
-
-    public Article(Long id, String title, String body, String url, String context, String lastEditor, int views,
-                   List<Picture> pictures) {
+    public Article(Long id, String title, String body, String url, String context, User lastEditor, int views) {
         this.id = id;
         this.title = title;
         this.body = body;
@@ -23,7 +18,6 @@ public class Article {
         this.context = context;
         this.lastEditor = lastEditor;
         this.views = views;
-        this.pictures = pictures;
     }
 
     public Article(){}
@@ -52,14 +46,6 @@ public class Article {
         this.body = body;
     }
 
-    public List<Picture> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(List<Picture> pictures) {
-        this.pictures = pictures;
-    }
-
     public int getViews() {
         return views;
     }
@@ -76,11 +62,11 @@ public class Article {
         this.url = url;
     }
 
-    public String getLastEditor() {
+    public User getLastEditor() {
         return lastEditor;
     }
 
-    public void setLastEditor(String lastEditor) {
+    public void setLastEditor(User lastEditor) {
         this.lastEditor = lastEditor;
     }
 
