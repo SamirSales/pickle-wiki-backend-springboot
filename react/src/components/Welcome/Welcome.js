@@ -16,7 +16,7 @@ const welcome = ( props ) => {
     "(criada por *Justin Roiland* e *Dan Harmon*). No terceiro episódio da terceira temporada "+
     "dessa séria, o personagem *Rick Sanchez* se transforma em um picles, na "+
     "intenção de escapar de uma sessão de terapia familiar. A genial sugestão do nome foi feita por "+
-    "[John Alisson](https://github.com/JohnSoares), durante um *brainstorm*.\r"+
+    "[John Soares](https://github.com/JohnSoares), durante um *brainstorm*.\r"+
 
     "## Manipulação de texto\r"+
     "A manipulação de texto do Pickle Wiki é feita por meio de *markdown*, uma linguagem de marcação "+
