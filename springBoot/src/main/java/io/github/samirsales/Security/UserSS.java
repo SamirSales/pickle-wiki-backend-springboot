@@ -1,6 +1,7 @@
 package io.github.samirsales.Security;
 
 import io.github.samirsales.Entity.Enum.UserPermission;
+import io.github.samirsales.Entity.PermissionEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,23 +22,23 @@ public class UserSS implements UserDetails {
 
     }
 
-    public UserSS(Long id, String login, String password, UserPermission userPermission){
+    public UserSS(Long id, String login, String password, PermissionEntity permissionEntity){
         super();
         ArrayList<SimpleGrantedAuthority> userTypes = new ArrayList<>();
-        userTypes.add(new SimpleGrantedAuthority(userPermission.getValue()));
+        userTypes.add(new SimpleGrantedAuthority(permissionEntity.getUserPermission().getValue()));
         this.id = id;
         this.login = login;
         this.password = password;
         this.authorities = userTypes;
     }
 
-    public UserSS(Long id, String login, String password, Set<UserPermission> userPermissions){
+    public UserSS(Long id, String login, String password, Set<PermissionEntity> permissionEntities){
         super();
         this.id = id;
         this.login = login;
         this.password = password;
-        this.authorities = userPermissions.stream().map(up ->
-                new SimpleGrantedAuthority(up.getValue())).collect(Collectors.toList());
+        this.authorities = permissionEntities.stream().map(ue ->
+                new SimpleGrantedAuthority(ue.getUserPermission().getValue())).collect(Collectors.toList());
     }
 
     @Override
