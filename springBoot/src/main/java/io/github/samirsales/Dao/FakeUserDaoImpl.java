@@ -25,24 +25,24 @@ public class FakeUserDaoImpl implements UserDao {
 
         User user1 = new User(1L, "Samir Sales", "admin",
                 "samir@email.com","admin", Gender.MALE);
-        user1.getUserPermissions().add(new PermissionEntity(UserPermission.ADMIN));
-        user1.getUserPermissions().add(new PermissionEntity(UserPermission.EDITOR));
+        user1.getPermissionEntities().add(new PermissionEntity(UserPermission.ADMIN));
+        user1.getPermissionEntities().add(new PermissionEntity(UserPermission.EDITOR));
 
         User user2 = new User(2L, "Andrio Antônio", "andrio",
                 "andrio@email.com","111111", Gender.MALE);
-        user2.getUserPermissions().add(new PermissionEntity(UserPermission.EDITOR));
+        user2.getPermissionEntities().add(new PermissionEntity(UserPermission.EDITOR));
 
         User user3 = new User(3L, "Diego Maia", "diego",
                 "diego@email.com","222222", Gender.MALE);
-        user3.getUserPermissions().add(new PermissionEntity(UserPermission.EDITOR));
+        user3.getPermissionEntities().add(new PermissionEntity(UserPermission.EDITOR));
 
         User user4 = new User(4L, "John Alisson", "john",
                 "john@email.com","333333", Gender.MALE);
-        user4.getUserPermissions().add(new PermissionEntity(UserPermission.EDITOR));
+        user4.getPermissionEntities().add(new PermissionEntity(UserPermission.EDITOR));
 
         User user5 = new User(5L, "Fabiana Ângelo", "fabi",
                 "fabi@email.com","333333", Gender.FEMALE);
-        user5.getUserPermissions().add(new PermissionEntity(UserPermission.EDITOR));
+        user5.getPermissionEntities().add(new PermissionEntity(UserPermission.EDITOR));
 
         users.put(user1.getId(), user1);
         users.put(user2.getId(), user2);
@@ -58,7 +58,7 @@ public class FakeUserDaoImpl implements UserDao {
                 user.getEmail(), "",
                 user.getGender());
 
-        copied.setUserPermissions(user.getUserPermissions());
+        copied.setPermissionEntities(user.getPermissionEntities());
 
         return copied;
     }
@@ -95,12 +95,12 @@ public class FakeUserDaoImpl implements UserDao {
                 userToReturn.setEmail(user.getEmail());
                 userToReturn.setGender(user.getGender());
 
-                if(user.getUserPermissions().contains(UserPermission.EDITOR)){
-                    userToReturn.getUserPermissions().add(new PermissionEntity(UserPermission.EDITOR));
+                if(user.getPermissionEntities().contains(UserPermission.EDITOR)){
+                    userToReturn.getPermissionEntities().add(new PermissionEntity(UserPermission.EDITOR));
                 }
 
-                if(user.getUserPermissions().contains(UserPermission.ADMIN)){
-                    userToReturn.getUserPermissions().add(new PermissionEntity(UserPermission.ADMIN));
+                if(user.getPermissionEntities().contains(UserPermission.ADMIN)){
+                    userToReturn.getPermissionEntities().add(new PermissionEntity(UserPermission.ADMIN));
                 }
 
 

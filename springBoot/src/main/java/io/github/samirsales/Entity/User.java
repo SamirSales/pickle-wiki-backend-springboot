@@ -2,7 +2,6 @@ package io.github.samirsales.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.github.samirsales.Entity.Enum.Gender;
-import io.github.samirsales.Entity.Enum.UserPermission;
 import io.github.samirsales.Model.AuditModel;
 
 import javax.persistence.*;
@@ -11,8 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
+@Entity(name = "users")
 public class User extends AuditModel {
 
     @Id
@@ -42,8 +40,8 @@ public class User extends AuditModel {
     private Gender gender;
 
     @JsonManagedReference
-    @OneToMany(targetEntity = PermissionEntity.class)
-    private Set<PermissionEntity> userPermissions;
+    @ManyToMany(targetEntity = PermissionEntity.class)
+    private Set<PermissionEntity> permissionEntities;
 
     public User(Long id, String name, String login, String email, String password, Gender gender) {
         this.id = id;
@@ -52,11 +50,11 @@ public class User extends AuditModel {
         this.email = email;
         this.password = password;
         this.gender = gender;
-        this.userPermissions = new HashSet<>();
+        this.permissionEntities = new HashSet<>();
     }
 
     public User() {
-        this.userPermissions = new HashSet<>();
+        this.permissionEntities = new HashSet<>();
     }
 
     public Long getId() {
@@ -107,11 +105,32 @@ public class User extends AuditModel {
         this.gender = gender;
     }
 
-    public Set<PermissionEntity> getUserPermissions() {
-        return userPermissions;
+    public Set<PermissionEntity> getPermissionEntities() {
+        return permissionEntities;
     }
 
-    public void setUserPermissions(Set<PermissionEntity> userPermissions) {
-        this.userPermissions = userPermissions;
+    public void setPermissionEntities(Set<PermissionEntity> permissionEntities) {
+        this.permissionEntities = permissionEntities;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+
+        User other = (User) obj;
+        if (id == null) {
+            if (other.id != null) return false;
+        } else if (!id.equals(other.id)) return false;
+        return true;
     }
 }
