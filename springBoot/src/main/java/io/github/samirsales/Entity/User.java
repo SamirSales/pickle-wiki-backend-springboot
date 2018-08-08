@@ -1,13 +1,14 @@
 package io.github.samirsales.Entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.github.samirsales.Entity.Enum.Gender;
+import io.github.samirsales.Entity.Enum.Permission;
 import io.github.samirsales.Model.AuditModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "users")
@@ -35,13 +36,16 @@ public class User extends AuditModel {
     @NotEmpty
     private String password;
 
-    @NotNull
+    @JoinTable(joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @JsonManagedReference
-    @ManyToMany(targetEntity = PermissionEntity.class)
-    private Set<PermissionEntity> permissionEntities;
+    @ElementCollection(targetClass = Permission.class)
+    @JoinTable(name = "tableUserPermission", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "userPermission", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<Permission> permissions;
 
     public User(Long id, String name, String login, String email, String password, Gender gender) {
         this.id = id;
@@ -50,11 +54,11 @@ public class User extends AuditModel {
         this.email = email;
         this.password = password;
         this.gender = gender;
-        this.permissionEntities = new HashSet<>();
+        this.permissions = new HashSet<>();
     }
 
     public User() {
-        this.permissionEntities = new HashSet<>();
+        this.permissions = new HashSet<>();
     }
 
     public Long getId() {
@@ -105,32 +109,25 @@ public class User extends AuditModel {
         this.gender = gender;
     }
 
-    public Set<PermissionEntity> getPermissionEntities() {
-        return permissionEntities;
+    public Set<Permission> getPermissions() {
+        return permissions;
     }
 
-    public void setPermissionEntities(Set<PermissionEntity> permissionEntities) {
-        this.permissionEntities = permissionEntities;
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-
-        User other = (User) obj;
-        if (id == null) {
-            if (other.id != null) return false;
-        } else if (!id.equals(other.id)) return false;
-        return true;
+        return Objects.hash(id);
     }
 }

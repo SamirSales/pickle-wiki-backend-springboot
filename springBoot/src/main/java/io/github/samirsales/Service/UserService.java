@@ -1,7 +1,7 @@
 package io.github.samirsales.Service;
 
 import io.github.samirsales.Dao.UserDao;
-import io.github.samirsales.Entity.Enum.UserPermission;
+import io.github.samirsales.Entity.Enum.Permission;
 import io.github.samirsales.Entity.User;
 import io.github.samirsales.Exception.AuthorizationException;
 import io.github.samirsales.Security.UserSS;
@@ -35,7 +35,7 @@ public class UserService {
 
         UserSS userSS = UserService.authenticated();
 
-        if(userSS == null || (!userSS.hashRole(UserPermission.ADMIN) && !id.equals(userSS.getId()))){
+        if(userSS == null || (!userSS.hashRole(Permission.ADMIN) && !id.equals(userSS.getId()))){
             throw new AuthorizationException("Access Denied");
         }
 

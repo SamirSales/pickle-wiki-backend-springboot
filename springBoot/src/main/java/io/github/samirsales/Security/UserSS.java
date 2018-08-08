@@ -1,7 +1,6 @@
 package io.github.samirsales.Security;
 
-import io.github.samirsales.Entity.Enum.UserPermission;
-import io.github.samirsales.Entity.PermissionEntity;
+import io.github.samirsales.Entity.Enum.Permission;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,23 +21,23 @@ public class UserSS implements UserDetails {
 
     }
 
-    public UserSS(Long id, String login, String password, PermissionEntity permissionEntity){
+    public UserSS(Long id, String login, String password, Permission permission){
         super();
         ArrayList<SimpleGrantedAuthority> userTypes = new ArrayList<>();
-        userTypes.add(new SimpleGrantedAuthority(permissionEntity.getUserPermission().getValue()));
+        userTypes.add(new SimpleGrantedAuthority(permission.getValue()));
         this.id = id;
         this.login = login;
         this.password = password;
         this.authorities = userTypes;
     }
 
-    public UserSS(Long id, String login, String password, Set<PermissionEntity> permissionEntities){
+    public UserSS(Long id, String login, String password, Set<Permission> permissions){
         super();
         this.id = id;
         this.login = login;
         this.password = password;
-        this.authorities = permissionEntities.stream().map(ue ->
-                new SimpleGrantedAuthority(ue.getUserPermission().getValue())).collect(Collectors.toList());
+        this.authorities = permissions.stream().map(up ->
+                new SimpleGrantedAuthority(up.getValue())).collect(Collectors.toList());
     }
 
     @Override
@@ -80,7 +79,7 @@ public class UserSS implements UserDetails {
         return id;
     }
 
-    public boolean hashRole(UserPermission userPermission) {
-        return getAuthorities().contains(new SimpleGrantedAuthority(userPermission.getValue()));
+    public boolean hashRole(Permission permission) {
+        return getAuthorities().contains(new SimpleGrantedAuthority(permission.getValue()));
     }
 }

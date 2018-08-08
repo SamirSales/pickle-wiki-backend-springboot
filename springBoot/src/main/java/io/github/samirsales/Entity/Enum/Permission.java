@@ -1,11 +1,11 @@
 package io.github.samirsales.Entity.Enum;
 
-public enum UserPermission {
+public enum Permission {
     EDITOR("ROLE_EDITOR"), ADMIN("ROLE_ADMIN");
 
     private String value;
 
-    UserPermission(String value) {
+    Permission(String value) {
         this.value = value;
     }
 
