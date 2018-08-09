@@ -1,15 +1,14 @@
 package io.github.samirsales.Entity;
 
 import io.github.samirsales.Entity.Enum.Gender;
-import io.github.samirsales.Entity.Enum.Permission;
 import io.github.samirsales.Model.AuditModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity(name = "users")
 public class User extends AuditModel {
@@ -36,16 +35,14 @@ public class User extends AuditModel {
     @NotEmpty
     private String password;
 
-    @JoinTable(joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ElementCollection(targetClass = Permission.class)
-    @JoinTable(name = "tableUserPermission", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "userPermission", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Set<Permission> permissions;
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "user_permission",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    private List<Permission> permissions;
 
     public User(Long id, String name, String login, String email, String password, Gender gender) {
         this.id = id;
@@ -54,11 +51,11 @@ public class User extends AuditModel {
         this.email = email;
         this.password = password;
         this.gender = gender;
-        this.permissions = new HashSet<>();
+        this.permissions = new ArrayList<Permission>();
     }
 
     public User() {
-        this.permissions = new HashSet<>();
+        this.permissions = new ArrayList<Permission>();
     }
 
     public Long getId() {
@@ -109,11 +106,11 @@ public class User extends AuditModel {
         this.gender = gender;
     }
 
-    public Set<Permission> getPermissions() {
+    public List<Permission> getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(Set<Permission> permissions) {
+    public void setPermissions(List<Permission> permissions) {
         this.permissions = permissions;
     }
 

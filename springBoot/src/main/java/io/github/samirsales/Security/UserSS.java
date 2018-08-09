@@ -1,13 +1,14 @@
 package io.github.samirsales.Security;
 
-import io.github.samirsales.Entity.Enum.Permission;
+import io.github.samirsales.Entity.Enum.PermissionType;
+import io.github.samirsales.Entity.Permission;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserSS implements UserDetails {
@@ -24,20 +25,20 @@ public class UserSS implements UserDetails {
     public UserSS(Long id, String login, String password, Permission permission){
         super();
         ArrayList<SimpleGrantedAuthority> userTypes = new ArrayList<>();
-        userTypes.add(new SimpleGrantedAuthority(permission.getValue()));
+        userTypes.add(new SimpleGrantedAuthority(permission.getPermissionType().getValue()));
         this.id = id;
         this.login = login;
         this.password = password;
         this.authorities = userTypes;
     }
 
-    public UserSS(Long id, String login, String password, Set<Permission> permissions){
+    public UserSS(Long id, String login, String password, List<Permission> permission){
         super();
         this.id = id;
         this.login = login;
         this.password = password;
-        this.authorities = permissions.stream().map(up ->
-                new SimpleGrantedAuthority(up.getValue())).collect(Collectors.toList());
+        this.authorities = permission.stream().map(pt ->
+                new SimpleGrantedAuthority(pt.getPermissionType().getValue())).collect(Collectors.toList());
     }
 
     @Override
@@ -79,7 +80,7 @@ public class UserSS implements UserDetails {
         return id;
     }
 
-    public boolean hashRole(Permission permission) {
-        return getAuthorities().contains(new SimpleGrantedAuthority(permission.getValue()));
+    public boolean hashRole(PermissionType permissionType) {
+        return getAuthorities().contains(new SimpleGrantedAuthority(permissionType.getValue()));
     }
 }
