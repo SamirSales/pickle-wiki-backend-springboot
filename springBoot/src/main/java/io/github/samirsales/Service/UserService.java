@@ -16,7 +16,7 @@ import java.util.Collection;
 public class UserService {
 
     @Autowired
-    @Qualifier("fakeData")
+    @Qualifier("postgres")
     private UserDao userDao;
 
     public static UserSS authenticated(){

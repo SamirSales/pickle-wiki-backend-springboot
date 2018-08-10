@@ -32,6 +32,8 @@ public class User extends AuditModel {
     @Column(nullable = false)
     private String email;
 
+    private boolean active;
+
     @NotEmpty
     private String password;
 
@@ -44,13 +46,14 @@ public class User extends AuditModel {
             inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private List<Permission> permissions;
 
-    public User(Long id, String name, String login, String email, String password, Gender gender) {
+    public User(Long id, String name, String login, String email, String password, Gender gender, boolean active) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.password = password;
         this.gender = gender;
+        this.active = active;
         this.permissions = new ArrayList<Permission>();
     }
 
@@ -126,5 +129,13 @@ public class User extends AuditModel {
     public int hashCode() {
 
         return Objects.hash(id);
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
