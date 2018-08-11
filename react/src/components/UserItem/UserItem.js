@@ -2,10 +2,11 @@ import React from 'react';
 
 import './UserItem.css';
 import logo from '../../assets/img/profile.png';
+import * as util from '../../utils';
 
 const userItem = ( props ) => {
 
-    const userPermissions = props.user.userPermissions.indexOf("ADMIN") !== -1 ? 'administrador' : 'editor';
+    const userPermissions = util.userHasPermission(props.user, 'ADMIN') ? 'administrador' : 'editor';
 
     return (
         <div className="userItem">            

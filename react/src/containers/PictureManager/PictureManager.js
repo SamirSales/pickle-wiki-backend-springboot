@@ -43,7 +43,7 @@ class PictureManager extends Component {
           }).catch(error => {
             console.log("error", error);
             this.setState({loading: false});
-            this.errorModal('Não foi possível carregar as imagens.');
+            //this.errorModal('Não foi possível carregar as imagens.');
           });
     }
 

@@ -7,6 +7,8 @@ import java.util.Collection;
 
 public interface ArticleRepository extends CrudRepository<Article, Long> {
 
+    Article findByIdAndActiveTrue(Long id);
+
     Collection<Article> findByActiveTrue();
 
     Collection<Article> findByTitleContainingOrContextContaining(String title, String context);

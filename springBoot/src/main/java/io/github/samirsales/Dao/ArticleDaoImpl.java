@@ -37,16 +37,18 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public void removeArticleById(long id) {
-
+        Article article = articleRepository.findByIdAndActiveTrue(id);
+        article.setActive(false);
+        articleRepository.save(article);
     }
 
     @Override
     public void updateArticle(Article article) {
-
+        articleRepository.save(article);
     }
 
     @Override
     public void insertArticle(Article article) {
-
+        articleRepository.save(article);
     }
 }

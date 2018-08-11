@@ -12,7 +12,7 @@ import java.util.Collection;
 public class ArticleService {
 
     @Autowired
-    @Qualifier("fakeData")
+    @Qualifier("postgres")
     private ArticleDao articleDao;
 
     public Collection<Article> getAllArticles(){

@@ -38,7 +38,7 @@ class Layout extends Component {
                 const userAuth = res.data;
                 this.props.onLogin(userAuth);
             }).catch(err =>{
-                console.log('Sessão expirou.');
+                console.log('Sessão expirou.', err);
             });
         }
     }
@@ -131,6 +131,8 @@ class Layout extends Component {
             }
         });
 
+        this.props.onToken("");
+        cookie.saveToken("");
         this.props.onLogin(null);
     }
 

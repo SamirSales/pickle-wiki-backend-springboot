@@ -1,5 +1,6 @@
 package io.github.samirsales.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.samirsales.Entity.Enum.PermissionType;
 
 import javax.persistence.*;
@@ -13,9 +14,11 @@ public class Permission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private PermissionType permissionType;
 
-    @ManyToMany(mappedBy = "permissions")
+    @JsonIgnore
+    @ManyToMany(mappedBy = "permissions", fetch = FetchType.LAZY)
     private List<User> users;
 
     public Permission(){
