@@ -1,23 +1,33 @@
 package io.github.samirsales.Entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Article {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String body;
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String url;
+
     private String context;
     private User lastEditor;
-    private int views;
 
-    public Article(Long id, String title, String body, String url, String context, User lastEditor, int views) {
+    public Article(Long id, String title, String body, String url, String context, User lastEditor) {
         this.id = id;
         this.title = title;
         this.body = body;
         this.url = url;
         this.context = context;
         this.lastEditor = lastEditor;
-        this.views = views;
     }
 
     public Article(){}
@@ -44,14 +54,6 @@ public class Article {
 
     public void setBody(String body) {
         this.body = body;
-    }
-
-    public int getViews() {
-        return views;
-    }
-
-    public void setViews(int views) {
-        this.views = views;
     }
 
     public String getUrl() {
