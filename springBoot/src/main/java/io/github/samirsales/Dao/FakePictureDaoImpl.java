@@ -31,7 +31,7 @@ public class FakePictureDaoImpl implements PictureDao {
     public Picture getPictureById(Long id) {
 
         for(Picture picture : pictures){
-            if(picture.getId().equals(id)){
+            if(picture.get_id().equals(id)){
                 return picture;
             }
         }
@@ -61,10 +61,10 @@ public class FakePictureDaoImpl implements PictureDao {
         long newId = 1;
 
         for(Picture pic : pictures){
-            newId = pic.getId() > newId ? pic.getId() : newId;
+            newId = pic.get_id() > newId ? pic.get_id() : newId;
         }
 
-        picture.setId(newId + 1);
+        picture.set_id(newId + 1);
         pictures.add(picture);
         return picture;
     }
@@ -73,7 +73,7 @@ public class FakePictureDaoImpl implements PictureDao {
     public void removePictureById(long id) {
 
         for(int i = 0; i<pictures.size(); i++){
-            if(pictures.get(i).getId().equals(id)){
+            if(pictures.get(i).get_id().equals(id)){
                 pictures.remove(i);
                 break;
             }
@@ -83,7 +83,7 @@ public class FakePictureDaoImpl implements PictureDao {
     @Override
     public void updatePicture(Picture picture) {
         for(int i = 0; i<pictures.size(); i++){
-            if(pictures.get(i).getId().equals(picture.getId())){
+            if(pictures.get(i).get_id().equals(picture.get_id())){
                 pictures.remove(i);
                 pictures.add(i, picture);
                 break;

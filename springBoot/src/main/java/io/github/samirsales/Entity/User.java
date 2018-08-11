@@ -1,5 +1,6 @@
 package io.github.samirsales.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.samirsales.Entity.Enum.Gender;
 import io.github.samirsales.Model.AuditModel;
 
@@ -34,6 +35,7 @@ public class User {
 
     private boolean active;
 
+    @JsonIgnore
     @NotEmpty
     private String password;
 

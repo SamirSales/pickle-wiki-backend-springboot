@@ -17,8 +17,6 @@ import * as util from '../utils';
 class App extends PureComponent {
 
   render() {
-    console.log("test", this.props.usr);
-
     let editArticlePage = <Route path='/edit-article' component={ArticleBuilder} />;
     let newArticlePage = <Route path='/new-article' exact component={ArticleBuilder} />;
     let editUsers = <Route path='/user-editor' exact component={UserEditor} />;
