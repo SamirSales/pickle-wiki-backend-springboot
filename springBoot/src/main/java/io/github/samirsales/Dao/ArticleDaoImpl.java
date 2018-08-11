@@ -1,13 +1,23 @@
 package io.github.samirsales.Dao;
 
 import io.github.samirsales.Entity.Article;
+import io.github.samirsales.Repository.ArticleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
+@Repository
+@Qualifier("postgres")
 public class ArticleDaoImpl implements ArticleDao {
+
+    @Autowired
+    private ArticleRepository articleRepository;
+
     @Override
     public Collection<Article> getAllArticles() {
-        return null;
+        return articleRepository.findByActiveTrue();
     }
 
     @Override
@@ -17,12 +27,12 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public Collection<Article> getArticlesBySearch(String search) {
-        return null;
+        return articleRepository.findByTitleContainingOrContextContaining(search, search);
     }
 
     @Override
     public Article getArticleByUrl(String url) {
-        return null;
+        return articleRepository.findByUrl(url);
     }
 
     @Override

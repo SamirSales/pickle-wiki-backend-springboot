@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "users")
-public class User extends AuditModel {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
