@@ -16,7 +16,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-//    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public Collection<User> getAllUsers(){
         return userService.getAllUsers();
