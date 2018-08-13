@@ -10,10 +10,11 @@
 }
 
 .div-login-modal .login-modal-enter-button{
-    margin: 3px 0px;
+    margin: 4px 0px;
     width: 100%;
     background-color: black;
     color: white;
+    border-width: 0px;
 }
 
 .div-login-modal .login-modal-enter-button:hover{

@@ -11,6 +11,15 @@ class LoginModal extends PureComponent {
         password: ''
     }
 
+    componentDidUpdate(){
+        if(!this.props.active){
+            this.setState({
+                login: '',
+                password: ''
+            });
+        }
+    }
+
     onChangeLogin = (event) =>{
         this.setState({
             login: event.target.value

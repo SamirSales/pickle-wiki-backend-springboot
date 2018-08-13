@@ -83,6 +83,9 @@ class Layout extends Component {
             password: password
         }
 
+        this.closeDialogLogin();
+        this.setState({loading: true});
+
         axios.login(user).then(res => {
 
             const token = res.headers.authorization;
@@ -95,12 +98,15 @@ class Layout extends Component {
 
                 this.closeDialogLogin();
                 showSnackBar('Bem vindo, '+userAuth.name+'!');
+                this.setState({loading: false});
                 return true;
             });
 
         }).catch(err =>{
             console.log("Error", err);
             showSnackBar('Acesso Negado');
+            this.setState({loading: false});
+            this.dialogLogin();
             return false;
         });
     }
