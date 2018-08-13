@@ -1,34 +1,67 @@
 package io.github.samirsales.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.samirsales.Entity.Enum.Gender;
-import io.github.samirsales.Entity.Enum.UserPermission;
+import io.github.samirsales.Model.AuditModel;
+import org.hibernate.annotations.NaturalId;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-public class User {
+@Entity(name = "users")
+public class User extends AuditModel{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @NotEmpty
+    @Column(nullable = false)
     private String name;
+
+    @NaturalId
+    @NotEmpty
+    @Column(nullable = false)
     private String login;
+
+    @NaturalId
+    @NotEmpty
+    @Column(nullable = false)
     private String email;
+
+    private boolean active;
+
+    @JsonIgnore
+    @NotEmpty
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private Gender gender;
-    private Set<UserPermission> userPermissions;
 
-    public User(Long id, String name, String login, String email, String password, Gender gender) {
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "user_permission",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    private List<Permission> permissions;
+
+    public User(Long id, String name, String login, String email, String password, Gender gender, boolean active) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.password = password;
         this.gender = gender;
-        this.userPermissions = new HashSet<>();
+        this.active = active;
+        this.permissions = new ArrayList<Permission>();
     }
 
     public User() {
-        this.userPermissions = new HashSet<>();
+        this.permissions = new ArrayList<Permission>();
     }
 
     public Long getId() {
@@ -79,11 +112,33 @@ public class User {
         this.gender = gender;
     }
 
-    public Set<UserPermission> getUserPermissions() {
-        return userPermissions;
+    public List<Permission> getPermissions() {
+        return permissions;
     }
 
-    public void setUserPermissions(Set<UserPermission> userPermissions) {
-        this.userPermissions = userPermissions;
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

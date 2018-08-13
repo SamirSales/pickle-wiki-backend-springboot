@@ -4,6 +4,7 @@ import { NavLink, withRouter } from 'react-router-dom';
 import './TopBar.css';
 import { AuthContext } from '../Layout/Layout';
 import AutoComplete from '../../components/AutoComplete/AutoComplete';
+import * as util from '../../utils';
 
 class TopBar extends PureComponent {
 
@@ -43,7 +44,7 @@ class TopBar extends PureComponent {
     let divSearch = null;
 
     if(this.props.user){
-      if(this.props.user.userPermissions.indexOf("ADMIN") !== -1){
+      if(util.userHasPermission(this.props.user, 'ADMIN')){
         tabAddNewUser = <NavLink className='tab' to='/user-editor' >Editores</NavLink>;
       }
       

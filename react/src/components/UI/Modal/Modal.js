@@ -8,7 +8,6 @@ const modal = ( props ) => {
 
     const marginLeft = props.marginLeft ? props.marginLeft :'0px';
     const marginTop = props.marginTop ? props.marginTop :'0px';
-
     const display = props.active ? 'block' : 'none';
 
     return (

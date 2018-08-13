@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import Modal from '../Modal';
 
+import logo from '../../../../assets/img/lock.png';
 import './LoginModal.css';
 
 class LoginModal extends PureComponent {
@@ -25,21 +26,26 @@ class LoginModal extends PureComponent {
     render(){
         return (
             <Modal active={this.props.active} 
-            cancel={this.props.cancel} 
-            marginTop={this.props.marginTop}
-            marginLeft={this.props.marginLeft}>
-                
-                <h3><i className="fa fa-lock"></i> Entrar</h3>
+                cancel={this.props.cancel} 
+                marginTop={this.props.marginTop}
+                marginLeft={this.props.marginLeft}>              
+
+                <div className="div-login-modal">
+                    <img src={logo} height="60" width="60" alt="Lock icon" />
                     
-                <input id='inputLoginModal' className="form-input" placeholder='Login' onChange={this.onChangeLogin}/>
-                
-                <input id='inputPasswordModal' type='password' className="form-input" placeholder='Senha' 
-                    onChange={this.onChangePassword} style={{marginTop: '10px'}}/>
-                
-                <div className="buttons" style={{marginTop: '10px'}}>
-                    <button className="cancel" onClick={this.props.cancel}>Não</button>
-                    <button onClick={this.props.confirm.bind(this, this.state.login, this.state.password)}>Sim</button>                    
+                    <input id='inputLoginModal' className="form-input" 
+                        placeholder='Insira o login' 
+                        onChange={this.onChangeLogin} />
+                    
+                    <input id='inputPasswordModal' type='password' className="form-input" 
+                        placeholder='Insira a senha' 
+                        onChange={this.onChangePassword} />
+
+                    <button className="login-modal-enter-button" 
+                        onClick={this.props.confirm.bind(this, this.state.login, this.state.password)}>ENTRAR</button>
                 </div>
+                
+                
             </Modal>        
         );
     }

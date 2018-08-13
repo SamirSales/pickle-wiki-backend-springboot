@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    @Qualifier("fakeData")
+    @Qualifier("postgres")
     private UserDao userDao;
 
     @Override
@@ -26,6 +26,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(login);
         }
 
-        return new UserSS(user.getId(), user.getLogin(), user.getPassword(), user.getUserPermissions());
+        return new UserSS(user.getId(), user.getLogin(), user.getPassword(), user.getPermissions());
     }
 }

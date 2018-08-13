@@ -18,7 +18,7 @@ import java.util.List;
 public class PictureService {
 
     @Autowired
-    @Qualifier("fakeData")
+    @Qualifier("postgres")
     private PictureDao pictureDao;
 
     @Value("${uploading.image.path}")
@@ -40,7 +40,7 @@ public class PictureService {
 
         Picture picture = pictureDao.insertPicture(new Picture());
         picture.setLabel(fileName);
-        picture.setFileName(picture.getId()+"."+getFileExtension(file.getOriginalFilename()));
+        picture.setFileName(picture.get_id()+"."+getFileExtension(file.getOriginalFilename()));
 
         String path = imagePath+"/"+picture.getFileName();
         File convertFile = new File(path);
@@ -53,7 +53,7 @@ public class PictureService {
             fout.close();
         } catch (IOException ioException) {
             ioException.printStackTrace();
-            removePictureById(picture.getId());
+            removePictureById(picture.get_id());
             throw ioException;
         }
 

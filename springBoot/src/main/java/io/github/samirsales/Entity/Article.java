@@ -1,23 +1,37 @@
 package io.github.samirsales.Entity;
 
-public class Article {
+import io.github.samirsales.Model.AuditModel;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Article extends AuditModel{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String body;
-    private String url;
-    private String context;
-    private User lastEditor;
-    private int views;
 
-    public Article(Long id, String title, String body, String url, String context, User lastEditor, int views) {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String url;
+
+    private String context;
+    private Long lastEditorId;
+    private boolean active;
+
+    public Article(Long id, String title, String body, String url, String context, Long lastEditorId, boolean active) {
         this.id = id;
         this.title = title;
         this.body = body;
         this.url = url;
         this.context = context;
-        this.lastEditor = lastEditor;
-        this.views = views;
+        this.lastEditorId = lastEditorId;
+        this.active = active;
     }
 
     public Article(){}
@@ -46,14 +60,6 @@ public class Article {
         this.body = body;
     }
 
-    public int getViews() {
-        return views;
-    }
-
-    public void setViews(int views) {
-        this.views = views;
-    }
-
     public String getUrl() {
         return url;
     }
@@ -62,12 +68,12 @@ public class Article {
         this.url = url;
     }
 
-    public User getLastEditor() {
-        return lastEditor;
+    public Long getLastEditorId() {
+        return lastEditorId;
     }
 
-    public void setLastEditor(User lastEditor) {
-        this.lastEditor = lastEditor;
+    public void setLastEditorId(long lastEditorId) {
+        this.lastEditorId = lastEditorId;
     }
 
     public String getContext() {
@@ -76,5 +82,13 @@ public class Article {
 
     public void setContext(String context) {
         this.context = context;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

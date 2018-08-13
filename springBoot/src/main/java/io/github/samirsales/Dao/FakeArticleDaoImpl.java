@@ -18,17 +18,16 @@ public class FakeArticleDaoImpl implements ArticleDao {
     public FakeArticleDaoImpl(){
 
         articles.add(new Article((long) 1, "Rato", "Sobre rato...","rato", "mamífero",
-                null, 0));
+                null, true));
 
         articles.add(new Article((long) 2, "Git", "Sobre Git...", "git",
-                "ferramenta de versionamento", null,
-                0));
+                "ferramenta de versionamento", null, true));
 
         articles.add(new Article((long) 3, "Java",
                 "soiasjoixjsaojs\r## Sobre Java\r...\r" +
                 "testando parágrago\r" +
-                "> Testando *blá* e **blá blá**", "java", "linguagem de programação", null,
-                0));
+                "> Testando *blá* e **blá blá**", "java", "linguagem de programação",
+                null, true));
     }
     
     private Map<String, Article> getArticleMap(){

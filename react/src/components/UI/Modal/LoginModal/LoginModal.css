@@ -1,0 +1,28 @@
+.div-login-modal input{
+    border-radius: 0;
+    padding: 8px 12px;
+    margin: 3px 0px;
+}
+
+.div-login-modal .login-modal-input-label{
+    margin: 8px 0px 3px 0px;
+    font-size: 14px;
+}
+
+.div-login-modal .login-modal-enter-button{
+    margin: 3px 0px;
+    width: 100%;
+    background-color: black;
+    color: white;
+}
+
+.div-login-modal .login-modal-enter-button:hover{
+    background-color: #c0c0c0;
+    color: black;
+}
+
+.div-login-modal img{
+    background-color: #ffffff;
+    padding: 10px;
+    margin-left: calc(50% - 40px);
+}

@@ -12,6 +12,7 @@ import PictureManager from '../containers/PictureManager/PictureManager';
 
 import { connect } from 'react-redux';
 import * as actionTypes from '../store/actions/actionTypes';
+import * as util from '../utils';
 
 class App extends PureComponent {
 
@@ -27,7 +28,7 @@ class App extends PureComponent {
       editUsers = <Redirect exact from='/user-editor' to='/welcome'/>;
       pictureManager = <Redirect exact from='/picture-manager' to='/welcome'/>;
 
-    }else if(this.props.usr.userPermissions.indexOf("ADMIN") === -1){
+    }else if(!util.userHasPermission(this.props.usr, 'ADMIN')){
       editUsers = <Redirect exact from='/user-editor' to='/welcome'/>;
     }
 
