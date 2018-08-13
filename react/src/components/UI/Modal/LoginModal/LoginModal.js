@@ -23,6 +23,12 @@ class LoginModal extends PureComponent {
         });
     }
 
+    onKeyPress = (event) =>{
+        if (event.key === 'Enter') {
+            this.props.confirm(this.state.login, this.state.password);
+        }
+    }
+
     render(){
         return (
             <Modal active={this.props.active} 
@@ -35,17 +41,15 @@ class LoginModal extends PureComponent {
                     
                     <input id='inputLoginModal' className="form-input" 
                         placeholder='Insira o login' 
-                        onChange={this.onChangeLogin} />
+                        onChange={this.onChangeLogin} onKeyPress={this.onKeyPress}/>
                     
                     <input id='inputPasswordModal' type='password' className="form-input" 
                         placeholder='Insira a senha' 
-                        onChange={this.onChangePassword} />
+                        onChange={this.onChangePassword} onKeyPress={this.onKeyPress}/>
 
                     <button className="login-modal-enter-button" 
                         onClick={this.props.confirm.bind(this, this.state.login, this.state.password)}>ENTRAR</button>
                 </div>
-                
-                
             </Modal>        
         );
     }
