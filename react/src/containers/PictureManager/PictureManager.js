@@ -127,10 +127,9 @@ class PictureManager extends Component {
     }
 
     render() {
-
         let thumbnails = this.state.pictures.map(pic => {
             return (
-                <Thumbnail key={pic.id} 
+                <Thumbnail key={pic._id} 
                     fileName={pic.fileName} 
                     alt={pic.label} 
                     onClick={this.imageModal.bind(this, pic)} />);

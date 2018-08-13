@@ -17,7 +17,8 @@ class TopBar extends PureComponent {
   }
 
   isReadingScreen(){
-    return !this.isPath("/new-article") && !this.isPath("/user-editor");
+    return !this.isPath("/new-article") && !this.isPath("/user-editor") 
+      && !this.isPath("/picture-manager");
   }
 
   render() {

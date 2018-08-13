@@ -44,6 +44,8 @@ public class PictureService {
 
         String path = imagePath+"/"+picture.getFileName();
         File convertFile = new File(path);
+
+        pictureDao.updatePicture(picture);
         System.out.println(path);
 
         try {
