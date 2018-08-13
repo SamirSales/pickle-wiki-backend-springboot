@@ -3,6 +3,7 @@ package io.github.samirsales.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.samirsales.Entity.Enum.Gender;
 import io.github.samirsales.Model.AuditModel;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "users")
-public class User {
+public class User extends AuditModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,12 +24,12 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NaturalId
     @NotEmpty
     @Column(nullable = false)
     private String login;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NaturalId
     @NotEmpty
     @Column(nullable = false)
     private String email;
@@ -42,7 +43,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "user_permission",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id"))

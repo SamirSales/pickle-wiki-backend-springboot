@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    @Qualifier("fakeData")
+    @Qualifier("postgres")
     private UserDao userDao;
 
     @Override

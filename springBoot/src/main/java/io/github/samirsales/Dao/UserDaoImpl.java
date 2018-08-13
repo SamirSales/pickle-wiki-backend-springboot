@@ -4,6 +4,8 @@ import io.github.samirsales.Entity.User;
 import io.github.samirsales.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -27,7 +29,15 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByLogin(String login) {
-        return userRepository.findByLoginAndActiveTrue(login);
+        User user = userRepository.findByLoginAndActiveTrue(login);
+
+        if(user != null){
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
+        }
+
+        return user;
     }
 
     @Override
@@ -35,6 +45,13 @@ public class UserDaoImpl implements UserDao {
         User authUser = userRepository.findByLoginAndActiveTrue(user.getLogin());
 
         if(authUser != null && authUser.getPassword().equals(user.getPassword())){
+
+            // encoding password
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(authUser.getPassword());
+            authUser.setPassword(hashedPassword);
+
+
             return authUser;
         }
 
