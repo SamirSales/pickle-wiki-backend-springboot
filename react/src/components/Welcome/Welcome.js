@@ -27,8 +27,8 @@ const welcome = ( props ) => {
     "| Tecnologia | Aplicação | Linguagem | Versão |\r"+
     "| --- | --- | --- |\r"+
     "| ReactJS | Front-end | JavaScript |16 |\r"+
-    "| Spring Boot | Back-end | Java | ? |\r"+
-    "| PostgreSQL | Banco de dados  | SQL | ? |\r";
+    "| Spring Boot | Back-end | Java | 2.0.2 |\r"+
+    "| PostgreSQL | Banco de dados  | SQL | 9.5.13 |\r";
 
     return (
         <div className='text-editor-markdown'><ReactMarkdown source={body} /><br/></div>
