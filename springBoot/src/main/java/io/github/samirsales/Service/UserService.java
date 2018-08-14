@@ -1,6 +1,7 @@
 package io.github.samirsales.Service;
 
 import io.github.samirsales.Dao.UserDao;
+import io.github.samirsales.Entity.Dto.UserDTO;
 import io.github.samirsales.Entity.Enum.PermissionType;
 import io.github.samirsales.Entity.User;
 import io.github.samirsales.Exception.AuthorizationException;
@@ -10,7 +11,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -27,11 +31,12 @@ public class UserService {
         }
     }
 
-    public Collection<User> getAllUsers(){
-        return userDao.getAllUsers();
+    public List<UserDTO> getAllUsers(){
+        Collection<User> users = userDao.getAllUsers();
+        return users.parallelStream().map(UserDTO::new).collect(Collectors.toList());
     }
 
-    public User getUserById(Long id){
+    public UserDTO getUserById(Long id){
 
         UserSS userSS = UserService.authenticated();
 
@@ -39,11 +44,11 @@ public class UserService {
             throw new AuthorizationException("Access Denied");
         }
 
-        return this.userDao.getUserById(id);
+        return new UserDTO(this.userDao.getUserById(id));
     }
 
-    public User getUserByAuthentication(User user) {
-        return this.userDao.getUserByAuthentication(user);
+    public UserDTO getUserByAuthentication(User user) {
+        return new UserDTO(this.userDao.getUserByAuthentication(user));
     }
 
     public void removeUserById(long id) {
@@ -58,7 +63,7 @@ public class UserService {
         this.userDao.insertUser(user);
     }
 
-    public User getUserByToken() {
+    public UserDTO getUserByToken() {
         UserSS userSS = UserService.authenticated();
 
         if(userSS == null ){

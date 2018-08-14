@@ -36,7 +36,6 @@ public class UserDaoImpl implements UserDao {
             String hashedPassword = passwordEncoder.encode(user.getPassword());
             user.setPassword(hashedPassword);
         }
-
         return user;
     }
 
@@ -51,10 +50,8 @@ public class UserDaoImpl implements UserDao {
             String hashedPassword = passwordEncoder.encode(authUser.getPassword());
             authUser.setPassword(hashedPassword);
 
-
             return authUser;
         }
-
         return null;
     }
 
@@ -63,14 +60,12 @@ public class UserDaoImpl implements UserDao {
         User user = userRepository.findByIdAndActiveTrue(id);
         if(user != null) {
             user.setActive(false);
-            // todo: reset update time
             userRepository.save(user);
         }
     }
 
     @Override
     public void updateUser(User user) {
-        // todo: reset update time
         userRepository.save(user);
     }
 

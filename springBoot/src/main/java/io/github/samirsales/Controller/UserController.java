@@ -1,5 +1,6 @@
 package io.github.samirsales.Controller;
 
+import io.github.samirsales.Entity.Dto.UserDTO;
 import io.github.samirsales.Entity.User;
 import io.github.samirsales.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -18,12 +19,12 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
-    public Collection<User> getAllUsers(){
+    public List<UserDTO> getAllUsers(){
         return userService.getAllUsers();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public User getUserById(@PathVariable("id") long id){
+    public UserDTO getUserById(@PathVariable("id") long id){
         return userService.getUserById(id);
     }
 
@@ -46,7 +47,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/token", method = RequestMethod.POST)
-    public User getUserByToken(){
+    public UserDTO getUserByToken(){
         return userService.getUserByToken();
     }
 

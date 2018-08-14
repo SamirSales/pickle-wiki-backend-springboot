@@ -39,7 +39,7 @@ class UserEditor extends Component {
       this.setState({loading: true});
       // eslint-disable-next-line
       const users = getUsers(this.props.tkn).then(response => {
-        // console.log("users::", response);
+        console.log("users::", response.data);
         this.setState({users: response.data});
         this.setState({loading: false});
       }).catch(error => {
@@ -207,8 +207,7 @@ class UserEditor extends Component {
       });
     }
 
-    render() {
-    
+    render() {    
       const users = this.state.users.map(user => {
         return <UserItem user={user} key={user.id}
           removeAction={this.modalConfirmRemove.bind(this, user)}

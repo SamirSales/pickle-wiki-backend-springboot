@@ -12,10 +12,4 @@ public interface UserRepository extends CrudRepository<User, Long> {
     User findByIdAndActiveTrue(Long id);
 
     User findByLoginAndActiveTrue(String login);
-
-//    User findByEmailAndByPasswordAndActiveTrue(String login, String email);
-//
-//    User findByIdAndPortAndActiveTrue(String ip,int port);
-//
-//    Collection<User> findByCollectPointIdAndActiveTrue(Long collectPointId);
 }
