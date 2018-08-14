@@ -1,6 +1,8 @@
 package io.github.samirsales.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.github.samirsales.Entity.Enum.PermissionType;
 import org.hibernate.annotations.NaturalId;
 
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "permissions")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Permission {
 
     @Id
@@ -19,9 +22,9 @@ public class Permission {
     @Enumerated(EnumType.STRING)
     private PermissionType permissionType;
 
-//    @JsonIgnore
-//    @ManyToMany(mappedBy = "permissions")
-//    private List<User> users;
+    @JsonBackReference
+    @ManyToMany(mappedBy = "permissions")
+    private List<User> users;
 
     public Permission(){
 
@@ -30,7 +33,7 @@ public class Permission {
     public Permission(Long id, PermissionType permissionType, List<User> users) {
         this.id = id;
         this.permissionType = permissionType;
-//        this.users = users;
+        this.users = users;
     }
 
     public PermissionType getPermissionType() {
@@ -49,13 +52,13 @@ public class Permission {
         this.id = id;
     }
 
-//    public List<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(List<User> users) {
-//        this.users = users;
-//    }
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     @Override
     public boolean equals(Object o) {

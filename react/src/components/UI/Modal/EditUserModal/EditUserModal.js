@@ -3,16 +3,27 @@ import React, { PureComponent } from 'react';
 import Modal from '../Modal';
 import './EditUserModal.css';
 
+// import * as util from '../../../../utils';
+
 class EditUserModal extends PureComponent {
     
+    adminPermission = {
+        id: 1,
+        permissionType: 'ADMIN'
+    };
+
+    editorPermission = {
+        id: 2,
+        permissionType: 'EDITOR'
+    };
+
     state = {
         name: '',
         login: '',
         password: '',
-        passwordConfirmation: '',
         email: '',
         gender: 'MALE',
-        userPermissions: ['EDITOR'],
+        userPermissions: [this.editorPermission],
         user: null,
         editing: false
     }
@@ -35,12 +46,6 @@ class EditUserModal extends PureComponent {
         });
     }
 
-    onChangePasswordConfirmation = (event) => {
-        this.setState( {
-            passwordConfirmation : event.target.value
-        });
-    }
-
     onChangeEmail = (event) => {
         this.setState( {
             email : event.target.value
@@ -56,26 +61,23 @@ class EditUserModal extends PureComponent {
     onChangeUserPermissions = (event) => {
 
         this.setState( {
-            userPermissions : event.target.value === 'ADMIN' ? ['EDITOR', 'ADMIN'] : ['EDITOR']
+            userPermissions : event.target.value === 'ADMIN' ? 
+                [this.editorPermission, this.adminPermission] : [this.editorPermission]
         });
-
-        
     }
 
-    setElements(name, login, email, password, passwordConfirmation, gender, userPermissions){
+    setElements(name, login, email, password, gender, userPermissions){
         document.getElementById("edit-user-modal-name").value = name;
         document.getElementById("edit-user-modal-login").value = login;
         document.getElementById("edit-user-modal-email").value = email;
         document.getElementById("edit-user-modal-password").value = password;
-        document.getElementById("edit-user-modal-password-confirm").value = passwordConfirmation;
         document.getElementById("edit-user-modal-select-gender").value = gender;
 
         if(userPermissions.indexOf("ADMIN") !== -1){
             document.getElementById("edit-user-modal-select-usertype").value = 'ADMIN'; 
         }else{
             document.getElementById("edit-user-modal-select-usertype").value = 'EDITOR'; 
-        }
-        
+        }   
     }
 
     componentDidUpdate(){
@@ -90,9 +92,8 @@ class EditUserModal extends PureComponent {
                     login: "",
                     email: "",
                     password: "",
-                    passwordConfirmation: "",
                     gender: "MALE",
-                    userPermissions: ["EDITOR"]
+                    userPermissions: [this.editorPermission]
                 });
 
                 this.setElements('','','','','','MALE', ['EDITOR']);   
@@ -109,7 +110,6 @@ class EditUserModal extends PureComponent {
                     login: this.props.user.login,
                     email: this.props.user.email,
                     password: this.props.user.password,
-                    passwordConfirmation: this.props.user.password,
                     gender: this.props.user.gender,
                     userPermissions: this.props.user.userPermissions
                 });
@@ -144,15 +144,12 @@ class EditUserModal extends PureComponent {
                         <option value="ADMIN">Administrador</option>
                     </select>
 
-                    <input id="edit-user-modal-password" type="password" placeholder="Senha" 
+                    <input id="edit-user-modal-password" type="text" placeholder="Senha" 
                         onChange={this.onChangePassword} />
-                    <input id="edit-user-modal-password-confirm" type="password" placeholder="Confirme a senha" 
-                        onChange={this.onChangePasswordConfirmation}/>
 
                     <button onClick={this.props.onSaveClick.bind(this, 
                         this.state.name, this.state.login, this.state.email,
                         this.state.gender, this.state.password, 
-                        this.state.passwordConfirmation,
                         this.state.userPermissions)} >Salvar</button>
                 </div>  
             </Modal>   

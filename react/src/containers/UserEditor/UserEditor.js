@@ -84,16 +84,14 @@ class UserEditor extends Component {
       })
     }
 
-    saveNewUser = (name, login, email, gender, password, passwordConfirm, userPermissions) => {
+    saveNewUser = (name, login, email, gender, password, userPermissions) => {
 
       if(name.trim() === '' || login.trim() === '' || email.trim() === '' || 
         password.trim() === ''){
         showSnackBar('Preencha todos os campos.');
       
-      }else if(password !== passwordConfirm){
-        showSnackBar('A confirmação de senha falhou.');
-
       }else{
+
         const user = {
           id: this.state.userModal.userToEdit != null ? this.state.userModal.userToEdit.id : null,
           name: name.trim(),
@@ -101,8 +99,11 @@ class UserEditor extends Component {
           email: email.trim(),
           password: password.trim(),
           gender: gender,
-          userPermissions: userPermissions
+          active: true,
+          permissions: userPermissions
         };
+
+        console.log("user to save", user);
 
         this.setState({loading: true});
 

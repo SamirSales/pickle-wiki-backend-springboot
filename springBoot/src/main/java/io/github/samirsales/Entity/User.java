@@ -1,6 +1,7 @@
 package io.github.samirsales.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.github.samirsales.Entity.Enum.Gender;
 import io.github.samirsales.Model.AuditModel;
 import org.hibernate.annotations.NaturalId;
@@ -8,15 +9,15 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "users")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class User extends AuditModel{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -36,20 +37,16 @@ public class User extends AuditModel{
 
     private boolean active;
 
-    @JsonIgnore
     @NotEmpty
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "user_permission",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    @ManyToMany
     private List<Permission> permissions;
 
-    public User(Long id, String name, String login, String email, String password, Gender gender, boolean active) {
+    public User(Long id, String name, String login, String email, String password, Gender gender, boolean active, List<Permission> permissions) {
         this.id = id;
         this.name = name;
         this.login = login;
@@ -57,11 +54,10 @@ public class User extends AuditModel{
         this.password = password;
         this.gender = gender;
         this.active = active;
-        this.permissions = new ArrayList<Permission>();
+        this.permissions = permissions;
     }
 
     public User() {
-        this.permissions = new ArrayList<Permission>();
     }
 
     public Long getId() {
