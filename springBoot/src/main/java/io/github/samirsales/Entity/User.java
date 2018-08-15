@@ -7,6 +7,7 @@ import io.github.samirsales.Model.AuditModel;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -25,13 +26,13 @@ public class User extends AuditModel{
     @Column(nullable = false)
     private String name;
 
-    @NaturalId
+    @NaturalId(mutable = true)
     @NotEmpty
     @Column(nullable = false)
     private String login;
 
-    @NaturalId
-    @NotEmpty
+    @NaturalId(mutable = true)
+    @Email
     @Column(nullable = false)
     private String email;
 
@@ -46,7 +47,8 @@ public class User extends AuditModel{
     @ManyToMany
     private List<Permission> permissions;
 
-    public User(Long id, String name, String login, String email, String password, Gender gender, boolean active, List<Permission> permissions) {
+    public User(Long id, String name, String login, String email, String password, Gender gender, boolean active,
+                List<Permission> permissions) {
         this.id = id;
         this.name = name;
         this.login = login;
