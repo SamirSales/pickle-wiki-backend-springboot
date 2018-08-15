@@ -3,18 +3,14 @@ import React, { PureComponent } from 'react';
 import Modal from '../Modal';
 import './EditUserModal.css';
 
-// import * as util from '../../../../utils';
-
 class EditUserModal extends PureComponent {
     
     adminPermission = {
-        id: 1,
-        permissionType: 'ADMIN'
+        id: 1, permissionType: 'ADMIN'
     };
 
     editorPermission = {
-        id: 2,
-        permissionType: 'EDITOR'
+        id: 2, permissionType: 'EDITOR'
     };
 
     state = {
@@ -23,7 +19,7 @@ class EditUserModal extends PureComponent {
         password: '',
         email: '',
         gender: 'MALE',
-        userPermissions: [this.editorPermission],
+        permissions: [this.editorPermission],
         user: null,
         editing: false
     }
@@ -59,21 +55,25 @@ class EditUserModal extends PureComponent {
     }
 
     onChangeUserPermissions = (event) => {
-
         this.setState( {
-            userPermissions : event.target.value === 'ADMIN' ? 
+            permissions : event.target.value === 'ADMIN' ? 
                 [this.editorPermission, this.adminPermission] : [this.editorPermission]
         });
     }
 
-    setElements(name, login, email, password, gender, userPermissions){
+    setElements(name, login, email, password, gender, permissions){
+
+        if(!password){
+            password = "";
+        }
+
         document.getElementById("edit-user-modal-name").value = name;
         document.getElementById("edit-user-modal-login").value = login;
         document.getElementById("edit-user-modal-email").value = email;
         document.getElementById("edit-user-modal-password").value = password;
         document.getElementById("edit-user-modal-select-gender").value = gender;
 
-        if(userPermissions.indexOf("ADMIN") !== -1){
+        if(permissions.indexOf("ADMIN") !== -1){
             document.getElementById("edit-user-modal-select-usertype").value = 'ADMIN'; 
         }else{
             document.getElementById("edit-user-modal-select-usertype").value = 'EDITOR'; 
@@ -93,10 +93,10 @@ class EditUserModal extends PureComponent {
                     email: "",
                     password: "",
                     gender: "MALE",
-                    userPermissions: [this.editorPermission]
+                    permissions: [this.editorPermission]
                 });
 
-                this.setElements('','','','','','MALE', ['EDITOR']);   
+                this.setElements('','','','','MALE', ['EDITOR']);   
             }
 
         } else {
@@ -111,11 +111,11 @@ class EditUserModal extends PureComponent {
                     email: this.props.user.email,
                     password: this.props.user.password,
                     gender: this.props.user.gender,
-                    userPermissions: this.props.user.userPermissions
+                    permissions: this.props.user.permissions
                 });
 
                 const u = this.props.user;
-                this.setElements(u.name,u.login,u.email,u.password,u.password,u.gender, u.userPermissions);
+                this.setElements(u.name,u.login,u.email,u.password,u.gender, u.permissions);
             }
         }
     }
@@ -150,7 +150,7 @@ class EditUserModal extends PureComponent {
                     <button onClick={this.props.onSaveClick.bind(this, 
                         this.state.name, this.state.login, this.state.email,
                         this.state.gender, this.state.password, 
-                        this.state.userPermissions)} >Salvar</button>
+                        this.state.permissions)} >Salvar</button>
                 </div>  
             </Modal>   
         );

@@ -39,7 +39,7 @@ class UserEditor extends Component {
       this.setState({loading: true});
       // eslint-disable-next-line
       const users = getUsers(this.props.tkn).then(response => {
-        console.log("users::", response.data);
+        // console.log("users::", response.data);
         this.setState({users: response.data});
         this.setState({loading: false});
       }).catch(error => {
@@ -103,7 +103,7 @@ class UserEditor extends Component {
           permissions: userPermissions
         };
 
-        console.log("user to save", user);
+        // console.log("user to save", user);
 
         this.setState({loading: true});
 
@@ -154,7 +154,6 @@ class UserEditor extends Component {
     }
 
     editUser = (user) => {
-
       this.setState({
         userModal: ({
           active: true,
@@ -175,9 +174,11 @@ class UserEditor extends Component {
           this.setState({loading: false});
           this.errorModal('Falha ao carregar usuários.');              
         });
+
         this.setState({loading: false});
         showSnackBar('Usuário removido com sucesso!');
         this.closeConfirmModal();
+
       }).catch(error => {
         console.log('error', error);
         this.setState({loading: false});

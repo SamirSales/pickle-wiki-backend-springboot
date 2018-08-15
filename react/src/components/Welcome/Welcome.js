@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 
 const welcome = ( props ) => {
 
-    const body = "# Bem vindo ao Pickle Wiki \r"+
+    const body = "# Bem-vindo ao Pickle Wiki \r"+
     "A Pickle Wiki é um projeto de enciclopédia de licença livre, baseado no sistema "+
     "[Wikipédia](https://www.wikipedia.org/) e escrito de maneira colaborativa. "+
     "Seu código fonte encontra-se no github, atualmente, sob administração de seu criador, Samir Sales. "+
