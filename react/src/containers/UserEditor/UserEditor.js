@@ -11,6 +11,8 @@ import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
 import ErrorModal from '../../components/UI/Modal/ErrorModal/ErrorModal';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import './UserEditor.css';
+
+import * as util from '../../utils';
  
 class UserEditor extends Component {
 
@@ -84,13 +86,15 @@ class UserEditor extends Component {
       })
     }
 
-    saveNewUser = (name, login, email, gender, password, userPermissions) => {
-
+    saveNewUser = (name, login, email, gender, password, permissions) => {
+      
       if(name.trim() === '' || login.trim() === '' || email.trim() === '' || 
         password.trim() === ''){
         showSnackBar('Preencha todos os campos.');
       
-      }else{
+      } else if(!util.validateEmail(email.trim())){
+        showSnackBar('Formatação de e-mail inválida.');
+      } else{
 
         const user = {
           id: this.state.userModal.userToEdit != null ? this.state.userModal.userToEdit.id : null,
@@ -100,7 +104,7 @@ class UserEditor extends Component {
           password: password.trim(),
           gender: gender,
           active: true,
-          permissions: userPermissions
+          permissions: permissions
         };
 
         // console.log("user to save", user);
