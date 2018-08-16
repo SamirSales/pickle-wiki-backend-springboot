@@ -10,11 +10,11 @@ import EditUserModal from '../../components/UI/Modal/EditUserModal/EditUserModal
 import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
 import ErrorModal from '../../components/UI/Modal/ErrorModal/ErrorModal';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import './UserEditor.css';
+import './UserManager.css';
 
 import * as util from '../../utils';
  
-class UserEditor extends Component {
+class UserManager extends Component {
 
     state = {
       users: [],
@@ -279,4 +279,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps)(UserEditor);
+export default connect(mapStateToProps)(UserManager);

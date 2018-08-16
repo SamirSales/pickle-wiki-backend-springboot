@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Layout from './Layout/Layout';
 import ArticleBuilder from './ArticleBuilder/ArticleBuilder';
-import UserEditor from './UserEditor/UserEditor';
+import UserManager from './UserManager/UserManager';
 import Welcome from '../components/Welcome/Welcome';
 import MarkDownHelp from '../components/MarkDownHelp/MarkDownHelp';
 import FullPost from '../components/FullPost/FullPost';
@@ -21,7 +21,7 @@ class App extends PureComponent {
 
     let editArticlePage = <Route path='/edit-article' component={ArticleBuilder} />;
     let newArticlePage = <Route path='/new-article' exact component={ArticleBuilder} />;
-    let editUsers = <Route path='/user-editor' exact component={UserEditor} />;
+    let editUsers = <Route path='/user-editor' exact component={UserManager} />;
     let pictureManager = <Route path='/picture-manager' exact component={PictureManager} />;
 
     if(this.props.usr == null){
