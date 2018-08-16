@@ -3,6 +3,13 @@
     margin-top: 4px;
     margin-bottom: 4px;
     color: #707070;
+    text-align: center;
+}
+
+.edit-user-modal-label{
+    margin: 4px 0px 0px 0px;
+    font-size: 12px;
+    color: #2d6930;
 }
 
 /* Full-width inputs */

@@ -130,21 +130,30 @@ class EditUserModal extends PureComponent {
                 
                 <div className="container editUserModal">
                     <h3>{this.props.title}</h3>
-                    <input id="edit-user-modal-name" type="text" placeholder="Nome" onChange={this.onChangeName}/>
-                    <input id="edit-user-modal-login" type="text" placeholder="Login" onChange={this.onChangeLogin} />
-                    <input id="edit-user-modal-email" type="text" placeholder="E-mail" onChange={this.onChangeEmail} />
-
+                    <p className="edit-user-modal-label">Nome</p>
+                    <input id="edit-user-modal-name" type="text" placeholder="Insira o nome" onChange={this.onChangeName}/>
+                    
+                    <p className="edit-user-modal-label">Gênero</p>
                     <select id="edit-user-modal-select-gender" onChange={this.onChangeGender}>
                         <option value="MALE">Masculino</option>
                         <option value="FEMALE">Feminino</option>
                     </select>
+                    
+                    <p className="edit-user-modal-label">E-mail</p>
+                    <input id="edit-user-modal-email" type="text" placeholder="Insira o e-mail" onChange={this.onChangeEmail} />
 
+                    <p className="edit-user-modal-label">Tipo de permissão</p>
                     <select id="edit-user-modal-select-usertype" onChange={this.onChangeUserPermissions}>
                         <option value="EDITOR">Editor</option>
                         <option value="ADMIN">Administrador</option>
                     </select>
 
-                    <input id="edit-user-modal-password" type="text" placeholder="Senha" 
+                    <p className="edit-user-modal-label">Login</p>
+                    <input id="edit-user-modal-login" type="text" placeholder="Insira o login" 
+                        onChange={this.onChangeLogin} />
+
+                    <p className="edit-user-modal-label">Senha</p>
+                    <input id="edit-user-modal-password" type="text" placeholder="Insira a senha" 
                         onChange={this.onChangePassword} />
 
                     <button onClick={this.props.onSaveClick.bind(this, 
