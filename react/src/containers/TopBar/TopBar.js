@@ -26,6 +26,9 @@ class TopBar extends PureComponent {
     let userAuthenticated = (
       <div className="topTopBar">
         <a onClick={this.props.logout}>Sair</a>
+        
+        <NavLink className="user-link" to='/settings' ><i className="fa fa-cog"></i> Configurações</NavLink>
+
         <a href={this.props.home} className="user-link">
           <i className="fa fa-user"></i> {this.props.user ? this.props.user.name : ''}</a>
       </div>

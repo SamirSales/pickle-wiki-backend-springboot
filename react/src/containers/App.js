@@ -9,6 +9,7 @@ import MarkDownHelp from '../components/MarkDownHelp/MarkDownHelp';
 import FullPost from '../components/FullPost/FullPost';
 import NotFoundPage from '../components/NotFoundPage/NotFoundPage';
 import PictureManager from '../containers/PictureManager/PictureManager';
+import Settings from '../containers/Settings/Settings';
 
 import { connect } from 'react-redux';
 import * as actionTypes from '../store/actions/actionTypes';
@@ -23,12 +24,14 @@ class App extends PureComponent {
     let newArticlePage = <Route path='/new-article' exact component={ArticleBuilder} />;
     let editUsers = <Route path='/user-editor' exact component={UserManager} />;
     let pictureManager = <Route path='/picture-manager' exact component={PictureManager} />;
+    let settings = <Route path='/settings' exact component={Settings} />;
 
     if(this.props.usr == null){
       editArticlePage = <Redirect exact from='/edit-article' to='/welcome' />;
       newArticlePage = <Redirect exact from='/new-article' to='/welcome' />;
       editUsers = <Redirect exact from='/user-editor' to='/welcome'/>;
       pictureManager = <Redirect exact from='/picture-manager' to='/welcome'/>;
+      settings = <Redirect exact from='/settings' to='/welcome'/>;
 
     }else if(!util.userHasPermission(this.props.usr, 'ADMIN')){
       editUsers = <Redirect exact from='/user-editor' to='/welcome'/>;
@@ -50,6 +53,7 @@ class App extends PureComponent {
             {newArticlePage}
             {editUsers}
             {pictureManager}
+            {settings}
 
             <Route component={NotFoundPage} />
           </Switch>        
