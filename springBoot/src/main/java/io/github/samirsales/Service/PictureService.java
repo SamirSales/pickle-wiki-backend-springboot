@@ -1,8 +1,11 @@
 package io.github.samirsales.Service;
 
 import io.github.samirsales.Dao.PictureDao;
+import io.github.samirsales.Entity.Dto.PictureDTO;
+import io.github.samirsales.Entity.Dto.UserDTO;
 import io.github.samirsales.Entity.Enum.PictureType;
 import io.github.samirsales.Entity.Picture;
+import io.github.samirsales.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +16,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PictureService {
@@ -25,16 +30,18 @@ public class PictureService {
     @Value("${uploading.image.path}")
     private String imagePath;
 
-    public Picture getPictureById(Long id) {
-        return pictureDao.getPictureById(id);
+    public PictureDTO getPictureById(Long id) {
+        return new PictureDTO(pictureDao.getPictureById(id));
     }
 
-    public List<Picture> getAll() {
-        return pictureDao.getAll();
+    public List<PictureDTO> getAll() {
+        Collection<Picture> pictures = pictureDao.getAll();
+        return pictures.parallelStream().map(PictureDTO::new).collect(Collectors.toList());
     }
 
-    public List<Picture> getPicturesBySearch(String search) {
-        return pictureDao.getPicturesBySearch(search);
+    public List<PictureDTO> getPicturesBySearch(String search) {
+        Collection<Picture> pictures = pictureDao.getPicturesBySearch(search);
+        return pictures.parallelStream().map(PictureDTO::new).collect(Collectors.toList());
     }
 
     public Picture insertPicture(MultipartFile file, String fileName, String pictureType) throws IOException {

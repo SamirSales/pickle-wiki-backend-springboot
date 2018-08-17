@@ -1,5 +1,6 @@
 package io.github.samirsales.Controller;
 
+import io.github.samirsales.Entity.Dto.PictureDTO;
 import io.github.samirsales.Entity.Picture;
 import io.github.samirsales.Service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,13 @@ public class PictureController {
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(method = RequestMethod.GET)
-    public Collection<Picture> getAllPictures(){
+    public Collection<PictureDTO> getAllPictures(){
         return pictureService.getAll();
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Picture getPictureById(@PathVariable("id") long id){
+    public PictureDTO getPictureById(@PathVariable("id") long id){
         return pictureService.getPictureById(id);
     }
 
@@ -55,7 +56,7 @@ public class PictureController {
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(value = "/search/{search}", method = RequestMethod.GET)
-    public Collection<Picture>  getPicturesBySearch(@PathVariable("search") String search){
+    public Collection<PictureDTO>  getPicturesBySearch(@PathVariable("search") String search){
         return pictureService.getPicturesBySearch(search);
     }
 }

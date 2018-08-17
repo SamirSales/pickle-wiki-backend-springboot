@@ -133,7 +133,7 @@ class PictureManager extends Component {
         let thumbnails = this.state.pictures.map(pic => {
             return (
                 <Thumbnail key={pic._id} 
-                    fileName={pic._id+"."+pic.fileExtension} 
+                    fileName={pic.thumbFileName} 
                     alt={pic.name} 
                     onClick={this.imageModal.bind(this, pic)} />);
         });
@@ -159,9 +159,9 @@ class PictureManager extends Component {
                     cancel={this.cancelConfirmModal.bind(this)} />
 
                 <ImageModal active={this.state.activeImageModal} 
-                    title={this.state.selectedPicture ? this.state.selectedPicture.label : null}
+                    title={this.state.selectedPicture ? this.state.selectedPicture.name : null}
                     cancel={this.cancelImageModal}
-                    src={this.state.selectedPicture ? this.state.selectedPicture._id+'.'+this.state.selectedPicture.fileExtension : null}
+                    src={this.state.selectedPicture ? this.state.selectedPicture.fileName : null}
                     clickDelete={this.onConfirmDeleteImageModal.bind(this)} />
 
                 <div className='text-editor-markdown'>
