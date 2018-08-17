@@ -74,7 +74,7 @@ public class PictureService {
     public void removePictureById(long id) throws IOException {
         Picture picture = pictureDao.getPictureById(id);
         if(picture != null){
-            File file = new File(imagePath+"/"+picture.getFileExtension());
+            File file = new File(imagePath+"/"+picture.get_id()+"."+picture.getFileExtension());
             Files.deleteIfExists(file.toPath());
             pictureDao.removePictureById(id);
         }

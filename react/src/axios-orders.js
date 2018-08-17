@@ -83,3 +83,8 @@ export const deletePicture = function(token, fileId){
     return axios.delete(url + '/pictures/'+fileId,
     {headers: {'Authorization': token}});
 }
+
+export const updatePicture = function(picture, token){
+    return axios.put(url + '/pictures/', picture,
+    {headers: {'Authorization': token}});
+}

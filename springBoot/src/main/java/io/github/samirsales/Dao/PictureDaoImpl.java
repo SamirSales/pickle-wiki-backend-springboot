@@ -38,7 +38,6 @@ public class PictureDaoImpl implements PictureDao {
 
     @Override
     public void removePictureById(long id) {
-//        pictureRepository.deleteBy_id(id);
         pictureRepository.deleteById(id);
     }
 
