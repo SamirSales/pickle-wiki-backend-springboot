@@ -23,7 +23,7 @@ class ImageModal extends PureComponent {
                 
                 <div className="image-modal-content" 
                     style={{display: display, marginTop: marginTop}} >
-                    <img src={src} height="350" width="350" alt={this.props.title}/>    
+                    <img src={src} alt={this.props.title}/>    
                     <h3>{this.props.title}</h3>
 
                     <div className="image-modal-buttons">

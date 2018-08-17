@@ -15,8 +15,11 @@ class Thumbnail extends PureComponent {
         const source = config.URL_IMAGES+"/"+this.props.fileName;
 
         return (
-            <div className="thumbnail-image" onClick={this.props.onClick}>             
-                <img src={source} alt={this.props.alt} height="90" width="90" />
+            <div className="thumbnail-image">    
+                <div className="thumbnail-image-img" onClick={this.props.onClick}>
+                    <img src={source} alt={this.props.alt} />
+                </div>         
+                
                 
                 <div className="thumbnail-image-label">
                     <a target="_blank" href={source}>{this.props.alt}</a>

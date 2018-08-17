@@ -168,7 +168,7 @@ class PictureManager extends Component {
                     <h1 className='simple-template-title'><i className="fa fa-image"></i> Imagens</h1>
                 </div>  
 
-                <div style={{marginTop: '10px'}}>
+                <div style={{marginTop: '5px'}}>
                     {thumbnails}
                 </div>           
 
@@ -182,7 +182,8 @@ class PictureManager extends Component {
                         
                         <br/> 
                     <input className='fileContainer' type="file" onChange={this.fileSelectedHandler} />
-                    <button className='article-btn article-btn-topic' onClick={this.imageUpload} >Enviar imagem</button>
+                    <button className='article-btn article-btn-topic' 
+                        onClick={this.imageUpload} >Enviar imagem</button>
                 </div>
                 
             </Aux>

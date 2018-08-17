@@ -6,6 +6,8 @@
     position: fixed;
     z-index: 120;
     /* margin-top: 60px; */
+    max-width: 350px;
+    max-height: 350px;
 }
 
 .image-modal-content h3{

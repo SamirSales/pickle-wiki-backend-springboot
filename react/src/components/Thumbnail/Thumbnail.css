@@ -1,20 +1,36 @@
 .thumbnail-image{
     display: inline-block;
-    margin: 5px;
+    margin: 0px 5px 5px 5px;
     cursor: pointer;
     position: relative;
+    vertical-align: top;
+}
+
+.thumbnail-image-img{
+    border: solid 1px #d0d0d0;
+    padding: 6px;
+    height: 90px;
+    width: 90px;
+    display: flex;
+}
+
+.thumbnail-image-img:hover{
+    border: solid 1px #a0a0a0;
 }
 
 .thumbnail-image img{
-    border: solid 1px #d0d0d0;
-    padding: 6px;
-
     opacity: 0.7;
     filter: alpha(opacity=70);
+
+    max-width: 90px;
+    max-height: 90px;
+    
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: auto;
 }
 
-.thumbnail-image img:hover{
-    border: solid 1px #a0a0a0;
+.thumbnail-image-img:hover img{
     opacity: 1;
     filter: alpha(opacity=100);
 }
