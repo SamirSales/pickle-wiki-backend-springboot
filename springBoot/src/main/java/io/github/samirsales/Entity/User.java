@@ -21,6 +21,8 @@ public class User extends AuditModel{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private Long pictureId;
+
     @NotNull
     @NotEmpty
     @Column(nullable = false)
@@ -138,5 +140,13 @@ public class User extends AuditModel{
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Long getPictureId() {
+        return pictureId;
+    }
+
+    public void setPictureId(Long pictureId) {
+        this.pictureId = pictureId;
     }
 }

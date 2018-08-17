@@ -54,6 +54,7 @@ class PictureManager extends Component {
                 const fd = new FormData();
                 fd.append('file', this.state.selectedUploadFile);
                 fd.append('fileName', this.state.fileName);
+                fd.append("pictureType", "DEFAULT");
 
                 axios.addPicture(this.props.tkn, fd).then(res => {
                     this.refreshImages();
@@ -127,11 +128,13 @@ class PictureManager extends Component {
     }
 
     render() {
+        console.log("this.state.pictures", this.state.pictures);
+
         let thumbnails = this.state.pictures.map(pic => {
             return (
                 <Thumbnail key={pic._id} 
-                    fileName={pic.fileName} 
-                    alt={pic.label} 
+                    fileName={pic._id+"."+pic.fileExtension} 
+                    alt={pic.name} 
                     onClick={this.imageModal.bind(this, pic)} />);
         });
 
@@ -158,7 +161,7 @@ class PictureManager extends Component {
                 <ImageModal active={this.state.activeImageModal} 
                     title={this.state.selectedPicture ? this.state.selectedPicture.label : null}
                     cancel={this.cancelImageModal}
-                    src={this.state.selectedPicture ? this.state.selectedPicture.fileName : null}
+                    src={this.state.selectedPicture ? this.state.selectedPicture._id+'.'+this.state.selectedPicture.fileExtension : null}
                     clickDelete={this.onConfirmDeleteImageModal.bind(this)} />
 
                 <div className='text-editor-markdown'>

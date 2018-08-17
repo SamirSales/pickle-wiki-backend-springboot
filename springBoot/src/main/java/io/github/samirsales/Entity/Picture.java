@@ -1,9 +1,8 @@
 package io.github.samirsales.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import io.github.samirsales.Entity.Enum.PictureType;
+
+import javax.persistence.*;
 
 @Entity(name = "pictures")
 public class Picture {
@@ -12,28 +11,29 @@ public class Picture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long _id;
 
-    // image's title used for image research by text
-    private String label;
+    private String name;
+    private String fileExtension;
 
-    private String fileName;
+    @Enumerated(EnumType.STRING)
+    private PictureType pictureType;
 
-    public Picture(Long _id, String label, String fileName) {
+    public Picture(Long _id, String name, String fileExtension) {
         this._id = _id;
-        this.label = label;
-        this.fileName = fileName;
+        this.name = name;
+        this.fileExtension = fileExtension;
     }
 
     public Picture(){
-        this.label = "default label";
-        this.fileName = "default file name";
+        this.name = "default name";
+        this.fileExtension = ".png"; //default
     }
 
-    public String getLabel() {
-        return label;
+    public String getName() {
+        return name;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long get_id() {
@@ -44,11 +44,19 @@ public class Picture {
         this._id = _id;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFileExtension() {
+        return fileExtension;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
+    }
+
+    public PictureType getPictureType() {
+        return pictureType;
+    }
+
+    public void setPictureType(PictureType pictureType) {
+        this.pictureType = pictureType;
     }
 }

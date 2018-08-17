@@ -48,7 +48,7 @@ public class FakePictureDaoImpl implements PictureDao {
         ArrayList<Picture> pictureArrayList = new ArrayList<>();
 
         for(Picture picture : pictures){
-            if(picture.getLabel().toLowerCase().contains(search.toLowerCase())){
+            if(picture.getName().toLowerCase().contains(search.toLowerCase())){
                 pictureArrayList.add(picture);
             }
         }

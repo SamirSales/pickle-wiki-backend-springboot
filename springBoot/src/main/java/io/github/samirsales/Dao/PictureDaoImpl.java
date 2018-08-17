@@ -1,5 +1,6 @@
 package io.github.samirsales.Dao;
 
+import io.github.samirsales.Entity.Enum.PictureType;
 import io.github.samirsales.Entity.Picture;
 import io.github.samirsales.Repository.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,12 @@ public class PictureDaoImpl implements PictureDao {
 
     @Override
     public List<Picture> getAll() {
-        return (List<Picture>) pictureRepository.findAll();
+        return (List<Picture>) pictureRepository.findByPictureType(PictureType.DEFAULT);
     }
 
     @Override
     public List<Picture> getPicturesBySearch(String search) {
-        return (List<Picture>) pictureRepository.findByLabelContaining(search);
+        return (List<Picture>) pictureRepository.findByNameContaining(search);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class PictureDaoImpl implements PictureDao {
 
     @Override
     public void removePictureById(long id) {
-        pictureRepository.deleteById(id);
+        pictureRepository.deleteBy_id(id);
     }
 
     @Override

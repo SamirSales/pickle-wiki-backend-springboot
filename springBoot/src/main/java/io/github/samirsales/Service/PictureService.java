@@ -1,6 +1,7 @@
 package io.github.samirsales.Service;
 
 import io.github.samirsales.Dao.PictureDao;
+import io.github.samirsales.Entity.Enum.PictureType;
 import io.github.samirsales.Entity.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,13 +37,14 @@ public class PictureService {
         return pictureDao.getPicturesBySearch(search);
     }
 
-    public Picture insertPicture(MultipartFile file, String fileName) throws IOException {
+    public Picture insertPicture(MultipartFile file, String fileName, String pictureType) throws IOException {
 
         Picture picture = pictureDao.insertPicture(new Picture());
-        picture.setLabel(fileName);
-        picture.setFileName(picture.get_id()+"."+getFileExtension(file.getOriginalFilename()));
+        picture.setName(fileName);
+        picture.setPictureType(pictureType.equals("PROFILE") ? PictureType.PROFILE : PictureType.DEFAULT);
+        picture.setFileExtension(getFileExtension(file.getOriginalFilename()));
 
-        String path = imagePath+"/"+picture.getFileName();
+        String path = imagePath+"/"+picture.get_id()+"."+picture.getFileExtension();
         File convertFile = new File(path);
 
         pictureDao.updatePicture(picture);
@@ -65,7 +67,7 @@ public class PictureService {
     public void removePictureById(long id) throws IOException {
         Picture picture = pictureDao.getPictureById(id);
         if(picture != null){
-            File file = new File(imagePath+"/"+picture.getFileName());
+            File file = new File(imagePath+"/"+picture.getFileExtension());
             Files.deleteIfExists(file.toPath());
             pictureDao.removePictureById(id);
         }
