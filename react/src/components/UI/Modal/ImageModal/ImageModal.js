@@ -23,12 +23,17 @@ class ImageModal extends PureComponent {
                 
                 <div className="image-modal-content" 
                     style={{display: display, marginTop: marginTop}} >
-                    <img src={src} alt={this.props.title}/>    
-                    <h3>{this.props.title}</h3>
+
+                    <div className="image-modal-content-img">
+                        <img src={src} alt={this.props.title}/>
+                    </div>
+
+                    <input type="text" value={this.props.title} />                    
 
                     <div className="image-modal-buttons">
-                        <div onClick={this.props.clickDelete}><i className="fa fa-trash"></i> Remover</div>       
-                        <div onClick={this.props.cancel}><i className="fa fa-times"></i> Fechar</div>
+                        <div onClick={this.props.cancel}><i className="fa fa-edit"></i></div>
+                        <div onClick={this.props.clickDelete}><i className="fa fa-trash"></i></div>       
+                        <div onClick={this.props.cancel}><i className="fa fa-times"></i></div>
                     </div>
                 </div>
             </Aux> 
