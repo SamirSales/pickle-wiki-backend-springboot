@@ -11,9 +11,7 @@ class ImageModal extends PureComponent {
         inputValue: ""
     }
 
-
     componentDidUpdate(prevProps, prevState){
-
         if(!prevProps.active && this.props.active){
             this.setState({inputValue: this.props.title})
         }
@@ -23,6 +21,10 @@ class ImageModal extends PureComponent {
         this.setState({
             inputValue: event.target.value
         })
+    }
+
+    clickEdit = () =>{
+        this.props.clickEdit(this.state.inputValue);
     }
 
     render(){
@@ -49,7 +51,7 @@ class ImageModal extends PureComponent {
                     <input type="text" value={this.state.inputValue} onChange={this.onChangeEvent} />                    
 
                     <div className="image-modal-buttons">
-                        <div onClick={this.props.cancel}><i className="fa fa-edit"></i></div>
+                        <div onClick={this.clickEdit}><i className="fa fa-edit"></i></div>
                         <div onClick={this.props.clickDelete}><i className="fa fa-trash"></i></div>       
                         <div onClick={this.props.cancel}><i className="fa fa-times"></i></div>
                     </div>

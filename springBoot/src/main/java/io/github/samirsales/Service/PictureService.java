@@ -81,7 +81,11 @@ public class PictureService {
     }
 
     public void updatePicture(Picture picture) {
-        pictureDao.updatePicture(picture);
+        Picture pictureDB = pictureDao.getPictureById(picture.get_id());
+        if(pictureDB != null){
+            pictureDB.setName(picture.getName());
+            pictureDao.updatePicture(pictureDB);
+        }
     }
 
     private String getFileExtension(String fullName) {

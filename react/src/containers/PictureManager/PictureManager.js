@@ -91,9 +91,17 @@ class PictureManager extends Component {
         })
     }
 
-    deleteSelectedPicture = () =>{
-        console.log('delete', this.state.selectedPicture);
+    updateSelectedPicture = () =>{
+        axios.updatePicture(this.props.tkn, this.state.selectedPicture).then(res =>{
+            this.refreshImages();
+            this.cancelConfirmModal();
+            showSnackBar("Imagem atualizada com sucesso!");
+        }).catch(err => {
+            console.log("error", err);
+        });
+    }
 
+    deleteSelectedPicture = () =>{
         axios.deletePicture(this.props.tkn, this.state.selectedPicture._id).then(res =>{
             this.refreshImages();
             this.cancelConfirmModal();
@@ -117,6 +125,24 @@ class PictureManager extends Component {
         });
     }
 
+    onConfirmEditImageModal = (newName) =>{
+        this.cancelImageModal();
+        this.setState({
+            confirmModal: {
+                title: this.state.selectedPicture.name,
+                question: 'Tem certeza que deseja relizar essa edição?',
+                active: true,
+                clickActionConfirm: this.updateSelectedPicture.bind(this)
+            },
+            selectedPicture: {
+                name: newName,
+                pictureType: 'DEFAULT',
+                _id: this.state.selectedPicture._id,
+                fileExtension: null
+            }
+        });
+    }
+
     cancelImageModal = () => {
         this.setState({
             activeImageModal: false
@@ -130,8 +156,6 @@ class PictureManager extends Component {
     }
 
     render() {
-        console.log("this.state.pictures", this.state.pictures);
-
         let thumbnails = this.state.pictures.map(pic => {
             return (
                 <Thumbnail key={pic._id} 
@@ -164,6 +188,7 @@ class PictureManager extends Component {
                     title={this.state.selectedPicture ? this.state.selectedPicture.name : null}
                     cancel={this.cancelImageModal}
                     src={this.state.selectedPicture ? this.state.selectedPicture.fileName : null}
+                    clickEdit={this.onConfirmEditImageModal}
                     clickDelete={this.onConfirmDeleteImageModal.bind(this)} />
 
                 <div className='text-editor-markdown'>
