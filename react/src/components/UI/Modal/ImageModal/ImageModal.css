@@ -1,6 +1,5 @@
 .image-modal-content{
     margin-left: calc(50% - 495px);
-    /* width: 300px; */
     height: 385px; 
     z-index: 130;
     position: fixed;
@@ -12,9 +11,6 @@
 .image-modal-content-img{
     position: absolute;
     display: flex;
-    /* width: 30px; */
-    /* background-color: #c0c0c0; */
-
     width: 485px;
     height: 350px;
 }
@@ -43,7 +39,6 @@
     margin-top: 350px;
     display: inline-block;
     width: 135px;
-    /* background-color: coral; */
 }
 
 .image-modal-content .image-modal-buttons div{

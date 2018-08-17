@@ -92,7 +92,9 @@ class PictureManager extends Component {
     }
 
     deleteSelectedPicture = () =>{
-        axios.deletePicture(this.props.tkn, this.state.selectedPicture.id).then(res =>{
+        console.log('delete', this.state.selectedPicture);
+
+        axios.deletePicture(this.props.tkn, this.state.selectedPicture._id).then(res =>{
             this.refreshImages();
             this.cancelConfirmModal();
             showSnackBar("Imagem removida com sucesso!");
@@ -107,7 +109,7 @@ class PictureManager extends Component {
         this.cancelImageModal();
         this.setState({
             confirmModal: {
-                title: this.state.selectedPicture.label,
+                title: this.state.selectedPicture.name,
                 question: 'Tem certeza que deseja remover essa image?',
                 active: true,
                 clickActionConfirm: this.deleteSelectedPicture.bind(this)

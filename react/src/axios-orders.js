@@ -81,5 +81,5 @@ export const addPicture = function(token, file){
 
 export const deletePicture = function(token, fileId){
     return axios.delete(url + '/pictures/'+fileId,
-    {headers: {'Authorization': token, 'Content-Type':'multipart/form-data'}});
+    {headers: {'Authorization': token}});
 }

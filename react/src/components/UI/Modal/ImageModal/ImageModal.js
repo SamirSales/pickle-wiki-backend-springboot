@@ -7,6 +7,24 @@ import './ImageModal.css';
 
 class ImageModal extends PureComponent {
 
+    state = {
+        inputValue: ""
+    }
+
+
+    componentDidUpdate(prevProps, prevState){
+
+        if(!prevProps.active && this.props.active){
+            this.setState({inputValue: this.props.title})
+        }
+    }
+
+    onChangeEvent = event =>{
+        this.setState({
+            inputValue: event.target.value
+        })
+    }
+
     render(){
         let src = null;
 
@@ -28,7 +46,7 @@ class ImageModal extends PureComponent {
                         <img src={src} alt={this.props.title}/>
                     </div>
 
-                    <input type="text" value={this.props.title} />                    
+                    <input type="text" value={this.state.inputValue} onChange={this.onChangeEvent} />                    
 
                     <div className="image-modal-buttons">
                         <div onClick={this.props.cancel}><i className="fa fa-edit"></i></div>
