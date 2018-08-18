@@ -11,7 +11,12 @@ class LoginModal extends PureComponent {
         password: ''
     }
 
-    componentDidUpdate(){
+    componentDidUpdate(prevProps, prevState){
+
+        if(!prevProps.active && this.props.active){
+            document.getElementById("inputLoginModal").focus();
+        }
+
         if(!this.props.active){
             this.setState({
                 login: '',
