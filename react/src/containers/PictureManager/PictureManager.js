@@ -159,7 +159,8 @@ class PictureManager extends Component {
         let thumbnails = this.state.pictures.map(pic => {
             return (
                 <Thumbnail key={pic._id} 
-                    fileName={pic.thumbFileName} 
+                    thumbFileName={pic.thumbFileName} 
+                    fileName={pic.fileName}
                     alt={pic.name} 
                     onClick={this.imageModal.bind(this, pic)} />);
         });
@@ -195,9 +196,7 @@ class PictureManager extends Component {
                     <h1 className='simple-template-title'><i className="fa fa-image"></i> Imagens</h1>
                 </div>  
 
-                <div style={{marginTop: '5px'}}>
-                    {thumbnails}
-                </div>           
+                <div className="picture-manager-thumbnails">{thumbnails}</div>           
 
                 <br/>
 
@@ -206,10 +205,9 @@ class PictureManager extends Component {
                         value={this.state.fileName} 
                         placeholder="Nome do arquivo de imagem"
                         onChange={this.onFileNameChange} />
-                        
-                        <br/> 
                     <input className='fileContainer' type="file" onChange={this.fileSelectedHandler} />
-                    <button className='article-btn article-btn-topic' 
+                    
+                    <button className='article-btn article-btn-topic picture-manager-upload-button' 
                         onClick={this.imageUpload} >Enviar imagem</button>
                 </div>
                 
