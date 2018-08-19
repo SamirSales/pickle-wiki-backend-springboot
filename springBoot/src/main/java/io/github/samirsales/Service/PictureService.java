@@ -2,10 +2,9 @@ package io.github.samirsales.Service;
 
 import io.github.samirsales.Dao.PictureDao;
 import io.github.samirsales.Entity.Dto.PictureDTO;
-import io.github.samirsales.Entity.Dto.UserDTO;
 import io.github.samirsales.Entity.Enum.PictureType;
 import io.github.samirsales.Entity.Picture;
-import io.github.samirsales.Entity.User;
+import io.github.samirsales.ImageResizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,18 +29,22 @@ public class PictureService {
     @Value("${uploading.image.path}")
     private String imagePath;
 
+    private final String THUMBNAIL_FILE_INDICATOR = "_thumbnail";
+
     public PictureDTO getPictureById(Long id) {
-        return new PictureDTO(pictureDao.getPictureById(id));
+        return new PictureDTO(pictureDao.getPictureById(id), THUMBNAIL_FILE_INDICATOR);
     }
 
     public List<PictureDTO> getAll() {
         Collection<Picture> pictures = pictureDao.getAll();
-        return pictures.parallelStream().map(PictureDTO::new).collect(Collectors.toList());
+        return pictures.parallelStream().map((Picture picture) -> new PictureDTO(picture, THUMBNAIL_FILE_INDICATOR))
+                .collect(Collectors.toList());
     }
 
     public List<PictureDTO> getPicturesBySearch(String search) {
         Collection<Picture> pictures = pictureDao.getPicturesBySearch(search);
-        return pictures.parallelStream().map(PictureDTO::new).collect(Collectors.toList());
+        return pictures.parallelStream().map((Picture picture) -> new PictureDTO(picture, THUMBNAIL_FILE_INDICATOR))
+                .collect(Collectors.toList());
     }
 
     public Picture insertPicture(MultipartFile file, String fileName, String pictureType) throws IOException {
@@ -62,6 +65,14 @@ public class PictureService {
             FileOutputStream fout = new FileOutputStream(convertFile);
             fout.write(file.getBytes());
             fout.close();
+
+            // build thumbnail
+            ImageResizer imgResizer = new ImageResizer();
+            imgResizer.resize(
+                    imagePath+"/"+picture.get_id()+"."+picture.getFileExtension(),
+                    imagePath+"/"+picture.get_id()+ THUMBNAIL_FILE_INDICATOR + "." + picture.getFileExtension(),
+                    200);
+
         } catch (IOException ioException) {
             ioException.printStackTrace();
             removePictureById(picture.get_id());
@@ -75,7 +86,10 @@ public class PictureService {
         Picture picture = pictureDao.getPictureById(id);
         if(picture != null){
             File file = new File(imagePath+"/"+picture.get_id()+"."+picture.getFileExtension());
+            File fileThumbnail = new File(imagePath + "/" + picture.get_id()
+                    + THUMBNAIL_FILE_INDICATOR + "." + picture.getFileExtension());
             Files.deleteIfExists(file.toPath());
+            Files.deleteIfExists(fileThumbnail.toPath());
             pictureDao.removePictureById(id);
         }
     }
