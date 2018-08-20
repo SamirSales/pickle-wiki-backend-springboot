@@ -3,15 +3,21 @@ import React from 'react';
 import './UserItem.css';
 import logo from '../../assets/img/profile.png';
 import * as util from '../../utils';
+import * as config from '../../config';
 
 const userItem = ( props ) => {
 
     const userPermissions = util.userHasPermission(props.user, 'ADMIN') ? 'administrador' : 'editor';
 
+    const hasImageProfile = props.user && props.user.pictureFileName && props.user.pictureFileName.trim() !== "";
+    const imageSrc = hasImageProfile ? 
+        config.URL_IMAGES_PROFILE + '/' + props.user.pictureFileName +"?t="+ new Date().getTime() :
+        logo;
+
     return (
         <div className="userItem">            
             <div className="user-item-div-image">
-                <img src={logo} alt="Icon de usuário" height="47" width="47"/>
+                <img src={imageSrc} alt="Icon de usuário" height="47" width="47"/>
             </div>
 
             <div className="user-item-div-info">

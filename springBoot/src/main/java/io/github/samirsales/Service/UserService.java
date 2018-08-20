@@ -5,13 +5,18 @@ import io.github.samirsales.Entity.Dto.UserDTO;
 import io.github.samirsales.Entity.Enum.PermissionType;
 import io.github.samirsales.Entity.User;
 import io.github.samirsales.Exception.AuthorizationException;
+import io.github.samirsales.ImageResizer;
 import io.github.samirsales.Security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,6 +28,9 @@ public class UserService {
     @Autowired
     @Qualifier("postgres")
     private UserDao userDao;
+
+    @Value("${uploading.image.path.profiles}")
+    private String imagePath;
 
     public static UserSS authenticated(){
         try{
@@ -102,18 +110,45 @@ public class UserService {
         return new UserDTO(userSaved);
     }
 
-    public UserDTO userPicture(MultipartFile file) {
+    public UserDTO userPicture(MultipartFile file) throws IOException {
         UserSS userSS = UserService.authenticated();
 
         if(userSS == null ){
             throw new AuthorizationException("Access Denied");
         }
-
         User savedUser = this.userDao.getUserById(userSS.getId());
-//        savedUser.setPictureFileName(user.getPictureFileName());
+
+        String fileName = savedUser.getId()+"."+getFileExtension(file.getOriginalFilename());
+        String path = imagePath+"/"+fileName;
+        File convertFile = new File(path);
+
+        System.out.println(path);
+
+        try {
+            convertFile.createNewFile();
+            FileOutputStream fout = new FileOutputStream(convertFile);
+            fout.write(file.getBytes());
+            fout.close();
+
+            ImageResizer imgResizer = new ImageResizer();
+            imgResizer.resize(path, path,300);
+
+            savedUser.setPictureFileName(fileName);
+            this.userDao.updateUser(savedUser);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+            throw ioException;
+        }
 
         return new UserDTO(savedUser);
     }
 
-
+    private String getFileExtension(String fullName) {
+        if(fullName.isEmpty()){
+            return "";
+        }
+        String fileName = new File(fullName).getName();
+        int dotIndex = fileName.lastIndexOf('.');
+        return (dotIndex == -1) ? "" : fileName.substring(dotIndex + 1);
+    }
 }

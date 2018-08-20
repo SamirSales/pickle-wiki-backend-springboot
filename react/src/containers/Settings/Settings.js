@@ -14,6 +14,7 @@ import logo from '../../assets/img/profile.png';
 import * as actionCreators from '../../store/actions/index';
 import * as axios from '../../axios-orders';
 import * as cookie from '../../cookie-handler';
+import * as config from '../../config';
 
 class Settings extends Component {
 
@@ -31,7 +32,10 @@ class Settings extends Component {
         active: false
       },
       loading: false,
-      imageFileName: null,
+      
+      selectedUploadFile: null,
+
+      imageSrc: logo,
       pictureFileName: '',
       name: '',
       gender: 'MALE',
@@ -47,7 +51,7 @@ class Settings extends Component {
         this.props.onToken(token);
         axios.getAuthUser(cookie.getToken()).then(res =>{
             const userAuth = res.data;
-            console.log('userAuth', userAuth);
+            // console.log('userAuth', userAuth);
             this.props.onLogin(userAuth);
 
             this.setState({
@@ -55,8 +59,9 @@ class Settings extends Component {
               gender: userAuth.gender,
               login: userAuth.login,
               email: userAuth.email,
+              user: userAuth
             });
-
+            this.updateImage();
         }).catch(err =>{
             // console.log('Sessão expirou.', err);
         });
@@ -82,7 +87,10 @@ class Settings extends Component {
         axios.userSetting(updateUser, cookie.getToken()).then(res => {
           const user = res.data;
           this.props.onLogin(user);
-          this.setState({loading: false});
+          this.setState({
+            loading: false,
+            user: user
+          });
           showSnackBar("Alterações realizadas com sucesso!");
         }).catch(err => {
           console.log("err", err);
@@ -94,8 +102,46 @@ class Settings extends Component {
 
     fileSelectedHandler = event =>{
       this.setState({
-        imageFileName: event.target.value
-      });
+        selectedUploadFile: event.target.files[0],
+    });
+    }
+
+    imageUpload = () =>{
+      if(this.state.selectedUploadFile){
+        
+        this.setState({loading: true});
+        const fd = new FormData();
+        fd.append('file', this.state.selectedUploadFile);
+
+        axios.userUploadPicture(cookie.getToken(), fd).then(res =>{
+          const user = res.data;
+          this.props.onLogin(user);
+          this.setState({
+            loading: false,
+            user: user
+          });
+          this.updateImage();
+        }).catch(err => {
+          console.log("err", err);
+          this.setState({loading: false});
+        });
+
+      }else{
+        showSnackBar("Nenhum arquivo foi selecionado.");
+      }
+    }
+
+    updateImage = () =>{
+      if(this.state.user && this.state.user.pictureFileName && this.state.user.pictureFileName.trim() !== ""){
+        this.setState({
+          imageSrc: config.URL_IMAGES_PROFILE + '/' + this.state.user.pictureFileName+"?t="+ new Date().getTime()
+        });
+        
+      }else{
+        this.setState({
+          imageSrc: logo
+        });
+      }
     }
 
     errorModal = (msg) =>{
@@ -166,8 +212,7 @@ class Settings extends Component {
       });
     }
 
-    render() {    
-      
+    render() {          
       return (
         <div className="settings-screen">
 
@@ -202,7 +247,7 @@ class Settings extends Component {
                 <h3>Imagem de avatar</h3>
                 
                 <div style={{width: '95px'}}>
-                    <img height="90" width="90" alt="Profile" src={logo}/>
+                    <img height="90" width="90" alt="Profile" src={this.state.imageSrc}/>
                 </div>
 
                 <div className="settings-screen-content-image">

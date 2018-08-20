@@ -50,10 +50,10 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
-    @RequestMapping(value = "/picture/upload",method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
-        userService.userPicture(file);
-        return new ResponseEntity<>("File is upload successfully", HttpStatus.OK);
+    @RequestMapping(value = "/update_picture", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public UserDTO uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
+        return userService.userPicture(file);
+//        return new ResponseEntity<>("File is upload successfully", HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")

@@ -46,7 +46,7 @@ export const userSetting = function(user, token){
 }
 
 export const userUploadPicture = function(token, file){
-    return axios.post(url + 'users/picture/upload', file,
+    return axios.post(url + '/users/update_picture', file,
     {headers: {'Authorization': token}});
 }
 
