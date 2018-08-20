@@ -85,7 +85,7 @@ public class FakeUserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserByLogin(String login) {
+    public User getUserByLogin(String login, boolean active) {
         Collection<User> users = this.users.values();
 
         for(User user : users){
@@ -119,7 +119,7 @@ public class FakeUserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserByEmail(String login) {
+    public User getUserByEmail(String login, boolean active) {
         return null;
     }
 

@@ -96,11 +96,11 @@ public class UserService {
 
         String password = ""+userSaved.getPassword();
 
-        if(this.userDao.getUserByLogin(user.getLogin()) == null){
+        if(this.userDao.getUserByLogin(user.getLogin(), false) == null){
             userSaved.setLogin(user.getLogin());
         }
 
-        if(this.userDao.getUserByEmail(user.getEmail()) == null){
+        if(this.userDao.getUserByEmail(user.getEmail(), false) == null){
             userSaved.setEmail(user.getEmail());
         }
 

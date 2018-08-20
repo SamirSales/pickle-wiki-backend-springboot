@@ -9,9 +9,9 @@ public interface UserDao {
 
     User getUserById(long id);
 
-    User getUserByLogin(String login);
+    User getUserByLogin(String login, boolean active);
 
-    User getUserByEmail(String login);
+    User getUserByEmail(String login, boolean active);
 
     User getUserByAuthentication(User user);
 

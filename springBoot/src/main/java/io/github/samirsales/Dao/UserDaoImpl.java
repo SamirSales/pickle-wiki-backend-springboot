@@ -28,8 +28,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserByLogin(String login) {
-        User user = userRepository.findByLogin(login);
+    public User getUserByLogin(String login, boolean active) {
+        User user = active ? userRepository.findByLoginAndActiveTrue(login) : userRepository.findByLogin(login);
 
         if(user != null){
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -40,8 +40,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email);
+    public User getUserByEmail(String email, boolean active) {
+        User user = active ? userRepository.findByEmailAndActiveTrue(email) : userRepository.findByEmail(email);
 
         if(user != null){
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -53,7 +53,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByAuthentication(User user) {
-        User authUser = userRepository.findByLogin(user.getLogin());
+        User authUser = userRepository.findByLoginAndActiveTrue(user.getLogin());
 
         if(authUser != null && authUser.getPassword().equals(user.getPassword())){
 
