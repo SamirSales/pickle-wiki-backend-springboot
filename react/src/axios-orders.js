@@ -8,6 +8,8 @@ export default instance;
 
 const url = "http://localhost:8090";
 
+// users ------------------------------------------------
+
 // eslint-disable-next-line
 export const getUsers = function(token){
     return axios.get(url + '/users/',
@@ -38,7 +40,17 @@ export const deleteUser = function(id, token){
     {headers: {'Authorization': token}});
 }
 
-// articles
+export const userSetting = function(user, token){
+    return axios.put(url + '/users/setting', user,
+    {headers: {'Authorization': token}});
+}
+
+export const userUploadPicture = function(token, file){
+    return axios.post(url + 'users/picture/upload', file,
+    {headers: {'Authorization': token}});
+}
+
+// articles ------------------------------------------------
 
 export const getArticles = function(){
     return axios.get(url + '/articles/');
@@ -67,7 +79,7 @@ export const deleteArticle = function(id, token){
     {headers: {'Authorization': token}} );
 }
 
-// pictures
+// pictures ------------------------------------------------
 
 export const getPictures = function(token){
     return axios.get(url + '/pictures/',

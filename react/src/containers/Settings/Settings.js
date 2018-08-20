@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { getUsers, insertUser, updateUser, deleteUser } from "../../axios-orders";
 import { showSnackBar } from '../../containers/Layout/Layout';
 
 import ConfirmModal from '../../components/UI/Modal/ConfirmModal/ConfirmModal';
@@ -11,16 +10,15 @@ import './Settings.css';
 
 import * as util from '../../utils';
 import logo from '../../assets/img/profile.png';
- 
+
+import * as actionCreators from '../../store/actions/index';
+import * as axios from '../../axios-orders';
+import * as cookie from '../../cookie-handler';
+
 class Settings extends Component {
 
     state = {
-      users: [],
-      userModal: {
-        active: false,
-        title: '',
-        userToEdit: null
-      },
+      user: null,
       confirmModal: {
         title: '',
         question: '',
@@ -32,21 +30,72 @@ class Settings extends Component {
         message: 'Não foi possível se conectar ao servidor.',
         active: false
       },
-      loading: false
+      loading: false,
+      imageFileName: null,
+      pictureFileName: '',
+      name: '',
+      gender: 'MALE',
+      login: '',
+      email: ''
     }
 
     componentDidMount(){
-    //   this.setState({loading: true});
-    //   // eslint-disable-next-line
-    //   const users = getUsers(this.props.tkn).then(response => {
-    //     // console.log("users::", response.data);
-    //     this.setState({users: response.data});
-    //     this.setState({loading: false});
-    //   }).catch(error => {
-    //     console.log("error", error);
-    //     this.setState({loading: false});
-    //     this.errorModal('Não foi possível carregar usuários.');
-    //   });
+      // getting token from cookies
+      const token = cookie.getToken();
+
+      if(token !== null && token !== ''){
+        this.props.onToken(token);
+        axios.getAuthUser(cookie.getToken()).then(res =>{
+            const userAuth = res.data;
+            console.log('userAuth', userAuth);
+            this.props.onLogin(userAuth);
+
+            this.setState({
+              name: userAuth.name,
+              gender: userAuth.gender,
+              login: userAuth.login,
+              email: userAuth.email,
+            });
+
+        }).catch(err =>{
+            // console.log('Sessão expirou.', err);
+        });
+      }
+    }
+
+    updateUserData = () =>{
+
+      if(this.state.name.trim() === "" || this.state.login === "" || this.state.email === ""){
+        showSnackBar("Preencha todos os campos");
+      }else if(!util.validateEmail(this.state.email)){
+        showSnackBar("O formato de e-mail está incorreto.");
+      }else{
+        this.setState({loading: true});
+
+        const updateUser = {
+          name: this.state.name,
+          gender: this.state.gender,
+          login: this.state.login,
+          email: this.state.email
+        }
+
+        axios.userSetting(updateUser, cookie.getToken()).then(res => {
+          const user = res.data;
+          this.props.onLogin(user);
+          this.setState({loading: false});
+          showSnackBar("Alterações realizadas com sucesso!");
+        }).catch(err => {
+          console.log("err", err);
+          this.setState({loading: false});
+        });
+      }
+
+    }
+
+    fileSelectedHandler = event =>{
+      this.setState({
+        imageFileName: event.target.value
+      });
     }
 
     errorModal = (msg) =>{
@@ -65,110 +114,6 @@ class Settings extends Component {
           active: false
         }
       })
-    }
-
-    saveNewUser = (name, login, email, gender, password, permissions) => {
-      
-      if(name.trim() === '' || login.trim() === '' || email.trim() === '' || 
-        password.trim() === ''){
-        showSnackBar('Preencha todos os campos.');
-      
-      } else if(!util.validateEmail(email.trim())){
-        showSnackBar('Formatação de e-mail inválida.');
-      } else{
-
-        const user = {
-          id: this.state.userModal.userToEdit != null ? this.state.userModal.userToEdit.id : null,
-          name: name.trim(),
-          login: login.trim(),
-          email: email.trim(),
-          password: password.trim(),
-          gender: gender,
-          active: true,
-          permissions: permissions
-        };
-
-        // console.log("user to save", user);
-
-        this.setState({loading: true});
-
-        if(this.state.userModal.userToEdit == null){
-          // insert new user
-          insertUser(user, this.props.tkn).then(res => {
-            getUsers(this.props.tkn).then(response => {
-              this.setState({users: response.data});
-              this.setState({loading: false});
-              showSnackBar('Usuário inserido com sucesso!');
-            }).catch(error => {
-              this.setState({loading: false});
-              this.errorModal('Falha ao carregar usuários.');              
-            });
-          }).catch(error => {
-            console.log('error', error);
-            this.setState({loading: false});
-            this.errorModal('Falha ao inserir usuário.'); 
-          });
-
-        }else{
-          
-          // update user
-          updateUser(user, this.props.tkn).then(res => {
-            getUsers(this.props.tkn).then(response => {
-              this.setState({
-                users: response.data,
-                userModal: ({
-                  userToEdit: null
-                })
-              });
-
-              this.setState({loading: false});
-              showSnackBar('Usuário atualizado com sucesso!');
-            }).catch(error => {
-              this.setState({loading: false});
-              this.errorModal('Falha ao carregar usuários.');              
-            });
-          }).catch(error => {
-            console.log('error', error);
-            this.setState({loading: false});
-            this.errorModal('Falha ao atualizar usuário.');              
-          });
-        }
-
-        this.closeUserModal();
-      }
-    }
-
-    editUser = (user) => {
-      this.setState({
-        userModal: ({
-          active: true,
-          title: user.name,
-          userToEdit: user
-        })
-      });
-    }
-
-    removeUser = () => {  
-      this.setState({loading: true});
-
-      deleteUser(this.state.confirmModal.userToDelete.id, this.props.tkn).then(res =>{  
-        getUsers(this.props.tkn).then(response => {
-          this.setState({users: response.data});          
-        }).catch(error => {
-          console.log('error', error);
-          this.setState({loading: false});
-          this.errorModal('Falha ao carregar usuários.');              
-        });
-
-        this.setState({loading: false});
-        showSnackBar('Usuário removido com sucesso!');
-        this.closeConfirmModal();
-
-      }).catch(error => {
-        console.log('error', error);
-        this.setState({loading: false});
-        this.errorModal('Falha ao remover o usuário.');              
-      });
     }
 
     modalConfirmRemove = (user) => {
@@ -193,8 +138,32 @@ class Settings extends Component {
       });
     }
 
-    save = () =>{
+    updateUserPassword = () =>{
 
+    }
+
+    onChangeName = event => {
+      this.setState({
+        name: event.target.value
+      });
+    }
+
+    onChangeLogin = event => {
+      this.setState({
+        login: event.target.value
+      });
+    }
+
+    onChangeEmail = event => {
+      this.setState({
+        email: event.target.value
+      });
+    }
+
+    onChangeGender = event => {
+      this.setState({
+        gender: event.target.value
+      });
     }
 
     render() {    
@@ -252,7 +221,8 @@ class Settings extends Component {
             <div className="settings-screen-content">
                 <h3>Dados do usuário</h3>
                 <p className="edit-user-modal-label">Nome</p>
-                <input type="text" placeholder="Nome do usuário"></input>
+                <input type="text" placeholder="Nome do usuário" value={this.state.name}
+                  onChange={this.onChangeName}></input>
 
                 <p className="edit-user-modal-label">Gênero</p>
                 <select id="setting-user-select-gender" onChange={this.onChangeGender}>
@@ -261,13 +231,15 @@ class Settings extends Component {
                 </select>
 
                 <p className="edit-user-modal-label">Login</p>
-                <input type="text" placeholder="Login do usuário"></input>
+                <input type="text" placeholder="Login do usuário" value={this.state.login}
+                  onChange={this.onChangeLogin}></input>
 
                 <p className="edit-user-modal-label">E-mail</p>
-                <input type="text" placeholder="Email do usuário"></input>
+                <input type="text" placeholder="Email do usuário" value={this.state.email}
+                  onChange={this.onChangeEmail}></input>
 
                 <button className='article-btn article-btn-topic' 
-                    onClick={this.save.bind(this)} 
+                    onClick={this.updateUserData.bind(this)} 
                     style={{marginTop: '10px'}}>Salvar alteração de dados</button>
             </div>
 
@@ -283,7 +255,7 @@ class Settings extends Component {
                 <input type="password" placeholder="Confirmação da nova senha"></input>
 
                 <button className='article-btn article-btn-topic' 
-                    onClick={this.save.bind(this)} 
+                    onClick={this.updateUserPassword.bind(this)} 
                     style={{marginTop: '10px'}}>Salvar alteração de senha</button>
             </div>
           </div>
@@ -301,4 +273,13 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps)(Settings);
+const mapDispathToProps = dispatch => {
+  return{
+      onLogin: (usr) => dispatch(actionCreators.userLogin(usr)),
+      onToken: (tkn) => dispatch(actionCreators.token(tkn)),
+      getAppName: () => dispatch(actionCreators.appName()),
+      onAuth: (login, password) => dispatch(actionCreators.auth(login, password))
+  };
+}
+
+export default connect(mapStateToProps, mapDispathToProps, null, {pure:false})(Settings);

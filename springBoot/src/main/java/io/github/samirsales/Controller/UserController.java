@@ -4,9 +4,12 @@ import io.github.samirsales.Entity.Dto.UserDTO;
 import io.github.samirsales.Entity.User;
 import io.github.samirsales.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,6 +41,19 @@ public class UserController {
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateUser(@RequestBody User user){
         userService.updateUser(user);
+    }
+
+    @PreAuthorize("hasAnyRole('EDITOR')")
+    @RequestMapping(value = "/setting", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO dataUserConfig(@RequestBody User user){
+        return userService.dataUserConfig(user);
+    }
+
+    @PreAuthorize("hasAnyRole('EDITOR')")
+    @RequestMapping(value = "/picture/upload",method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
+        userService.userPicture(file);
+        return new ResponseEntity<>("File is upload successfully", HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")

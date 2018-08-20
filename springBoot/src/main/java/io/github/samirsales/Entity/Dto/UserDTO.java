@@ -13,6 +13,7 @@ public class UserDTO {
     private String login;
     private String email;
     private boolean active;
+    private String pictureFileName;
     private String gender;
     private List<Permission> permissions;
 
@@ -23,6 +24,7 @@ public class UserDTO {
         email = user.getEmail();
         active = user.isActive();
         gender = user.getGender().getValue();
+        pictureFileName = user.getPictureFileName();
 
         permissions = new ArrayList<>();
         for(Permission permission : user.getPermissions()){
@@ -86,4 +88,11 @@ public class UserDTO {
         this.permissions = permissions;
     }
 
+    public String getPictureFileName() {
+        return pictureFileName;
+    }
+
+    public void setPictureFileName(String pictureFileName) {
+        this.pictureFileName = pictureFileName;
+    }
 }

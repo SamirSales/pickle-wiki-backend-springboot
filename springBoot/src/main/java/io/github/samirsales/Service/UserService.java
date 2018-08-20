@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,4 +73,47 @@ public class UserService {
 
         return getUserById(userSS.getId());
     }
+
+    public UserDTO dataUserConfig(User user) {
+        UserSS userSS = UserService.authenticated();
+
+        if(userSS == null ){
+            throw new AuthorizationException("Access Denied");
+        }
+
+        User userSaved = this.userDao.getUserById(userSS.getId());
+
+        userSaved.setName(user.getName());
+        userSaved.setGender(user.getGender());
+
+        String password = ""+userSaved.getPassword();
+
+        if(this.userDao.getUserByLogin(user.getLogin()) == null){
+            userSaved.setLogin(user.getLogin());
+        }
+
+        if(this.userDao.getUserByEmail(user.getEmail()) == null){
+            userSaved.setEmail(user.getEmail());
+        }
+
+        userSaved.setPassword(password);
+        this.userDao.updateUser(userSaved);
+
+        return new UserDTO(userSaved);
+    }
+
+    public UserDTO userPicture(MultipartFile file) {
+        UserSS userSS = UserService.authenticated();
+
+        if(userSS == null ){
+            throw new AuthorizationException("Access Denied");
+        }
+
+        User savedUser = this.userDao.getUserById(userSS.getId());
+//        savedUser.setPictureFileName(user.getPictureFileName());
+
+        return new UserDTO(savedUser);
+    }
+
+
 }

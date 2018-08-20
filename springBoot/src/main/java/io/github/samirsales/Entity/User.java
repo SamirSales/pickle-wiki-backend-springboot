@@ -21,8 +21,6 @@ public class User extends AuditModel{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long pictureId;
-
     @NotNull
     @NotEmpty
     @Column(nullable = false)
@@ -39,6 +37,8 @@ public class User extends AuditModel{
     private String email;
 
     private boolean active;
+
+    private String pictureFileName;
 
     @NotEmpty
     private String password;
@@ -142,11 +142,11 @@ public class User extends AuditModel{
         this.active = active;
     }
 
-    public Long getPictureId() {
-        return pictureId;
+    public String getPictureFileName() {
+        return pictureFileName;
     }
 
-    public void setPictureId(Long pictureId) {
-        this.pictureId = pictureId;
+    public void setPictureFileName(String pictureFileName) {
+        this.pictureFileName = pictureFileName;
     }
 }

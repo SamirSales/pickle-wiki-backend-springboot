@@ -119,6 +119,11 @@ public class FakeUserDaoImpl implements UserDao {
     }
 
     @Override
+    public User getUserByEmail(String login) {
+        return null;
+    }
+
+    @Override
     public User getUserByAuthentication(User inputUser) {
 
         Collection<User> users = this.users.values();
