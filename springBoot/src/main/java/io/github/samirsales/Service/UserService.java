@@ -110,6 +110,23 @@ public class UserService {
         return new UserDTO(userSaved);
     }
 
+    public void setUserPassword(String currentPassword, String newPassword){
+        UserSS userSS = UserService.authenticated();
+
+        if(userSS == null) {
+            throw new AuthorizationException("Access Denied");
+        }
+
+        User savedUser = this.userDao.getUserById(userSS.getId());
+
+        if(savedUser == null || !savedUser.getPassword().equals(currentPassword)){
+            throw new AuthorizationException("Access Denied");
+        }
+
+        savedUser.setPassword(newPassword);
+        this.userDao.updateUser(savedUser);
+    }
+
     public UserDTO userPicture(MultipartFile file) throws IOException {
         UserSS userSS = UserService.authenticated();
 

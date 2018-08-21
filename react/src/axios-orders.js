@@ -50,6 +50,11 @@ export const userUploadPicture = function(token, file){
     {headers: {'Authorization': token}});
 }
 
+export const userPasswordUpdate = function(token, fields){
+    return axios.post(url + '/users/update_password', fields,
+    {headers: {'Authorization': token}});
+}
+
 // articles ------------------------------------------------
 
 export const getArticles = function(){

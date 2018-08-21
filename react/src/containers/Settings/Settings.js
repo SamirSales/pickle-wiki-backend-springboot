@@ -40,7 +40,11 @@ class Settings extends Component {
       name: '',
       gender: 'MALE',
       login: '',
-      email: ''
+      email: '',
+
+      currentPwd: '',
+      newPwd: '',
+      newPwdConfirmation: ''
     }
 
     componentDidMount(){
@@ -184,10 +188,6 @@ class Settings extends Component {
       });
     }
 
-    updateUserPassword = () =>{
-
-    }
-
     onChangeName = event => {
       this.setState({
         name: event.target.value
@@ -210,6 +210,49 @@ class Settings extends Component {
       this.setState({
         gender: event.target.value
       });
+    }
+
+    // ------------------------------------ Password Update
+
+    updateUserPassword = () =>{
+      
+      if(this.state.currentPwd.trim() !== '' && this.state.newPwd.trim() !== '' 
+        && this.state.newPwdConfirmation.trim() !== ''){
+
+          if(this.state.newPwd.trim() === this.state.newPwdConfirmation.trim()){
+
+            this.setState({loading: true});
+            const fd = new FormData();
+            fd.append('currentPassword', this.state.currentPwd);
+            fd.append('newPassword', this.state.newPwd);
+            axios.userPasswordUpdate(cookie.getToken(), fd).then(res =>{
+              
+              this.setState({currentPwd: '', newPwd: '', newPwdConfirmation: '', loading: false});
+              showSnackBar("Senha atualizada com sucesso!");
+            }).catch(err => {
+
+              this.setState({loading: false});
+              showSnackBar("Acesso negado");
+            });
+          }else{
+            showSnackBar("Erro de confirmação de senha.");
+          }
+      } else {
+        showSnackBar("Preencha todos os campos de senha");
+      }
+
+    }
+
+    onChangeCurrentPwd = event => {
+      this.setState({currentPwd : event.target.value});
+    }
+
+    onChangeNewPwd = event => {
+      this.setState({newPwd : event.target.value});
+    }
+
+    onChangeNewPwdConfirmation = event => {
+      this.setState({newPwdConfirmation : event.target.value});
     }
 
     render() {          
@@ -293,11 +336,19 @@ class Settings extends Component {
             <div className="settings-screen-content">
                 <h3>Alteração de senha</h3>
                 <p className="edit-user-modal-label">Senha atual</p>
-                <input type="password" placeholder="Senha atual"></input>
+                <input type="password" placeholder="Senha atual" 
+                  onChange={this.onChangeCurrentPwd}
+                  value={this.state.currentPwd} />
+
                 <p className="edit-user-modal-label">Nova senha</p>
-                <input type="password" placeholder="Nova senha"></input>
+                <input type="password" placeholder="Nova senha"
+                  onChange={this.onChangeNewPwd} 
+                  value={this.state.newPwd} />
+
                 <p className="edit-user-modal-label">Confirmação da nova senha</p>
-                <input type="password" placeholder="Confirmação da nova senha"></input>
+                <input type="password" placeholder="Confirmação da nova senha" 
+                  onChange={this.onChangeNewPwdConfirmation}
+                  value={this.state.newPwdConfirmation} />
 
                 <button className='article-btn article-btn-topic' 
                     onClick={this.updateUserPassword.bind(this)} 

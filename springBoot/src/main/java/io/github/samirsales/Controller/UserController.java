@@ -53,7 +53,14 @@ public class UserController {
     @RequestMapping(value = "/update_picture", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UserDTO uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
         return userService.userPicture(file);
-//        return new ResponseEntity<>("File is upload successfully", HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('EDITOR')")
+    @RequestMapping(value = "/update_password", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> updateUserPassword(@RequestParam("currentPassword") String currentPassword,
+                                                     @RequestParam("newPassword") String newPassword) throws Exception {
+        userService.setUserPassword(currentPassword, newPassword);
+        return new ResponseEntity<>("The user's password has been updated successfully", HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
