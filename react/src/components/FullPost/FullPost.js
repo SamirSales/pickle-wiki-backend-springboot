@@ -9,6 +9,7 @@ import Aux from '../../hoc/Aux/Aux';
 import './FullPost.css';
 
 import { connect } from 'react-redux';
+import * as config from '../../config';
 
 class FullPost extends Component{
 
@@ -21,7 +22,8 @@ class FullPost extends Component{
             question: '',
             active: false
         },
-        fullArticle: null
+        fullArticle: null,
+        lastEditor: null,
     }
 
     componentDidMount(){        
@@ -45,7 +47,8 @@ class FullPost extends Component{
                     articleId: res.data.id,
                     title: res.data.title,
                     body: res.data.body,
-                    fullArticle: res.data
+                    fullArticle: res.data,
+                    lastEditor: res.data.lastEditor
                 });
             }else{
                 this.notFoundArticle();
@@ -102,6 +105,26 @@ class FullPost extends Component{
         });
     }
 
+    formatDate(dateText) {
+        const monthNames = [
+          "janeiro", "fevereiro", "março",
+          "abril", "maio", "junho", "julho",
+          "agosto", "setembro", "outubro",
+          "novembro", "dezembro"
+        ];
+      
+        const date = new Date(dateText);
+        const day = date.getDay();
+        const monthIndex = date.getMonth();
+        const year = date.getFullYear();
+        const hour = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+      
+        return day + ' de ' + monthNames[monthIndex] + ' de ' + year + ' às ' 
+            + hour +':'+minutes+':'+seconds;
+    }
+
     render(){
         let editorsButtons = null;
 
@@ -110,6 +133,13 @@ class FullPost extends Component{
                 <i className="full-post-icon-link fa fa-edit" onClick={this.onEditClick}> editar artigo</i>
                 <i className="full-post-icon-link fa fa-trash" onClick={this.onModalConfirmRemove}> excluir artigo</i>
             </div>);
+        }
+
+        let imageEditor = null;
+
+        if(this.state.fullArticle && this.state.fullArticle.lastEditor){
+            const srcImg = config.URL_IMAGES_PROFILE + '/' + this.state.fullArticle.lastEditor.pictureFileName;
+            imageEditor = <img src={srcImg} height="55" width="55"/>
         }
 
         return (
@@ -130,7 +160,15 @@ class FullPost extends Component{
 
                     {editorsButtons}
                     
-                    <div className='text-editor-markdown'><ReactMarkdown source={this.state.body} /></div> 
+                    <div className='text-editor-markdown'>
+                        <ReactMarkdown source={this.state.body} />
+                    </div> 
+
+                    <div className='full-post-div-editor'>
+                        <div className="img-div">{imageEditor}</div>
+                        <div className="editor-name-div">Editado por <span className="highlight">{this.state.lastEditor ? this.state.lastEditor.name : ''}</span></div>
+                        <div className="date-article-div"><i>{this.state.fullArticle ? this.formatDate(this.state.fullArticle.updatedAt) : ''}</i></div>
+                    </div>
                 </div>
                                  
             </Aux>

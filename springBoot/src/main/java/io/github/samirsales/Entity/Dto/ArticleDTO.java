@@ -10,6 +10,7 @@ public class ArticleDTO {
     private String context;
     private String body;
     private String url;
+    private String updatedAt;
 
     private UserDTO lastEditor;
 
@@ -22,7 +23,14 @@ public class ArticleDTO {
         body = article.getBody();
         url = article.getUrl();
         active = article.isActive();
+
         lastEditor = new UserDTO(user);
+        lastEditor.setId(null);
+        lastEditor.setLogin("");
+        lastEditor.setId(null);
+        lastEditor.setPermissions(null);
+
+        updatedAt = article.getUpdatedAt().toString();
     }
 
     public Long getId() {
@@ -79,5 +87,13 @@ public class ArticleDTO {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

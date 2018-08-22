@@ -23,3 +23,37 @@
 .full-post-icon-link:active{
     background-color: #326fad;
 }
+
+.full-post-div-editor{
+    border-top: solid 1px #e0e0e0;
+    padding: 15px 0px;
+    margin: 30px 0px;
+}
+
+/* image editor */
+
+.full-post-div-editor .img-div{
+    float: left;
+    margin: 0px 10px 0px 0px;
+}
+
+.full-post-div-editor .img-div img{
+    border-radius: 50%;
+}
+
+ /* title editor */
+
+.full-post-div-editor .editor-name-div{
+    color: #555555;
+    padding: 5px 0px;
+    font-size: 15px;
+}
+
+.full-post-div-editor .editor-name-div .highlight{
+    color: #3270de;
+}
+
+.full-post-div-editor .date-article-div{
+    color: #777777;
+    font-size: 15px;
+}
