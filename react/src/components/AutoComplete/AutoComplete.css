@@ -37,7 +37,7 @@
 /* list */
 
 .div-autocomplete-list{
-    position: fixed;
+    position: absolute;
     width: 100%;
     max-width: 280px;
     background-color: #fefefe;
