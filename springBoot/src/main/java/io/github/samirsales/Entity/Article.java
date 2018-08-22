@@ -1,6 +1,7 @@
 package io.github.samirsales.Entity;
 
 import io.github.samirsales.Model.AuditModel;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ public class Article extends AuditModel{
     private String title;
     private String body;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NaturalId(mutable = true)
     private String url;
 
     private String context;

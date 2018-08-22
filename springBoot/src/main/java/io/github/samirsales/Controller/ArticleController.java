@@ -1,6 +1,7 @@
 package io.github.samirsales.Controller;
 
 import io.github.samirsales.Entity.Article;
+import io.github.samirsales.Entity.Dto.ArticleDTO;
 import io.github.samirsales.Service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,7 +23,7 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/{url}", method = RequestMethod.GET)
-    public Article getArticleByUrl(@PathVariable("url") String url){
+    public ArticleDTO getArticleByUrl(@PathVariable("url") String url){
         return articleService.getArticleByUrl(url);
     }
 

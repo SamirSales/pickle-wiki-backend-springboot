@@ -1,7 +1,12 @@
 package io.github.samirsales.Service;
 
 import io.github.samirsales.Dao.ArticleDao;
+import io.github.samirsales.Dao.UserDao;
 import io.github.samirsales.Entity.Article;
+import io.github.samirsales.Entity.Dto.ArticleDTO;
+import io.github.samirsales.Entity.User;
+import io.github.samirsales.Exception.AuthorizationException;
+import io.github.samirsales.Security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,6 +20,10 @@ public class ArticleService {
     @Qualifier("postgres")
     private ArticleDao articleDao;
 
+    @Autowired
+    @Qualifier("postgres")
+    private UserDao userDao;
+
     public Collection<Article> getAllArticles(){
         return articleDao.getAllArticles();
     }
@@ -27,8 +36,14 @@ public class ArticleService {
         return articleDao.getTopVisitedArticles(range);
     }
 
-    public Article getArticleByUrl(String url){
-        return this.articleDao.getArticleByUrl(url);
+    public ArticleDTO getArticleByUrl(String url){
+        Article article = this.articleDao.getArticleByUrl(url);
+
+        if(article != null){
+            User user = this.userDao.getUserById(article.getLastEditorId());
+            return new ArticleDTO(article, user);
+        }
+        return null;
     }
 
     public void removeArticleById(long id) {
@@ -36,10 +51,64 @@ public class ArticleService {
     }
 
     public void updateArticle(Article article){
+
+        UserSS userSS = UserService.authenticated();
+
+        if(userSS == null) {
+            throw new AuthorizationException("Access Denied");
+        }
+        article.setLastEditorId(userSS.getId());
+
+        StringBuilder urlSB = new StringBuilder(buildURL(article.getTitle()) + "-" + buildURL(article.getContext()));
+
+        int index = 1;
+
+        Article searchedArticle = this.articleDao.getArticleByUrl(urlSB.toString());
+        while (searchedArticle != null && !searchedArticle.getId().equals(article.getId())){
+            index++;
+            urlSB.append("-").append(index);
+        }
+        article.setUrl(urlSB.toString());
+        article.setActive(true);
+
+
         this.articleDao.updateArticle(article);
     }
 
     public void insertArticle(Article article) {
+
+        UserSS userSS = UserService.authenticated();
+
+        if(userSS == null) {
+            throw new AuthorizationException("Access Denied");
+        }
+        article.setLastEditorId(userSS.getId());
+
+        StringBuilder urlSB = new StringBuilder(buildURL(article.getTitle()) + "-" + buildURL(article.getContext()));
+
+        int index = 1;
+        while (this.articleDao.getArticleByUrl(urlSB.toString()) != null){
+            index++;
+            urlSB.append("-").append(index);
+        }
+        article.setUrl(urlSB.toString());
+        article.setActive(true);
+
         this.articleDao.insertArticle(article);
     }
+
+    private String buildURL(String text){
+        String[] arrayOfWords = text.toLowerCase().split(" ");
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(int i=0; i<arrayOfWords.length; i++){
+
+            if(i>0){
+                stringBuilder.append("-");
+            }
+            stringBuilder.append(arrayOfWords[i]);
+        }
+        return stringBuilder.toString();
+    }
+
 }
