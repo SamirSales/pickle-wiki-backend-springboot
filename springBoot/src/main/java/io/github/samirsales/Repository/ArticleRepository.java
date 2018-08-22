@@ -20,6 +20,6 @@ public interface ArticleRepository extends CrudRepository<Article, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM public.article "
             + "WHERE LOWER(unaccent(title)) LIKE '%' || LOWER(unaccent(:title)) || '%' "
-            + "OR LOWER(unaccent(context)) LIKE '%' || LOWER(unaccent(:context)) || '%'")
+            + "OR LOWER(unaccent(context)) LIKE '%' || LOWER(unaccent(:context)) || '%' ORDER BY title")
     public Collection<Article> find(@Param("title") String title, @Param("context") String context);
 }
