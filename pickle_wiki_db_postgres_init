@@ -1,0 +1,11 @@
+CREATE EXTENSION unaccent;
+
+INSERT INTO public.users(
+	id, created_at, updated_at, active, email, gender, login, name, password)
+	VALUES (1, '2018-08-13', '2018-08-13', true, 'admin@admin.com', 'MALE', 'admin', 'Administrator', 'admin');
+
+INSERT INTO public.permissions(id, permission_type) VALUES (1, 'ADMIN');
+INSERT INTO public.permissions(id, permission_type)VALUES (2, 'EDITOR');
+
+INSERT INTO public.user_permission(user_id, permission_id) VALUES (1, 1);
+INSERT INTO public.user_permission(user_id, permission_id) VALUES (1, 2);

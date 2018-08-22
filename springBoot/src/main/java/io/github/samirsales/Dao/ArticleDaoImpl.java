@@ -27,7 +27,8 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public Collection<Article> getArticlesBySearch(String search) {
-        return articleRepository.findByTitleContainingOrContextContaining(search, search);
+//        return articleRepository.findByTitleContainingIgnoreCaseOrContextContainingIgnoreCase(search, search);
+        return articleRepository.find(search,search);
     }
 
     @Override
