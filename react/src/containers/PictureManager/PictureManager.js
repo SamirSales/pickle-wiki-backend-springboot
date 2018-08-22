@@ -30,6 +30,7 @@ class PictureManager extends Component {
     }
 
     componentDidMount(){
+        document.title = "Imagens - Pickle Wiki";
         this.refreshImages();
       }
 

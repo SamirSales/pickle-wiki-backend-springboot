@@ -50,8 +50,11 @@ class FullPost extends Component{
                     fullArticle: res.data,
                     lastEditor: res.data.lastEditor
                 });
+
+                document.title = res.data.title + " - Pickle Wiki";
             }else{
                 this.notFoundArticle();
+                document.title = "Artigo não encontrado - Pickle Wiki";
             }
             
         }).catch(err =>{

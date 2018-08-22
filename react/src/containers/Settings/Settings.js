@@ -48,6 +48,7 @@ class Settings extends Component {
     }
 
     componentDidMount(){
+      document.title = "Configurações - Pickle Wiki";
       // getting token from cookies
       const token = cookie.getToken();
 

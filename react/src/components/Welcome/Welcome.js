@@ -30,6 +30,8 @@ const welcome = ( props ) => {
     "| Spring Boot | Back-end | Java | 2.0.2 |\r"+
     "| PostgreSQL | Banco de dados  | SQL | 9.5.13 |\r";
 
+    document.title = "Bem-vindo - Pickle Wiki";
+
     return (
         <div className='text-editor-markdown'><ReactMarkdown source={body} /><br/></div>
     )

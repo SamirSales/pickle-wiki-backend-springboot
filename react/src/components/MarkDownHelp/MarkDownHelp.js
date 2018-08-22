@@ -7,6 +7,10 @@ import earthImage from '../../assets/img/earth.png';
 
 class MarkDownHelp extends Component{
 
+    componentDidMount(){
+        document.title = "MarkDown - Pickle Wiki";
+    }
+
     state = {
         body: "# Markdown \r"+
             "Desenvolvido em 2004 por *John Gruber* e *Aaron Swartz* para simplificar a estruturação de um texto, "+

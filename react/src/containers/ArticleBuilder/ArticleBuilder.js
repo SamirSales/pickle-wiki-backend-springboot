@@ -31,7 +31,7 @@ class ArticleBuilder extends Component {
     }
 
     componentDidMount(){
-        
+        document.title = "Edição de Artigo - Pickle Wiki";
 
         if(this.props.location.state && this.props.location.state.article){
             const article = this.props.location.state.article;

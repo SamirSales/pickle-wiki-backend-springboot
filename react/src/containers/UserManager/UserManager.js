@@ -38,6 +38,8 @@ class UserManager extends Component {
     }
 
     componentDidMount(){
+      document.title = "Editores - Pickle Wiki";
+
       this.setState({loading: true});
       // eslint-disable-next-line
       const users = getUsers(this.props.tkn).then(response => {
