@@ -142,7 +142,7 @@ class FullPost extends Component{
 
         if(this.state.fullArticle && this.state.fullArticle.lastEditor){
             const srcImg = config.URL_IMAGES_PROFILE + '/' + this.state.fullArticle.lastEditor.pictureFileName;
-            imageEditor = <img src={srcImg} alt={this.state.fullArticle.lastEditor.name} height="55" width="55"/>
+            imageEditor = <img src={srcImg} alt={this.state.fullArticle.lastEditor.name} height="48" width="48"/>
         }
 
         return (

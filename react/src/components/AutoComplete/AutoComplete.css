@@ -54,11 +54,11 @@
 }
 
 .div-autocomplete-list .auto-complete-item:hover{
-    background-color: #e6ece7;
+    background-color: #90b775;
 }
 
-.auto-complete-selected-item{
-    background-color: #e6ece7;
+ .auto-complete-selected-item{
+    background-color: #90b775;
 }
 
 .div-autocomplete-list .auto-complete-item-title{
@@ -74,3 +74,6 @@
     color: #888888;
 }
 
+.auto-complete-item:hover .auto-complete-item-context, .auto-complete-selected-item .auto-complete-item-context{
+    color: #555555;
+}

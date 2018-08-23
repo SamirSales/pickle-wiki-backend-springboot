@@ -122,7 +122,7 @@ class AutoComplete extends PureComponent {
                     <div className="divSearch" style={{zIndex : zIndex}}>
 
                         <input type="text" id="auto-complete-input"
-                            placeholder="Pesquisar..."   
+                            placeholder="Pesquisa Pickle Wiki"   
                             onKeyUp={this.onKeyUp}                      
                             onClick={this.inputClick} onChange={this.search} />
 
