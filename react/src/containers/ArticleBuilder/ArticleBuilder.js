@@ -89,6 +89,10 @@ class ArticleBuilder extends Component {
         return result;
     }
 
+    modalImagePicker = () =>{
+        console.log("on image click...");
+    }
+
     submit = () =>{
         // console.log("submit", this.state);
 
@@ -184,6 +188,7 @@ class ArticleBuilder extends Component {
                     title={this.getTitle()} 
                     content={this.props.location.state ? this.props.location.state.article.body : ''}
                     onChangeBody={this.onChangeBody}
+                    onImageClick={this.modalImagePicker}
                     linkHelp="true"/>                
                 
                 <div style={{marginTop: '10px'}}>

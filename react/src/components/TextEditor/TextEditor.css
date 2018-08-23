@@ -65,8 +65,7 @@
 
 .text-editor-link-help{
     float: right;
-    margin-top: 6px;
-    margin-right: 4px;
+    margin: 6px 6px 0px 10px;
     color: #337ab7;
 }
 
@@ -208,3 +207,22 @@
     color: #555555;
     margin: 0px;
 }
+
+/* .text-editor-frame .link-button{
+    display: inline-block;
+    color: #337ab7;
+    max-height: 27px;
+    max-width: 20px;
+    font-size: 14px;
+
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    padding: 5px 6px 5px 5px;
+    margin: 0px 0px 2px 40%;
+
+    cursor: pointer;
+}
+
+.text-editor-frame .link-button:hover{
+    background-color: #f0f0f0;
+} */

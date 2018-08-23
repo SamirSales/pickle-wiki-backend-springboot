@@ -64,11 +64,18 @@ class TextEditor extends Component {
         }
 
         let linkHelp = null;
+        let linkButtonImagePicker = null;
 
         if(this.props.linkHelp){
             linkHelp = <Link className='text-editor-link-help' to='/mark-down-help' target="_blank">
                 <i className="fa fa-question-circle"></i></Link>;
+
+            linkButtonImagePicker = (
+                <a className="text-editor-link-help" onClick={this.props.onImageClick}><i className="fa fa-image"></i></a>
+            );
         }
+
+        
 
         return (
             <div className='text-editor-frame'>
@@ -80,7 +87,12 @@ class TextEditor extends Component {
                         className={this.state.shownPreview ? 'text-editor-div-tab-selected': ''} >
                         <i className="fa fa-eye"></i></button>
 
+                    
+
                     {linkHelp}
+
+                    {linkButtonImagePicker}
+
                 </div>
 
                 <div className='text-editor-div-content'>
