@@ -4,10 +4,12 @@
 }
 
 .user-editor-div-user-list{
-    height: 300px;
+    height: 62vh;
     overflow-y: scroll;
 }
 
 .user-editor-div-user-list > .empty-content-message{
-    margin-top: 130px;
+    color: #555555;
+    text-align: center;
+    margin-top: 20vh;
 }

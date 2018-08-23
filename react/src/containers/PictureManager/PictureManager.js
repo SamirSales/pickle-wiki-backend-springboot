@@ -167,7 +167,7 @@ class PictureManager extends Component {
         });
 
         if(this.state.pictures.length === 0){
-            thumbnails = <p className='empty-content-message'>Nenhuma imagem foi importada para esse artigo.</p>;
+            thumbnails = <p className='empty-content-message'><i>Nenhuma imagem foi importada para esse artigo.</i></p>;
         }
 
         return (

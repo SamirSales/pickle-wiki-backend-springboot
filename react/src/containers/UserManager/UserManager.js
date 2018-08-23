@@ -221,7 +221,7 @@ class UserManager extends Component {
           editAction={this.editUser.bind(this, user)} />;
       });
 
-      const emptyFieldMessage = <p className='empty-content-message'>Nenhum editor foi adicionado.</p>;
+      const emptyFieldMessage = <p className='empty-content-message'><i>Nenhum editor foi adicionado.</i></p>;
 
       return (
         <Aux>
@@ -259,7 +259,7 @@ class UserManager extends Component {
             <h1 className='simple-template-title'><i className="fa fa-users"></i> Editores</h1>
           </div>
           
-          <div className='article-builder-div-content user-editor-div-user-list' style={{marginTop: '10px'}}>
+          <div className='user-editor-div-user-list' style={{marginTop: '10px'}}>
             {users}
             {this.state.users.length === 0 ? emptyFieldMessage : null}
           </div>
