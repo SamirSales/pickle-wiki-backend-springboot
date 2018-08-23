@@ -28,7 +28,7 @@ public class PictureDaoImpl implements PictureDao {
 
     @Override
     public List<Picture> getPicturesBySearch(String search) {
-        return (List<Picture>) pictureRepository.findByNameContaining(search);
+        return (List<Picture>) pictureRepository.find(search);
     }
 
     @Override

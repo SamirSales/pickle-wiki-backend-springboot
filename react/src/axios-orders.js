@@ -105,3 +105,8 @@ export const updatePicture = function(token, picture){
     return axios.put(url + '/pictures/', picture,
     {headers: {'Authorization': token}});
 }
+
+export const getPicturesBySearch = function(token, search){
+    return axios.get(url + '/pictures/search/'+search,
+    {headers: {'Authorization': token}});
+}

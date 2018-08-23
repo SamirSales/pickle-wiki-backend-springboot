@@ -16,7 +16,15 @@ class TextEditor extends Component {
             this.setState({
                 content: this.props.content
             });
-        }        
+        }      
+    }
+
+    componentDidUpdate(){
+        if(this.state.content !== this.props.value){
+            this.setState({
+                content: this.props.value
+            });
+        }
     }
 
     updateContent(newContent) {
@@ -55,12 +63,15 @@ class TextEditor extends Component {
         let page = null;
 
         if(this.state.shownPreview){
-            page = <div className='text-editor-markdown'><ReactMarkdown source={this.getContent()} /></div>;
+        page = (<div className='text-editor-markdown'>
+                    <ReactMarkdown source={this.getContent()} />
+                </div>);
+
         }else{
             page = <textarea 
                 className='text-editor-textarea' 
                 onChange={this.onChangeContent}
-                defaultValue={this.state.content} />;
+                value={this.state.content} />;
         }
 
         let linkHelp = null;
@@ -71,11 +82,10 @@ class TextEditor extends Component {
                 <i className="fa fa-question-circle"></i></Link>;
 
             linkButtonImagePicker = (
-                <a className="text-editor-link-help" onClick={this.props.onImageClick}><i className="fa fa-image"></i></a>
+                <a className="text-editor-link-help" 
+                    onClick={this.props.onImageClick}><i className="fa fa-image"></i></a>
             );
-        }
-
-        
+        }       
 
         return (
             <div className='text-editor-frame'>
@@ -87,10 +97,7 @@ class TextEditor extends Component {
                         className={this.state.shownPreview ? 'text-editor-div-tab-selected': ''} >
                         <i className="fa fa-eye"></i></button>
 
-                    
-
                     {linkHelp}
-
                     {linkButtonImagePicker}
 
                 </div>

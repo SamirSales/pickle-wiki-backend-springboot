@@ -41,7 +41,7 @@ class FullPost extends Component{
 
     setPostByURL(url){
         getArticleByUrl(url).then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data !== ""){
                 this.setState({
                     articleId: res.data.id,

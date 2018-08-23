@@ -38,7 +38,7 @@ class Layout extends Component {
                 const userAuth = res.data;
                 this.props.onLogin(userAuth);
             }).catch(err =>{
-                // console.log('Sessão expirou.', err);
+                console.log('Usuário não logado', err);
             });
         }
     }

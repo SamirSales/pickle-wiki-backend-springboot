@@ -1,0 +1,41 @@
+.image-picker-modal{
+    position: fixed;
+    background-color: #fefefe;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: calc(100vw - 245px);
+    animation-name: animatezoom;
+    animation-duration: 0.4s;
+    z-index: 300; /* Sit on top */
+}
+
+.image-picker-modal input[type=text]{
+    width: calc(100% - 22px);
+    padding: 6px 10px;
+    border: solid 1px #bbbbbb;
+    border-radius: 4px;
+}
+
+.image-picker-modal input[type=text]:hover{
+    border-color: #aaaaaa;
+}
+
+.image-picker-modal input[type=text]:focus{
+    outline: -webkit-focus-ring-color auto 0px;
+    border-color: #38b0de;
+}
+
+.image-picker-modal .image-picker-thumbnails-content{
+    min-height: 100px;
+}
+
+.image-picker-thumbnails-content p.no-picture-found-msg{
+    color: #555555;
+    text-align: center;
+    margin-top: 13vh;
+}
+
+.image-picker-thumbnails-content{
+    margin-top: 10px;
+}

@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {insertArticle, putArticle, getArticleByUrl} from '../../axios-orders';
 import TextEditor from '../../components/TextEditor/TextEditor';
+import ImagePickerModal from '../../components/UI/Modal/ImagePickerModal/ImagePickerModal';
 import Aux from '../../hoc/Aux/Aux';
+
+import * as config from '../../config';
 import './ArticleBuilder.css';
 
 import { showSnackBar } from '../Layout/Layout';
@@ -27,7 +30,8 @@ class ArticleBuilder extends Component {
             title: 'Error',
             message: 'Não foi possível se conectar ao servidor.',
             active: false
-        }
+        },
+        imagePickerModalActive: false,
     }
 
     componentDidMount(){
@@ -90,7 +94,26 @@ class ArticleBuilder extends Component {
     }
 
     modalImagePicker = () =>{
-        console.log("on image click...");
+        this.setState({
+            imagePickerModalActive: true
+        });
+    }
+
+    closeModalImagePicker = () =>{
+        this.setState({
+            imagePickerModalActive: false
+        });
+    }
+
+    imagePickerModalThumbClick = (picture) =>{
+        
+        const updatedBody = this.state.body 
+            + "\r!["+picture.name+"](" + config.URL_IMAGES
+            + "/" + picture.fileName + ")";
+
+        this.setState({
+            body: updatedBody
+        });
     }
 
     submit = () =>{
@@ -154,9 +177,6 @@ class ArticleBuilder extends Component {
                     console.log("err...", err);
                 });
             }
-
-            
-
             
         }else{
             showSnackBar('Preencha todos os campos');
@@ -171,8 +191,17 @@ class ArticleBuilder extends Component {
     }
  
     render() {
+
+        // console.log("this.props", this.props);
+        const textEditorContent = this.props.location.state ? this.props.location.state.article.body : '';
+        
         return (
             <Aux>
+                <ImagePickerModal 
+                    active={this.state.imagePickerModalActive}
+                    thumbClick={this.imagePickerModalThumbClick}
+                    cancel={this.closeModalImagePicker} />
+
                 <div className='text-editor-markdown'>
                     <h1 className='simple-template-title'><i className="fa fa-edit"></i> {this.getTitle()}</h1>
                 </div>
@@ -186,8 +215,9 @@ class ArticleBuilder extends Component {
 
                 <TextEditor 
                     title={this.getTitle()} 
-                    content={this.props.location.state ? this.props.location.state.article.body : ''}
+                    content={textEditorContent}
                     onChangeBody={this.onChangeBody}
+                    value={this.state.body}
                     onImageClick={this.modalImagePicker}
                     linkHelp="true"/>                
                 

@@ -14,12 +14,10 @@ public interface ArticleRepository extends CrudRepository<Article, Long> {
 
     Collection<Article> findByActiveTrue();
 
-//    Collection<Article> findByTitleContainingIgnoreCaseOrContextContainingIgnoreCase(String title, String context);
-
     Article findByUrl(String url);
 
     @Query(nativeQuery = true, value = "SELECT * FROM public.article "
             + "WHERE LOWER(unaccent(title)) LIKE '%' || LOWER(unaccent(:search)) || '%' "
             + "OR LOWER(unaccent(context)) LIKE '%' || LOWER(unaccent(:search)) || '%' ORDER BY title")
-    public Collection<Article> find(@Param("search") String search);
+    Collection<Article> find(@Param("search") String search);
 }
