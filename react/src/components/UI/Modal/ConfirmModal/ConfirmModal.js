@@ -10,11 +10,11 @@ const confirmModal = ( props ) => {
             marginTop={props.marginTop}
             marginLeft={props.marginLeft}>
             
-            <h3>{props.title}</h3>
-            <p>{props.question}</p>
+            <h3 className="modal-confirm-title">{props.title}</h3>
+            <p className="modal-confirm-msg">{props.question}</p>
             <div className="buttons">
-                <button className="cancel" onClick={props.cancel}>Não</button>
-                <button onClick={props.confirm}>Sim</button>                    
+                <button onClick={props.cancel}>Não</button>
+                <button className="modal-confirm-btn-confirm" onClick={props.confirm}>Sim</button>                    
             </div>
         </Modal>        
     )
