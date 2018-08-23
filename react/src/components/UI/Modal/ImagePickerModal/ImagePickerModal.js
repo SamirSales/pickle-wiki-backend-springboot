@@ -14,6 +14,18 @@ class ImagePickerModal extends Component {
         thumbnails: null
     }
 
+    componentDidUpdate(prevProps, prevState){
+
+        if(!this.props.active && prevProps.active){
+            this.setState({
+                searchValue: "",
+                thumbnails: null
+            });
+
+            document.getElementById('image-picker-modal-search-input').value = "";
+        }
+    }
+
     onChangeSearch = event => {
         const search = event.target.value;
 
@@ -58,7 +70,8 @@ class ImagePickerModal extends Component {
                 
                 <div className="image-picker-modal" style={{ display: display}} >
 
-                    <input type="text" placeholder="Pesquisa de imagem..." 
+                    <input  id="image-picker-modal-search-input" 
+                        type="text" placeholder="Pesquisa de imagem..." 
                         onChange={this.onChangeSearch} 
                         value={this.searchValue} />
 

@@ -114,6 +114,8 @@ class ArticleBuilder extends Component {
         this.setState({
             body: updatedBody
         });
+
+        this.closeModalImagePicker();
     }
 
     submit = () =>{
