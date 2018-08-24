@@ -31,7 +31,7 @@ public class PictureDaoImpl implements PictureDao {
         return (List<Picture>) pictureRepository.find(search);
     }
 
-    @Override
+    @Override   
     public Picture insertPicture(Picture picture) {
         return pictureRepository.save(picture);
     }

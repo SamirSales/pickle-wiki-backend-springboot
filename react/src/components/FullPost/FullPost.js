@@ -115,9 +115,11 @@ class FullPost extends Component{
           "agosto", "setembro", "outubro",
           "novembro", "dezembro"
         ];
+        
+        console.log("dateText", dateText);
       
         const date = new Date(dateText);
-        const day = date.getDay();
+        const day = date.getDate();       
         const monthIndex = date.getMonth();
         const year = date.getFullYear();
         const hour = date.getHours();
@@ -145,6 +147,18 @@ class FullPost extends Component{
             imageEditor = <img src={srcImg} alt={this.state.fullArticle.lastEditor.name} height="48" width="48"/>
         }
 
+        let infoEdition = null;
+
+        if(this.state.articleId){
+            infoEdition = (
+                <div className='full-post-div-editor'>
+                    <div className="img-div">{imageEditor}</div>
+                    <div className="editor-name-div">Editado por <span className="highlight">{this.state.lastEditor ? this.state.lastEditor.name : ''}</span></div>
+                    <div className="date-article-div"><i>{this.state.fullArticle ? this.formatDate(this.state.fullArticle.updatedAt) : ''}</i></div>
+                </div>
+            );
+        }
+
         return (
             <Aux>
                 <ConfirmModal 
@@ -167,11 +181,7 @@ class FullPost extends Component{
                         <ReactMarkdown source={this.state.body} />
                     </div> 
 
-                    <div className='full-post-div-editor'>
-                        <div className="img-div">{imageEditor}</div>
-                        <div className="editor-name-div">Editado por <span className="highlight">{this.state.lastEditor ? this.state.lastEditor.name : ''}</span></div>
-                        <div className="date-article-div"><i>{this.state.fullArticle ? this.formatDate(this.state.fullArticle.updatedAt) : ''}</i></div>
-                    </div>
+                    {infoEdition}
                 </div>
                                  
             </Aux>
