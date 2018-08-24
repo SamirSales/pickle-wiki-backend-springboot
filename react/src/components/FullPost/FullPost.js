@@ -43,10 +43,15 @@ class FullPost extends Component{
         getArticleByUrl(url).then(res => {
             // console.log(res.data);
             if(res.data !== ""){
+
+                // replace tags by URLs 
+                const re = new RegExp(config.TAG_OF_ARTICLE_IMAGE, "g");
+                const bodySet = res.data.body.replace(re, config.URL_IMAGES);
+
                 this.setState({
                     articleId: res.data.id,
                     title: res.data.title,
-                    body: res.data.body,
+                    body: bodySet,
                     fullArticle: res.data,
                     lastEditor: res.data.lastEditor
                 });
@@ -115,8 +120,6 @@ class FullPost extends Component{
           "agosto", "setembro", "outubro",
           "novembro", "dezembro"
         ];
-        
-        console.log("dateText", dateText);
       
         const date = new Date(dateText);
         const day = date.getDate();       

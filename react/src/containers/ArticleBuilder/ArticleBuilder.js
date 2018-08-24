@@ -118,9 +118,7 @@ class ArticleBuilder extends Component {
         this.closeModalImagePicker();
     }
 
-    submit = () =>{
-        // console.log("submit", this.state);
-
+    submit = () => {
         // verify empty field
         if(this.state.title.trim() !== '' && this.state.context.trim() !== '' &&
             this.state.body.trim() !== ''){
@@ -128,13 +126,16 @@ class ArticleBuilder extends Component {
             // mount url
             const url = this.getURLFormat(this.state.title) + '-' 
                 + this.getURLFormat(this.state.context);
-            // console.log('url', url);
+
+            // replace URLs by tags
+            const re = new RegExp(config.URL_IMAGES, "g");
+            const bodySet = this.state.body.replace(re, config.TAG_OF_ARTICLE_IMAGE);
 
             const article = {
                 id: this.state.id,
                 title: this.state.title,
                 context: this.state.context,
-                body: this.state.body,
+                body: bodySet,
                 url: url,
                 pictures: this.state.pictures,
                 lastEditor: this.state.lastEditor,
