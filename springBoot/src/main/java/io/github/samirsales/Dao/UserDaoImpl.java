@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Collection<User> getAllUsers() {
-        return userRepository.findByActiveTrue();
+        return userRepository.findByActiveTrueOrderByName();
     }
 
     @Override

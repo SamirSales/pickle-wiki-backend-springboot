@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    Collection<User> findByActiveTrue();
+    Collection<User> findByActiveTrueOrderByName();
 
     User findByIdAndActiveTrue(Long id);
 

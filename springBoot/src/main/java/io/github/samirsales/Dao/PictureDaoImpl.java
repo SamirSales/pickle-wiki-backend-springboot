@@ -23,7 +23,7 @@ public class PictureDaoImpl implements PictureDao {
 
     @Override
     public List<Picture> getAll() {
-        return (List<Picture>) pictureRepository.findByPictureType(PictureType.DEFAULT);
+        return (List<Picture>) pictureRepository.findByPictureTypeOrderByName(PictureType.DEFAULT);
     }
 
     @Override

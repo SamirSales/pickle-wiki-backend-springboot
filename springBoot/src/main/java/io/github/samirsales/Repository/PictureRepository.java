@@ -16,7 +16,7 @@ public interface PictureRepository extends CrudRepository<Picture, Long> {
 
     Collection<Picture> findAll();
 
-    Collection<Picture> findByPictureType(PictureType pictureType);
+    Collection<Picture> findByPictureTypeOrderByName(PictureType pictureType);
 
     Collection<Picture> findByNameContaining(String search);
 
