@@ -42,6 +42,7 @@ class Settings extends Component {
       login: '',
       email: '',
 
+      // password update
       currentPwd: '',
       newPwd: '',
       newPwdConfirmation: ''
@@ -56,7 +57,6 @@ class Settings extends Component {
         this.props.onToken(token);
         axios.getAuthUser(cookie.getToken()).then(res =>{
             const userAuth = res.data;
-            // console.log('userAuth', userAuth);
             this.props.onLogin(userAuth);
 
             this.setState({
@@ -66,6 +66,7 @@ class Settings extends Component {
               email: userAuth.email,
               user: userAuth
             });
+            
             this.updateImage();
         }).catch(err =>{
             // console.log('Sessão expirou.', err);
@@ -90,19 +91,34 @@ class Settings extends Component {
         }
 
         axios.userSetting(updateUser, cookie.getToken()).then(res => {
-          const user = res.data;
-          this.props.onLogin(user);
-          this.setState({
-            loading: false,
-            user: user
-          });
-          showSnackBar("Alterações realizadas com sucesso!");
+
+          if(res.data === "Login not available"){
+            showSnackBar("O login requerido já está sendo usado.");
+
+          }else if(res.data === "E-mail not available"){
+            showSnackBar("O e-mail requerido já está sendo usado.");
+          
+          } else {           
+            axios.getAuthUser(cookie.getToken()).then(res =>{
+              this.setState({user: res.data});
+              this.props.onLogin(res.data);
+              showSnackBar("Alterações realizadas com sucesso!");
+              this.setState({loading: false});
+              
+            }).catch(err => {
+              console.log("err", err);
+              this.setState({loading: false});
+              showSnackBar(err.message);
+            });    
+          }
+          
+          this.setState({loading: false});
         }).catch(err => {
           console.log("err", err);
           this.setState({loading: false});
+          showSnackBar(err.message);
         });
       }
-
     }
 
     fileSelectedHandler = event =>{
@@ -227,6 +243,7 @@ class Settings extends Component {
             fd.append('currentPassword', this.state.currentPwd);
             fd.append('newPassword', this.state.newPwd);
             axios.userPasswordUpdate(cookie.getToken(), fd).then(res =>{
+              console.log("res password", res);
               
               this.setState({currentPwd: '', newPwd: '', newPwdConfirmation: '', loading: false});
               showSnackBar("Senha atualizada com sucesso!");
@@ -314,7 +331,7 @@ class Settings extends Component {
                   onChange={this.onChangeName}></input>
 
                 <p className="edit-user-modal-label">Gênero</p>
-                <select id="setting-user-select-gender" onChange={this.onChangeGender}>
+                <select id="setting-user-select-gender" onChange={this.onChangeGender} value={this.state.gender}>
                     <option value="MALE">Masculino</option>
                     <option value="FEMALE">Feminino</option>
                 </select>

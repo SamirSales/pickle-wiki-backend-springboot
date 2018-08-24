@@ -2,6 +2,7 @@ package io.github.samirsales.Controller;
 
 import io.github.samirsales.Entity.Dto.UserDTO;
 import io.github.samirsales.Entity.User;
+import io.github.samirsales.Exception.UserUpdateException;
 import io.github.samirsales.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,8 +46,17 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(value = "/setting", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO dataUserConfig(@RequestBody User user){
-        return userService.dataUserConfig(user);
+    public ResponseEntity<Object> dataUserConfig(@RequestBody User user){
+
+        try{
+            userService.dataUserConfig(user);
+
+        }catch (UserUpdateException ex){
+            System.out.println(ex.getMessage());
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.OK);
+        }
+        
+        return new ResponseEntity<>("The user's password has been updated successfully", HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")

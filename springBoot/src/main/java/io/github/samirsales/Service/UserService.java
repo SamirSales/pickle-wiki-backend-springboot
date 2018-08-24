@@ -5,6 +5,7 @@ import io.github.samirsales.Entity.Dto.UserDTO;
 import io.github.samirsales.Entity.Enum.PermissionType;
 import io.github.samirsales.Entity.User;
 import io.github.samirsales.Exception.AuthorizationException;
+import io.github.samirsales.Exception.UserUpdateException;
 import io.github.samirsales.Util.ImageResizer;
 import io.github.samirsales.Security.UserSS;
 import io.github.samirsales.Util.TextEncryption;
@@ -97,14 +98,20 @@ public class UserService {
         userSaved.setName(user.getName());
         userSaved.setGender(user.getGender());
 
-        String password = ""+userSaved.getPassword();
+        String password = userSaved.getPassword();
 
-        if(this.userDao.getUserByLogin(user.getLogin(), false) == null){
+        User userByLogin = this.userDao.getUserByLogin(user.getLogin(), false);
+        if(userByLogin == null || userByLogin.getId().equals(userSaved.getId())){
             userSaved.setLogin(user.getLogin());
+        }else {
+            throw new UserUpdateException("Login not available");
         }
 
-        if(this.userDao.getUserByEmail(user.getEmail(), false) == null){
+        User userByEmail = this.userDao.getUserByEmail(user.getEmail(), false);
+        if(userByEmail == null || userByEmail.getId().equals(userSaved.getId())){
             userSaved.setEmail(user.getEmail());
+        }else {
+            throw new UserUpdateException("E-mail not available");
         }
 
         userSaved.setPassword(password);
