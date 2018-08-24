@@ -1,4 +1,4 @@
-package io.github.samirsales;
+package io.github.samirsales.Util;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

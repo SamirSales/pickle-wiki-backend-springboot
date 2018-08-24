@@ -2,6 +2,7 @@ package io.github.samirsales.Dao;
 
 import io.github.samirsales.Entity.User;
 import io.github.samirsales.Repository.UserRepository;
+import io.github.samirsales.Util.TextEncryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -83,6 +84,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void insertUser(User user) {
+        TextEncryption textEncryption = new TextEncryption();
+        user.setPassword(textEncryption.getMD5(user.getPassword()));
+
         userRepository.save(user);
     }
 }

@@ -1,6 +1,7 @@
 package io.github.samirsales.Security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.samirsales.Util.TextEncryption;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,8 +33,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             CredentialsDTO creds = new ObjectMapper().readValue(
                     req.getInputStream(), CredentialsDTO.class);
 
+            TextEncryption textEncryption = new TextEncryption();
+
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    creds.getLogin(), creds.getPassword(), new ArrayList<>());
+                    creds.getLogin(), textEncryption.getMD5(creds.getPassword()), new ArrayList<>());
 
             Authentication auth = authenticationManager.authenticate(authToken);
             return auth;

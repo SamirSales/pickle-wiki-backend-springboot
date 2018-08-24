@@ -4,7 +4,7 @@ import io.github.samirsales.Dao.PictureDao;
 import io.github.samirsales.Entity.Dto.PictureDTO;
 import io.github.samirsales.Entity.Enum.PictureType;
 import io.github.samirsales.Entity.Picture;
-import io.github.samirsales.ImageResizer;
+import io.github.samirsales.Util.ImageResizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;

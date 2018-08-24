@@ -5,8 +5,9 @@ import io.github.samirsales.Entity.Dto.UserDTO;
 import io.github.samirsales.Entity.Enum.PermissionType;
 import io.github.samirsales.Entity.User;
 import io.github.samirsales.Exception.AuthorizationException;
-import io.github.samirsales.ImageResizer;
+import io.github.samirsales.Util.ImageResizer;
 import io.github.samirsales.Security.UserSS;
+import io.github.samirsales.Util.TextEncryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,6 +65,9 @@ public class UserService {
     }
 
     public void updateUser(User user){
+        TextEncryption textEncryption = new TextEncryption();
+        user.setPassword(textEncryption.getMD5(user.getPassword()));
+
         this.userDao.updateUser(user);
     }
 
@@ -112,6 +115,7 @@ public class UserService {
 
     public void setUserPassword(String currentPassword, String newPassword){
         UserSS userSS = UserService.authenticated();
+        TextEncryption textEncryption = new TextEncryption();
 
         if(userSS == null) {
             throw new AuthorizationException("Access Denied");
@@ -119,11 +123,11 @@ public class UserService {
 
         User savedUser = this.userDao.getUserById(userSS.getId());
 
-        if(savedUser == null || !savedUser.getPassword().equals(currentPassword)){
+        if(savedUser == null || !savedUser.getPassword().equals(textEncryption.getMD5(currentPassword))){
             throw new AuthorizationException("Access Denied");
         }
 
-        savedUser.setPassword(newPassword);
+        savedUser.setPassword(textEncryption.getMD5(newPassword));
         this.userDao.updateUser(savedUser);
     }
 
