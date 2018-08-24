@@ -103,17 +103,21 @@ class AutoComplete extends PureComponent {
         const display = this.state.active ? 'block' : 'none';
         const zIndex = this.state.active ? '120' : '90';
 
-        const articles = this.state.foundArticles.map(art => {
-            let itemDivClass = art.id === this.state.selectedItem ? ' auto-complete-selected-item' : '';
-            itemDivClass = 'auto-complete-item'.concat(itemDivClass);
+        let articles = null;
 
-            return (
-                <div className={itemDivClass} key={art.id} onClick={this.searchItemSelect.bind(this, art.url)}>
-                    <p className='auto-complete-item-title'>{art.title}</p>
-                    <p className='auto-complete-item-context'><i>{art.context}</i></p>
-                </div>);
-        });
-
+        if(this.state.foundArticles && this.state.foundArticles.length > 0){
+            articles = this.state.foundArticles.map(art => {
+                let itemDivClass = art.id === this.state.selectedItem ? ' auto-complete-selected-item' : '';
+                itemDivClass = 'auto-complete-item'.concat(itemDivClass);
+    
+                return (
+                    <div className={itemDivClass} key={art.id} onClick={this.searchItemSelect.bind(this, art.url)}>
+                        <p className='auto-complete-item-title'>{art.title}</p>
+                        <p className='auto-complete-item-context'><i>{art.context}</i></p>
+                    </div>);
+            });
+        }
+        
         return (
             <Aux>
                 <Backdrop active={this.state.active} click={this.cancel} />
