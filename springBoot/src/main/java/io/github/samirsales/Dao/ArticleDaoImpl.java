@@ -32,7 +32,7 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public Article getArticleByUrl(String url) {
-        return articleRepository.findByUrl(url);
+        return articleRepository.findByUrlAndActiveTrue(url);
     }
 
     @Override

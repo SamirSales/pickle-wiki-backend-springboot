@@ -66,14 +66,17 @@ class Layout extends Component {
     }
 
     refreshToken = () =>{
-        console.log("refreshing token..." + new Date());
-        axios.refreshToken(this.props.tkn).then(res => {     
-            const newToken = res.headers.authorization;
-            cookie.saveToken(newToken);
-            this.props.onToken(newToken);
-        }).catch(err => {
-            // console.log("err", err);
-        });
+        // console.log("refreshing token..." + new Date());
+        // console.log("this.props.tkn", "["+this.props.tkn+"]");  
+        if(this.props.tkn !== ""){
+            axios.refreshToken(this.props.tkn).then(res => {     
+                const newToken = res.headers.authorization;
+                cookie.saveToken(newToken);
+                this.props.onToken(newToken);
+            }).catch(err => {
+                // console.log("err", err);
+            });
+        }        
     }
 
     state = {
