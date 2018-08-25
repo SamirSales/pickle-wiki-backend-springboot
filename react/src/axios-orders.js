@@ -8,9 +8,13 @@ export default instance;
 
 const url = "http://localhost:8090";
 
-// users ------------------------------------------------
+// refresh token
+export const refreshToken = function(token){
+    return axios.post(url + '/auth/refresh_token', token,
+    {headers: {'Authorization': token}});
+}
 
-// eslint-disable-next-line
+// users ------------------------------------------------
 export const getUsers = function(token){
     return axios.get(url + '/users/',
     {headers: {'Authorization': token}});

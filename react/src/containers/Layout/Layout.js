@@ -28,6 +28,10 @@ export const showSnackBar = (text) => {
 
 class Layout extends Component {
 
+    state = {
+        tokenRefresherActive: false
+    }
+
     componentDidMount(){
         //getting token from cookies
         const token = cookie.getToken();
@@ -43,6 +47,33 @@ class Layout extends Component {
                 }
             });
         }
+
+        this.setState({tokenRefresherActive: true});
+        this.refreshToken();
+        this.loopRefreshToken(this);
+    }
+
+    loopRefreshToken = (context) =>{
+        setTimeout(function(){ context.loopRefreshTokenRepetition(context); }, 60 * 1000);
+    }
+
+    // this method represents each loop of the loopRefreshToken method
+    loopRefreshTokenRepetition = (context) =>{
+        if(context.state.tokenRefresherActive){
+            context.refreshToken();
+            context.loopRefreshToken(context);
+        }        
+    }
+
+    refreshToken = () =>{
+        console.log("refreshing token..." + new Date());
+        axios.refreshToken(this.props.tkn).then(res => {     
+            const newToken = res.headers.authorization;
+            cookie.saveToken(newToken);
+            this.props.onToken(newToken);
+        }).catch(err => {
+            // console.log("err", err);
+        });
     }
 
     state = {

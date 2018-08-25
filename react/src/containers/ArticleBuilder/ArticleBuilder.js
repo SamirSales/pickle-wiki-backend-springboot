@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import {insertArticle, putArticle, getArticleByUrl} from '../../axios-orders';
 import TextEditor from '../../components/TextEditor/TextEditor';
 import ImagePickerModal from '../../components/UI/Modal/ImagePickerModal/ImagePickerModal';
 import Aux from '../../hoc/Aux/Aux';
 
+import * as axios from '../../axios-orders';
 import * as config from '../../config';
+
 import './ArticleBuilder.css';
 
 import { showSnackBar } from '../Layout/Layout';
@@ -34,17 +35,25 @@ class ArticleBuilder extends Component {
         imagePickerModalActive: false,
     }
 
-    componentDidMount(){
-        document.title = "Edição de Artigo - Pickle Wiki";
+    componentDidMount(){        
+        this.setFieldsInit();
+    }
 
+    setFieldsInit = () => {
+        // verify if it is an article edition...
         if(this.props.location.state && this.props.location.state.article){
+            document.title = "Edição de Artigo - Pickle Wiki";
+
             const article = this.props.location.state.article;
-            // console.log('receiving', article);
+
+            // replace tags by URLs 
+            const re = new RegExp(config.TAG_OF_ARTICLE_IMAGE, "g");
+            const bodySet = article.body.replace(re, config.URL_IMAGES);
 
             this.setState({
                 id: article.id,
                 title: article.title,
-                body: article.body,
+                body: bodySet,
                 context: article.context,
                 pictures: [],
                 lastEditor: '',
@@ -53,6 +62,9 @@ class ArticleBuilder extends Component {
 
             document.getElementById("input-article-title").value = article.title;
             document.getElementById("input-article-context").value = article.context;
+        }else{
+            // in case of new article
+            document.title = "Novo de Artigo - Pickle Wiki";
         }
     }
 
@@ -146,10 +158,10 @@ class ArticleBuilder extends Component {
             if(this.state.fullArticle){
                 // editing article...
                 // verify url
-                getArticleByUrl(url).then(res =>{
+                axios.getArticleByUrl(url).then(res =>{
                     if(res.data === "" || res.data.id === this.state.fullArticle.id){
 
-                        putArticle(article, this.props.tkn).then(res =>{
+                        axios.putArticle(article, this.props.tkn).then(res =>{
                             showSnackBar('Artigo salvo com sucesso!');
                             this.props.history.push({pathname: '/article/' + url});
                         }).catch(err => {
@@ -164,10 +176,10 @@ class ArticleBuilder extends Component {
             }else{
                 // new article...
                 // verify url
-                getArticleByUrl(url).then(res =>{
+                axios.getArticleByUrl(url).then(res =>{
                     if(res.data === ""){
 
-                        insertArticle(article, this.props.tkn).then(res =>{
+                        axios.insertArticle(article, this.props.tkn).then(res =>{
                             showSnackBar('Artigo salvo com sucesso!');
                             this.props.history.push({pathname: '/article/' + url});
                         }).catch(err => {
