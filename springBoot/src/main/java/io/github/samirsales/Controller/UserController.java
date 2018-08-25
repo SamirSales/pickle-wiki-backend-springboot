@@ -50,12 +50,10 @@ public class UserController {
 
         try{
             userService.dataUserConfig(user);
-
         }catch (UserUpdateException ex){
             System.out.println(ex.getMessage());
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.OK);
         }
-        
         return new ResponseEntity<>("The user's password has been updated successfully", HttpStatus.OK);
     }
 

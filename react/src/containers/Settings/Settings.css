@@ -50,3 +50,14 @@
     box-sizing: border-box;
     background-color: #fff;  
 }
+
+.settings-screen select:focus, .settings-screen input[type=text]:focus, 
+.settings-screen input[type=password]:focus {
+    outline: -webkit-focus-ring-color auto 0px;   
+    border-color: #32b0de; 
+}
+
+/* .settings-screen select:active, .settings-screen input[type=text]:active, 
+.settings-screen input[type=password]:active {
+    border-color: #32b0de;
+} */

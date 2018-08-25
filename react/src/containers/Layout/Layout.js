@@ -37,8 +37,10 @@ class Layout extends Component {
             axios.getAuthUser(cookie.getToken()).then(res =>{
                 const userAuth = res.data;
                 this.props.onLogin(userAuth);
-            }).catch(err =>{
-                console.log('Usuário não logado', err);
+            }).catch(err => {
+                if(err.message === 'Network Error'){
+                    showSnackBar(err.message);
+                }
             });
         }
     }
