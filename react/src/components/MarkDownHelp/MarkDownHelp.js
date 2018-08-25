@@ -26,7 +26,7 @@ class MarkDownHelp extends Component{
         
         sampleText: "# Título\r"+
 
-        "Parágrago normal aqui...\r\r"+ 
+        "Parágrafo normal aqui...\r\r"+ 
         "## Listas\r"+       
         "* Primeiro item com [link do Google](https://google.com) para exemplo;\r"+
         "* Segundo item com *itálico* para _exemplo_;\r"+
@@ -88,6 +88,7 @@ class MarkDownHelp extends Component{
                 <TextEditor 
                     title=""
                     content={this.state.sampleText}
+                    value={this.state.sampleText}
                     onChangeBody={this.onChangeBody}/> 
             </Aux>
         );
