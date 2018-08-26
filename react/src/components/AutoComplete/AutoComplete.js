@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 
 import { withRouter } from 'react-router-dom';
-import {getArticleBySearch} from '../../axios-orders';
+import * as axios from '../../axios-orders';
 
 import Aux from '../../hoc/Aux/Aux';
 import Backdrop from '../UI/Backdrop/Backdrop';
@@ -27,8 +27,10 @@ class AutoComplete extends PureComponent {
 
     search = (event) =>{
         if(event.target.value.trim().length >= 1){
-            getArticleBySearch(event.target.value.trim()).then(res => {
-                this.setState({foundArticles: res.data});    
+            const search = encodeURIComponent(event.target.value.trim());
+
+            axios.getArticleBySearch(search).then(res => {
+                this.setState({foundArticles: res.data, selectedItem: -1});    
             }).catch(err => {
                 console.log('error',err);
             });
@@ -69,7 +71,6 @@ class AutoComplete extends PureComponent {
 
         // ARROW UP KEY
         if(event.keyCode === 38){
-            console.log("up");
             if(this.state.foundArticles.length > 0){
                 if(this.state.selectedItem !== -1){
                     let i;

@@ -36,7 +36,7 @@ class Layout extends Component {
         //getting token from cookies
         const token = cookie.getToken();
 
-        if(token !== null && token !== ''){
+        if(token && token !== ''){
             this.props.onToken(token);
             axios.getAuthUser(cookie.getToken()).then(res =>{
                 const userAuth = res.data;
@@ -66,9 +66,7 @@ class Layout extends Component {
     }
 
     refreshToken = () =>{
-        // console.log("refreshing token..." + new Date());
-        // console.log("this.props.tkn", "["+this.props.tkn+"]");  
-        if(this.props.tkn !== ""){
+        if(this.props.tkn && this.props.tkn !== ""){
             axios.refreshToken(this.props.tkn).then(res => {     
                 const newToken = res.headers.authorization;
                 cookie.saveToken(newToken);
@@ -76,7 +74,7 @@ class Layout extends Component {
             }).catch(err => {
                 // console.log("err", err);
             });
-        }        
+        }      
     }
 
     state = {
