@@ -44,7 +44,7 @@ class AutoComplete extends PureComponent {
             active: false,
             selectedItem: -1
         })
-        this.props.history.push({pathname: '/article/' + url});
+        this.props.history.push({pathname: '/article/' + encodeURIComponent(url)});
     }
 
     onKeyUp = (event) =>{

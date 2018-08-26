@@ -163,7 +163,7 @@ class ArticleBuilder extends Component {
 
                         axios.putArticle(article, this.props.tkn).then(res =>{
                             showSnackBar('Artigo salvo com sucesso!');
-                            this.props.history.push({pathname: '/article/' + url});
+                            this.props.history.push({pathname: '/article/' + encodeURIComponent(url)});
                         }).catch(err => {
                             console.log("err...", err);
                         });
@@ -181,7 +181,7 @@ class ArticleBuilder extends Component {
 
                         axios.insertArticle(article, this.props.tkn).then(res =>{
                             showSnackBar('Artigo salvo com sucesso!');
-                            this.props.history.push({pathname: '/article/' + url});
+                            this.props.history.push({pathname: '/article/' + encodeURIComponent(url)});
                         }).catch(err => {
                             console.log("err...", err);
                         });

@@ -26,13 +26,12 @@ class FullPost extends Component{
         lastEditor: null,
     }
 
-    componentDidMount(){        
+    componentDidMount(){               
         const url = this.props.match.params.tag;
         this.setPostByURL(url);
     }
 
     componentDidUpdate(prevProps, prevState) {
-
         // updating url...
         if(prevProps.match.params.tag !== this.props.match.params.tag){
             this.setPostByURL(this.props.match.params.tag);
