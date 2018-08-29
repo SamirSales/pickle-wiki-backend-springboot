@@ -4,17 +4,17 @@ import ReactMarkdown from 'react-markdown';
 const welcome = ( props ) => {
 
     const body = "# Bem-vindo ao Pickle Wiki \r"+
-    "A Pickle Wiki é um projeto de enciclopédia de licença livre, baseado no sistema "+
-    "[Wikipédia](https://www.wikipedia.org/) e escrito de maneira colaborativa. "+
-    "Seu código fonte encontra-se no github, atualmente, sob administração de seu criador, Samir Sales. "+
-    "O Pickle Wiki é uma ferramenta de pesquisa com foco em redes internas, por isso o cadastro dos "+
-    "editores de artigos é feita por intermédio de um administrador pré cadastrado.\r"+
+    "O Pickle Wiki é um projeto de enciclopédia *open source* de licença "+
+    "[MIT](https://pt.wikipedia.org/wiki/Licen%C3%A7a_MIT), escrito de maneira colaborativa e baseado no sistema "+
+    "[Wikipédia](https://www.wikipedia.org/).\r\r"+
+    "Diferente do tradicional Wikipédia, o Pickle Wiki é uma ferramenta de pesquisa com foco em redes internas, "+
+    "por isso o cadastro dos editores de artigos é feito por intermédio de um administrador pré-cadastrado.\r"+
     
     "## Origem do nome\r"+
-    "O nome Pickle Wiki é uma paródia do nome *Wikipédia* combinada com a expressão *“Pickle Rick”* "+
+    "O nome Pickle Wiki é uma paródia do nome *Wikipédia* combinada com a expressão *“Pickle Rick”*, "+
     "da animação americana [Rick and Morty](https://en.wikipedia.org/wiki/Rick_and_Morty) "+
     "(criada por *Justin Roiland* e *Dan Harmon*). No terceiro episódio da terceira temporada "+
-    "dessa séria, o personagem *Rick Sanchez* se transforma em um picles, na "+
+    "dessa série, o personagem *Rick Sanchez* se transforma em um picles, na "+
     "intenção de escapar de uma sessão de terapia familiar. A genial sugestão do nome foi feita por "+
     "[John Soares](https://github.com/JohnSoares), durante um *brainstorm*.\r"+
 

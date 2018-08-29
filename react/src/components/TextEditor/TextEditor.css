@@ -80,6 +80,10 @@
     margin: 0;
 }
 
+.text-editor-markdown p{
+    margin: 4px 0px;
+}
+
 .text-editor-markdown h1{
     font-family: "Times New Roman", Times, serif;
     color: #333333;

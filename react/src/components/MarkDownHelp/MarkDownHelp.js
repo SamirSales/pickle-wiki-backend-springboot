@@ -16,11 +16,7 @@ class MarkDownHelp extends Component{
             "Desenvolvido em 2004 por *John Gruber* e *Aaron Swartz* para simplificar a estruturação de um texto, "+
             "o **Markdown** é um sistema de formatação aberto que torna a escrita e a leitura mais simples. "+
             "Com uma codificação mínima, além de fácil, ele é visualmente mais \"limpo\" e pode ser convertido "+
-            "facilmente para HTML.\r\r"+
-
-            "Basicamente, ele marca alterações nos textos (subtítulos, negrito, itálico etc) apenas com os "+
-            "símbolos do teclado, sem usar teclas de atalho, menus, selecionando o texto e sem aquele visual "+
-            "complexo - para os que não estão acostumados - de HTML.\r"+
+            "facilmente para HTML.\r"+
             
             "## Demonstração\r",
         
@@ -90,6 +86,8 @@ class MarkDownHelp extends Component{
                     content={this.state.sampleText}
                     value={this.state.sampleText}
                     onChangeBody={this.onChangeBody}/> 
+                
+                <br />
             </Aux>
         );
     }
