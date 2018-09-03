@@ -14,3 +14,9 @@ At the moment, the texts of the systems are all in Brazilian Portuguese.
 ## Screenshot
 
 ![Pickle Wiki](screenshot.png)
+
+## License
+
+MIT
+
+Copyright &copy; 2018 Samir Sales
