@@ -87,7 +87,7 @@ class FullPost extends Component{
 
     removeArticle = () =>{
         deleteArticle(this.state.articleId, this.props.tkn).then(res =>{
-            this.props.history.push({pathname: '/welcome'});
+            this.props.history.push({pathname: config.URL_HOME_PAGE+'/welcome'});
             showSnackBar('Artigo excluído com sucesso!');
 
         }).catch(err => {
@@ -105,7 +105,7 @@ class FullPost extends Component{
     }
 
     onEditClick = () =>{
-        this.props.history.push({pathname: '/edit-article', 
+        this.props.history.push({pathname: config.URL_HOME_PAGE+'/edit-article', 
             state: {
                 article: this.state.fullArticle
             }

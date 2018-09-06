@@ -5,6 +5,7 @@ import './TopBar.css';
 import { AuthContext } from '../Layout/Layout';
 import AutoComplete from '../../components/AutoComplete/AutoComplete';
 import * as util from '../../utils';
+import * as config from '../../config';
 
 class TopBar extends PureComponent {
 
@@ -17,8 +18,8 @@ class TopBar extends PureComponent {
   }
 
   isReadingScreen(){
-    return !this.isPath("/new-article") && !this.isPath("/user-editor") 
-      && !this.isPath("/picture-manager") && !this.isPath("/settings");
+    return !this.isPath(config.URL_HOME_PAGE+"/new-article") && !this.isPath(config.URL_HOME_PAGE+"/user-editor") 
+      && !this.isPath(config.URL_HOME_PAGE+"/picture-manager") && !this.isPath(config.URL_HOME_PAGE+"/settings");
   }
 
   render() {
@@ -27,7 +28,8 @@ class TopBar extends PureComponent {
       <div className="topTopBar">
         <a onClick={this.props.logout}>Sair</a>
         
-        <NavLink className="user-link" to='/settings' ><i className="fa fa-cog"></i> Configurações</NavLink>
+        <NavLink className="user-link" to={config.URL_HOME_PAGE+'/settings'} >
+          <i className="fa fa-cog"></i> Configurações</NavLink>
 
         <a href={this.props.home} className="user-link">
           <i className="fa fa-user"></i> {this.props.user ? this.props.user.name : ''}</a>
@@ -41,18 +43,20 @@ class TopBar extends PureComponent {
       </div>
     );
 
-    let tabRead = <NavLink className='tab' to='/article' >Leitura</NavLink>;
-    let tabAddArticle = <NavLink className='tab' to='/new-article' >Novo Artigo</NavLink>;
+    let tabRead = <NavLink className='tab' to={config.URL_HOME_PAGE+'/article'} >Leitura</NavLink>;
+    let tabAddArticle = <NavLink className='tab' to={config.URL_HOME_PAGE+'/new-article'} >Novo Artigo</NavLink>;
     let tabAddNewUser = null;
     let tabPictureManager = null;
     let divSearch = null;
 
     if(this.props.user){
       if(util.userHasPermission(this.props.user, 'ADMIN')){
-        tabAddNewUser = <NavLink className='tab' to='/user-editor' >Editores</NavLink>;
+        tabAddNewUser = <NavLink className='tab' 
+          to={config.URL_HOME_PAGE+'/user-editor'} >Editores</NavLink>;
       }
       
-      tabPictureManager = <NavLink className='tab' to='/picture-manager' >Imagens</NavLink>;
+      tabPictureManager = <NavLink className='tab' 
+        to={config.URL_HOME_PAGE+'/picture-manager'} >Imagens</NavLink>;
     }
 
     if(this.isReadingScreen()){

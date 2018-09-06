@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/img/try-icon.png';
+import * as config from '../../config';
 
 class NavBar extends Component {
 
@@ -25,8 +26,8 @@ class NavBar extends Component {
         <h5 className="title">{this.props.title}</h5>
         <h4 className="quote"><i>Sua enciclopédia personalisada</i></h4>
 
-        <Link align="left" to='/welcome' >Início</Link>
-        <Link align="left" to='/mark-down-help' >Markdown</Link>
+        <Link align="left" to={config.URL_HOME_PAGE+'/welcome'} >Início</Link>
+        <Link align="left" to={config.URL_HOME_PAGE+'/mark-down-help'} >Markdown</Link>
         
         {gitHubLink}
         {errorLink}

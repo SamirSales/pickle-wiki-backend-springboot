@@ -14,24 +14,35 @@ import Settings from '../containers/Settings/Settings';
 import { connect } from 'react-redux';
 import * as actionTypes from '../store/actions/actionTypes';
 import * as util from '../utils';
+import * as config from '../config';
 
 class App extends PureComponent {
 
   render() {
     // console.log("APP", this.props.usr);
 
-    let editArticlePage = <Route path='/edit-article' component={ArticleBuilder} />;
-    let newArticlePage = <Route path='/new-article' exact component={ArticleBuilder} />;
-    let editUsers = <Route path='/user-editor' exact component={UserManager} />;
-    let pictureManager = <Route path='/picture-manager' exact component={PictureManager} />;
-    let settings = <Route path='/settings' exact component={Settings} />;
+    let editArticlePage = <Route path={config.URL_HOME_PAGE+'/edit-article'} 
+      component={ArticleBuilder} />;
+    let newArticlePage = <Route path={config.URL_HOME_PAGE+'/new-article'} exact 
+      component={ArticleBuilder} />;
+    let editUsers = <Route path={config.URL_HOME_PAGE+'/user-editor'} exact 
+      component={UserManager} />;
+    let pictureManager = <Route path={config.URL_HOME_PAGE+'/picture-manager'} exact 
+      component={PictureManager} />;
+    let settings = <Route path={config.URL_HOME_PAGE+'/settings'} exact 
+      component={Settings} />;
 
     if(this.props.usr == null){
-      editArticlePage = <Redirect exact from='/edit-article' to='/welcome' />;
-      newArticlePage = <Redirect exact from='/new-article' to='/welcome' />;
-      editUsers = <Redirect exact from='/user-editor' to='/welcome'/>;
-      pictureManager = <Redirect exact from='/picture-manager' to='/welcome'/>;
-      settings = <Redirect exact from='/settings' to='/welcome'/>;
+      editArticlePage = <Redirect exact from={config.URL_HOME_PAGE+'/edit-article'} 
+        to={config.URL_HOME_PAGE+'/welcome'} />;
+      newArticlePage = <Redirect exact from={config.URL_HOME_PAGE+'/new-article'} 
+        to={config.URL_HOME_PAGE+'/welcome'} />;
+      editUsers = <Redirect exact from={config.URL_HOME_PAGE+'/user-editor'} 
+        to={config.URL_HOME_PAGE+'/welcome'}/>;
+      pictureManager = <Redirect exact from={config.URL_HOME_PAGE+'/picture-manager'} 
+        to={config.URL_HOME_PAGE+'/welcome'}/>;
+      settings = <Redirect exact from={config.URL_HOME_PAGE+'/settings'} 
+        to={config.URL_HOME_PAGE+'/welcome'}/>;
 
     }else if(!util.userHasPermission(this.props.usr, 'ADMIN')){
       editUsers = <Redirect exact from='/user-editor' to='/welcome'/>;
@@ -41,13 +52,14 @@ class App extends PureComponent {
       <BrowserRouter>
         <Layout>
           <Switch>
-            <Redirect exact from='/' to='/welcome' />
+            <Redirect exact from="/" to={config.URL_HOME_PAGE+'/welcome'} />
+            <Redirect exact from={config.URL_HOME_PAGE+'/'} to={config.URL_HOME_PAGE+'/welcome'} />
 
-            <Route path='/' exact component={Welcome} />
-            <Route path='/welcome' exact component={Welcome} />
-            <Route path='/mark-down-help' exact component={MarkDownHelp} />
-            <Route path='/article' exact component={Welcome} />
-            <Route path='/article/:tag' exact component={FullPost} />
+            <Route path={config.URL_HOME_PAGE+'/'} exact component={Welcome} />
+            <Route path={config.URL_HOME_PAGE+'/welcome'} exact component={Welcome} />
+            <Route path={config.URL_HOME_PAGE+'/mark-down-help'} exact component={MarkDownHelp} />
+            <Route path={config.URL_HOME_PAGE+'/article'} exact component={Welcome} />
+            <Route path={config.URL_HOME_PAGE+'/article/:tag'} exact component={FullPost} />
             
             {editArticlePage}
             {newArticlePage}

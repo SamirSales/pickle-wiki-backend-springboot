@@ -163,7 +163,7 @@ class ArticleBuilder extends Component {
 
                         axios.putArticle(article, this.props.tkn).then(res =>{
                             showSnackBar('Artigo salvo com sucesso!');
-                            this.props.history.push({pathname: '/article/' + encodeURIComponent(url)});
+                            this.props.history.push({pathname: config.URL_HOME_PAGE+'/article/' + encodeURIComponent(url)});
                         }).catch(err => {
                             console.log("err...", err);
                         });
@@ -181,7 +181,7 @@ class ArticleBuilder extends Component {
 
                         axios.insertArticle(article, this.props.tkn).then(res =>{
                             showSnackBar('Artigo salvo com sucesso!');
-                            this.props.history.push({pathname: '/article/' + encodeURIComponent(url)});
+                            this.props.history.push({pathname: config.URL_HOME_PAGE+'/article/' + encodeURIComponent(url)});
                         }).catch(err => {
                             console.log("err...", err);
                         });
@@ -239,8 +239,8 @@ class ArticleBuilder extends Component {
                 <div style={{marginTop: '10px'}}>
                     <button className='article-btn article-btn-submit' style={{marginRight: '10px'}}
                         onClick={this.submit}>Submeter</button>
-                    <button className='article-btn article-btn-cancel'
-                        onClick={this.cancel}>Descartar</button>
+                    {/* <button className='article-btn article-btn-cancel'
+                        onClick={this.cancel}>Descartar</button> */}
                 </div>
     
                 <br/><br/><br/><br/>

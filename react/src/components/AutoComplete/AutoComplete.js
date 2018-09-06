@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 
 import { withRouter } from 'react-router-dom';
 import * as axios from '../../axios-orders';
+import * as config from '../../config';
 
 import Aux from '../../hoc/Aux/Aux';
 import Backdrop from '../UI/Backdrop/Backdrop';
@@ -46,7 +47,7 @@ class AutoComplete extends PureComponent {
             active: false,
             selectedItem: -1
         })
-        this.props.history.push({pathname: '/article/' + encodeURIComponent(url)});
+        this.props.history.push({pathname: config.URL_HOME_PAGE + '/article/' + encodeURIComponent(url)});
     }
 
     onKeyUp = (event) =>{
