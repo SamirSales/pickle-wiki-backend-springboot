@@ -1,12 +1,6 @@
 import axios from 'axios';
 
-const instance = axios.create({
-    baseURL: 'http://localhost:8090'
-});
-
-export default instance;
-
-const url = "http://localhost:8090";
+const url = "http://localhost:8080/pickle_wiki_backend";
 
 // refresh token
 export const refreshToken = function(token){
