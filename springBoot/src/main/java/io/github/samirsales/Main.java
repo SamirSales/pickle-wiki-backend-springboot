@@ -7,27 +7,27 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 // DEVELOPMENT
-//@SpringBootApplication
-//@EnableJpaAuditing
-//public class Main {
-//
-//    public static void main(String[] args) {
-//        SpringApplication.run(Main.class, args);
-//    }
-//}
-
-
-// TOMCAT PRODUCTION
 @SpringBootApplication
 @EnableJpaAuditing
-public class Main extends SpringBootServletInitializer {
+public class Main {
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(Main.class);
-    }
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
 }
+
+
+// TOMCAT PRODUCTION
+//@SpringBootApplication
+//@EnableJpaAuditing
+//public class Main extends SpringBootServletInitializer {
+//
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//        return application.sources(Main.class);
+//    }
+//
+//    public static void main(String[] args) throws Exception {
+//        SpringApplication.run(Main.class, args);
+//    }
+//}

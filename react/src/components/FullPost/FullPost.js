@@ -11,6 +11,8 @@ import './FullPost.css';
 import { connect } from 'react-redux';
 import * as config from '../../config';
 
+import defaultImageProfile from '../../assets/img/profile.png';
+
 class FullPost extends Component{
 
     state = {
@@ -145,8 +147,12 @@ class FullPost extends Component{
         let imageEditor = null;
 
         if(this.state.fullArticle && this.state.fullArticle.lastEditor){
-            const srcImg = config.URL_IMAGES_PROFILE + '/' + this.state.fullArticle.lastEditor.pictureFileName;
-            imageEditor = <img src={srcImg} alt={this.state.fullArticle.lastEditor.name} height="48" width="48"/>
+            if(this.state.fullArticle.lastEditor.pictureFileName){
+                const srcImg = config.URL_IMAGES_PROFILE + '/' + this.state.fullArticle.lastEditor.pictureFileName;
+                imageEditor = <img src={srcImg} alt={this.state.fullArticle.lastEditor.name} height="48" width="48"/>
+            } else {
+                imageEditor = <img src={defaultImageProfile} alt={this.state.fullArticle.lastEditor.name} height="48" width="48"/>
+            }
         }
 
         let infoEdition = null;

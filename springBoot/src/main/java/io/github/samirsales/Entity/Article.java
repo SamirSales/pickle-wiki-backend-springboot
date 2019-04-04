@@ -2,11 +2,9 @@ package io.github.samirsales.Entity;
 
 import io.github.samirsales.Model.AuditModel;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Article extends AuditModel{
@@ -16,6 +14,8 @@ public class Article extends AuditModel{
     private Long id;
 
     private String title;
+
+    @Column(columnDefinition="TEXT")
     private String body;
 
     @NaturalId(mutable = true)
