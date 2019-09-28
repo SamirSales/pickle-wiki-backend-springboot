@@ -10,19 +10,15 @@ import java.util.Collection;
 
 @Repository
 @Qualifier("postgres")
+@SuppressWarnings("unused")
 public class ArticleDaoImpl implements ArticleDao {
 
     @Autowired
     private ArticleRepository articleRepository;
 
     @Override
-    public Collection<Article> getAllArticles() {
+    public Collection<Article> getAll() {
         return articleRepository.findByActiveTrue();
-    }
-
-    @Override
-    public Collection<Article> getTopVisitedArticles(int range) {
-        return null;
     }
 
     @Override
@@ -31,24 +27,24 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
-    public Article getArticleByUrl(String url) {
+    public Article getByUrl(String url) {
         return articleRepository.findByUrlAndActiveTrue(url);
     }
 
     @Override
-    public void removeArticleById(long id) {
+    public void deleteById(long id) {
         Article article = articleRepository.findByIdAndActiveTrue(id);
         article.setActive(false);
         articleRepository.save(article);
     }
 
     @Override
-    public void updateArticle(Article article) {
+    public void update(Article article) {
         articleRepository.save(article);
     }
 
     @Override
-    public void insertArticle(Article article) {
+    public void insert(Article article) {
         articleRepository.save(article);
     }
 }

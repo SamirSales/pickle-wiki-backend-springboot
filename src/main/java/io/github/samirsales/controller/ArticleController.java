@@ -12,41 +12,42 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/articles")
+@SuppressWarnings("unused")
 public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Collection<Article> getAllArticles(){
+    public Collection<Article> getAll(){
         return articleService.getAllArticles();
     }
 
     @RequestMapping(value = "/{url}", method = RequestMethod.GET)
-    public ArticleDTO getArticleByUrl(@PathVariable("url") String url){
+    public ArticleDTO getByUrl(@PathVariable("url") String url){
         return articleService.getArticleByUrl(url);
     }
 
     @RequestMapping(value = "/search/{search}", method = RequestMethod.GET)
-    public Collection<Article>  getArticlesBySearch(@PathVariable("search") String search){
+    public Collection<Article>  getBySearch(@PathVariable("search") String search){
         return articleService.getArticlesBySearch(search);
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void removeArticleById(@PathVariable("id") long id){
+    public void deleteById(@PathVariable("id") long id){
         articleService.removeArticleById(id);
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateArticle(@RequestBody Article article){
+    public void update(@RequestBody Article article){
         articleService.updateArticle(article);
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void insertArticle(@RequestBody Article article){
+    public void insert(@RequestBody Article article){
         articleService.insertArticle(article);
     }
 }

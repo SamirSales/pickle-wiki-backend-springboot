@@ -18,26 +18,24 @@ public class ArticleService {
 
     @Autowired
     @Qualifier("postgres")
+    @SuppressWarnings("unused")
     private ArticleDao articleDao;
 
     @Autowired
     @Qualifier("postgres")
+    @SuppressWarnings("unused")
     private UserDao userDao;
 
     public Collection<Article> getAllArticles(){
-        return articleDao.getAllArticles();
+        return articleDao.getAll();
     }
 
     public Collection<Article> getArticlesBySearch(String search){
         return articleDao.getArticlesBySearch(search);
     }
 
-    protected Collection<Article> getTopVisitedArticles(int range){
-        return articleDao.getTopVisitedArticles(range);
-    }
-
     public ArticleDTO getArticleByUrl(String url){
-        Article article = this.articleDao.getArticleByUrl(url);
+        Article article = this.articleDao.getByUrl(url);
 
         if(article != null){
             User user = this.userDao.getUserById(article.getLastEditorId());
@@ -47,7 +45,7 @@ public class ArticleService {
     }
 
     public void removeArticleById(long id) {
-        this.articleDao.removeArticleById(id);
+        this.articleDao.deleteById(id);
     }
 
     public void updateArticle(Article article){
@@ -63,7 +61,7 @@ public class ArticleService {
 
         int index = 1;
 
-        Article searchedArticle = this.articleDao.getArticleByUrl(urlSB.toString());
+        Article searchedArticle = this.articleDao.getByUrl(urlSB.toString());
         while (searchedArticle != null && !searchedArticle.getId().equals(article.getId())){
             index++;
             urlSB.append("-").append(index);
@@ -72,7 +70,7 @@ public class ArticleService {
         article.setActive(true);
 
 
-        this.articleDao.updateArticle(article);
+        this.articleDao.update(article);
     }
 
     public void insertArticle(Article article) {
@@ -87,14 +85,14 @@ public class ArticleService {
         StringBuilder urlSB = new StringBuilder(buildURL(article.getTitle()) + "-" + buildURL(article.getContext()));
 
         int index = 1;
-        while (this.articleDao.getArticleByUrl(urlSB.toString()) != null){
+        while (this.articleDao.getByUrl(urlSB.toString()) != null){
             index++;
             urlSB.append("-").append(index);
         }
         article.setUrl(urlSB.toString());
         article.setActive(true);
 
-        this.articleDao.insertArticle(article);
+        this.articleDao.insert(article);
     }
 
     private String buildURL(String text){

@@ -6,17 +6,15 @@ import java.util.Collection;
 
 public interface ArticleDao {
 
-    Collection<Article> getAllArticles();
-
-    Collection<Article> getTopVisitedArticles(int range);
+    Collection<Article> getAll();
 
     Collection<Article> getArticlesBySearch(String search);
 
-    Article getArticleByUrl(String url);
+    Article getByUrl(String url);
 
-    void removeArticleById(long id);
+    void deleteById(long id);
 
-    void updateArticle(Article article);
+    void update(Article article);
 
-    void insertArticle(Article article);
+    void insert(Article article);
 }
