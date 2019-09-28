@@ -1,4 +1,4 @@
-package io.github.samirsales.model;
+package io.github.samirsales.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;

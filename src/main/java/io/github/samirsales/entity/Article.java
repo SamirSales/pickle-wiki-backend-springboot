@@ -1,6 +1,5 @@
 package io.github.samirsales.entity;
 
-import io.github.samirsales.model.AuditModel;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;

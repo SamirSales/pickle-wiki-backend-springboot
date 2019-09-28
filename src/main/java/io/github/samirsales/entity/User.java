@@ -3,7 +3,6 @@ package io.github.samirsales.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.github.samirsales.entity.Enum.Gender;
-import io.github.samirsales.model.AuditModel;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
