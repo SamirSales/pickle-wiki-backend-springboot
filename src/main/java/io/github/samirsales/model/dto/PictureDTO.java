@@ -1,6 +1,6 @@
-package io.github.samirsales.entity.Dto;
+package io.github.samirsales.model.dto;
 
-import io.github.samirsales.entity.Picture;
+import io.github.samirsales.model.entity.Picture;
 
 public class PictureDTO {
 

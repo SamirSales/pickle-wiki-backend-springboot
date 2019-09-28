@@ -1,6 +1,6 @@
 package io.github.samirsales.dao;
 
-import io.github.samirsales.entity.User;
+import io.github.samirsales.model.entity.User;
 
 import java.util.Collection;
 

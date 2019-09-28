@@ -1,6 +1,6 @@
-package io.github.samirsales.entity;
+package io.github.samirsales.model.entity;
 
-import io.github.samirsales.entity.Enum.PictureType;
+import io.github.samirsales.model.enums.PictureType;
 
 import javax.persistence.*;
 

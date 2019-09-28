@@ -1,9 +1,9 @@
 package io.github.samirsales.service;
 
 import io.github.samirsales.dao.UserDao;
-import io.github.samirsales.entity.Dto.UserDTO;
-import io.github.samirsales.entity.Enum.PermissionType;
-import io.github.samirsales.entity.User;
+import io.github.samirsales.model.dto.UserDTO;
+import io.github.samirsales.model.enums.PermissionType;
+import io.github.samirsales.model.entity.User;
 import io.github.samirsales.exception.AuthorizationException;
 import io.github.samirsales.exception.UserUpdateException;
 import io.github.samirsales.util.ImageResizer;

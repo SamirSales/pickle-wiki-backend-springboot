@@ -1,8 +1,8 @@
-package io.github.samirsales.entity;
+package io.github.samirsales.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import io.github.samirsales.entity.Enum.Gender;
+import io.github.samirsales.model.enums.Gender;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -14,7 +14,7 @@ import java.util.Objects;
 
 @Entity(name = "users")
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-public class User extends AuditModel{
+public class User extends Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

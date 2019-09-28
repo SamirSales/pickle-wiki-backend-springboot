@@ -1,7 +1,7 @@
 package io.github.samirsales.controller;
 
-import io.github.samirsales.entity.Article;
-import io.github.samirsales.entity.Dto.ArticleDTO;
+import io.github.samirsales.model.entity.Article;
+import io.github.samirsales.model.dto.ArticleDTO;
 import io.github.samirsales.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

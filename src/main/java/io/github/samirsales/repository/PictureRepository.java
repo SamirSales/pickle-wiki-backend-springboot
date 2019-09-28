@@ -1,7 +1,7 @@
 package io.github.samirsales.repository;
 
-import io.github.samirsales.entity.Enum.PictureType;
-import io.github.samirsales.entity.Picture;
+import io.github.samirsales.model.enums.PictureType;
+import io.github.samirsales.model.entity.Picture;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

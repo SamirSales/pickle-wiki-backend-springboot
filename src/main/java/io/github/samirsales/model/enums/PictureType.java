@@ -1,4 +1,4 @@
-package io.github.samirsales.entity.Enum;
+package io.github.samirsales.model.enums;
 
 public enum PictureType {
     DEFAULT("DEFAULT"), PROFILE("PROFILE");

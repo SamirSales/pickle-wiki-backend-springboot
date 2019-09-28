@@ -1,4 +1,4 @@
-package io.github.samirsales.entity.Enum;
+package io.github.samirsales.model.enums;
 
 public enum PermissionType {
     EDITOR("ROLE_EDITOR"), ADMIN("ROLE_ADMIN");

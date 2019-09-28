@@ -1,6 +1,6 @@
 package io.github.samirsales.dao;
 
-import io.github.samirsales.entity.Picture;
+import io.github.samirsales.model.entity.Picture;
 
 import java.util.List;
 

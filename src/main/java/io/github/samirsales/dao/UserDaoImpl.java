@@ -1,6 +1,6 @@
 package io.github.samirsales.dao;
 
-import io.github.samirsales.entity.User;
+import io.github.samirsales.model.entity.User;
 import io.github.samirsales.repository.UserRepository;
 import io.github.samirsales.util.TextEncryption;
 import org.springframework.beans.factory.annotation.Autowired;

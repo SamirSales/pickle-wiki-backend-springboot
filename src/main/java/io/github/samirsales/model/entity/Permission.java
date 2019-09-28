@@ -1,9 +1,9 @@
-package io.github.samirsales.entity;
+package io.github.samirsales.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import io.github.samirsales.entity.Enum.PermissionType;
+import io.github.samirsales.model.enums.PermissionType;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;

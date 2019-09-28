@@ -1,6 +1,6 @@
 package io.github.samirsales.repository;
 
-import io.github.samirsales.entity.Article;
+import io.github.samirsales.model.entity.Article;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

@@ -1,7 +1,7 @@
-package io.github.samirsales.entity.Dto;
+package io.github.samirsales.model.dto;
 
-import io.github.samirsales.entity.Article;
-import io.github.samirsales.entity.User;
+import io.github.samirsales.model.entity.Article;
+import io.github.samirsales.model.entity.User;
 
 public class ArticleDTO {
 

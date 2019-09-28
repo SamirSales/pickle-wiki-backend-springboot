@@ -1,7 +1,7 @@
 package io.github.samirsales.service;
 
 import io.github.samirsales.dao.UserDao;
-import io.github.samirsales.entity.User;
+import io.github.samirsales.model.entity.User;
 import io.github.samirsales.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

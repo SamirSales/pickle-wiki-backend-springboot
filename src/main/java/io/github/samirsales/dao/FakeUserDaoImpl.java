@@ -1,9 +1,9 @@
 package io.github.samirsales.dao;
 
-import io.github.samirsales.entity.Enum.Gender;
-import io.github.samirsales.entity.Enum.PermissionType;
-import io.github.samirsales.entity.Permission;
-import io.github.samirsales.entity.User;
+import io.github.samirsales.model.enums.Gender;
+import io.github.samirsales.model.enums.PermissionType;
+import io.github.samirsales.model.entity.Permission;
+import io.github.samirsales.model.entity.User;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

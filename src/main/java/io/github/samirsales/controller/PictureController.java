@@ -1,7 +1,7 @@
 package io.github.samirsales.controller;
 
-import io.github.samirsales.entity.Dto.PictureDTO;
-import io.github.samirsales.entity.Picture;
+import io.github.samirsales.model.dto.PictureDTO;
+import io.github.samirsales.model.entity.Picture;
 import io.github.samirsales.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

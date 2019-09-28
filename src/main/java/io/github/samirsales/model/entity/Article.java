@@ -1,11 +1,11 @@
-package io.github.samirsales.entity;
+package io.github.samirsales.model.entity;
 
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 
 @Entity
-public class Article extends AuditModel{
+public class Article extends Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

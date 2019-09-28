@@ -1,9 +1,9 @@
 package io.github.samirsales.service;
 
 import io.github.samirsales.dao.PictureDao;
-import io.github.samirsales.entity.Dto.PictureDTO;
-import io.github.samirsales.entity.Enum.PictureType;
-import io.github.samirsales.entity.Picture;
+import io.github.samirsales.model.dto.PictureDTO;
+import io.github.samirsales.model.enums.PictureType;
+import io.github.samirsales.model.entity.Picture;
 import io.github.samirsales.util.ImageResizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

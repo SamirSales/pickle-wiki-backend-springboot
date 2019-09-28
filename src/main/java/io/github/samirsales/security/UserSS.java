@@ -1,7 +1,7 @@
 package io.github.samirsales.security;
 
-import io.github.samirsales.entity.Enum.PermissionType;
-import io.github.samirsales.entity.Permission;
+import io.github.samirsales.model.enums.PermissionType;
+import io.github.samirsales.model.entity.Permission;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

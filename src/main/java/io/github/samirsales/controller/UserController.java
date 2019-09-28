@@ -1,7 +1,7 @@
 package io.github.samirsales.controller;
 
-import io.github.samirsales.entity.Dto.UserDTO;
-import io.github.samirsales.entity.User;
+import io.github.samirsales.model.dto.UserDTO;
+import io.github.samirsales.model.entity.User;
 import io.github.samirsales.exception.UserUpdateException;
 import io.github.samirsales.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,9 +2,9 @@ package io.github.samirsales.service;
 
 import io.github.samirsales.dao.ArticleDao;
 import io.github.samirsales.dao.UserDao;
-import io.github.samirsales.entity.Article;
-import io.github.samirsales.entity.Dto.ArticleDTO;
-import io.github.samirsales.entity.User;
+import io.github.samirsales.model.entity.Article;
+import io.github.samirsales.model.dto.ArticleDTO;
+import io.github.samirsales.model.entity.User;
 import io.github.samirsales.exception.AuthorizationException;
 import io.github.samirsales.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;

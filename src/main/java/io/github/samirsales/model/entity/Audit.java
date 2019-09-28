@@ -1,4 +1,4 @@
-package io.github.samirsales.entity;
+package io.github.samirsales.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,7 +15,7 @@ import java.util.Date;
         value = {"createdAt", "updatedAt"},
         allowGetters = true
 )
-public abstract class AuditModel implements Serializable {
+public abstract class Audit implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)

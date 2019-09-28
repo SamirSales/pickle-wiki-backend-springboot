@@ -1,7 +1,7 @@
 package io.github.samirsales.dao;
 
-import io.github.samirsales.entity.Enum.PictureType;
-import io.github.samirsales.entity.Picture;
+import io.github.samirsales.model.enums.PictureType;
+import io.github.samirsales.model.entity.Picture;
 import io.github.samirsales.repository.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

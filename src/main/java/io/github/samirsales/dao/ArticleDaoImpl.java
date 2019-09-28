@@ -1,6 +1,6 @@
 package io.github.samirsales.dao;
 
-import io.github.samirsales.entity.Article;
+import io.github.samirsales.model.entity.Article;
 import io.github.samirsales.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

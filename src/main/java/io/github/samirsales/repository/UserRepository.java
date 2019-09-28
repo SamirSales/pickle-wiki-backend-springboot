@@ -1,6 +1,6 @@
 package io.github.samirsales.repository;
 
-import io.github.samirsales.entity.User;
+import io.github.samirsales.model.entity.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Collection;
