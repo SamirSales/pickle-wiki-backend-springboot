@@ -22,7 +22,7 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Override
-    public Collection<Article> getArticlesBySearch(String search) {
+    public Collection<Article> searchByText(String search) {
         return articleRepository.find(search);
     }
 

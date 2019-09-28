@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@SuppressWarnings("unused")
 public class UserController {
 
     @Autowired
@@ -23,24 +24,24 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
-    public List<UserDTO> getAllUsers(){
+    public List<UserDTO> getAll(){
         return userService.getAllUsers();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public UserDTO getUserById(@PathVariable("id") long id){
+    public UserDTO getById(@PathVariable("id") long id){
         return userService.getUserById(id);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void removeUserById(@PathVariable("id") long id){
+    public void deleteById(@PathVariable("id") long id){
         userService.removeUserById(id);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateUser(@RequestBody User user){
+    public void update(@RequestBody User user){
         userService.updateUser(user);
     }
 
@@ -58,27 +59,33 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
-    @RequestMapping(value = "/update_picture", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public UserDTO uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
+    @RequestMapping(value = "/update_picture",
+            method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public UserDTO uploadImageFile(@RequestParam("file") MultipartFile file) throws Exception {
         return userService.userPicture(file);
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
-    @RequestMapping(value = "/update_password", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> updateUserPassword(@RequestParam("currentPassword") String currentPassword,
-                                                     @RequestParam("newPassword") String newPassword) throws Exception {
+    @RequestMapping(value = "/update_password",
+            method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> updateUserPassword(
+            @RequestParam("currentPassword") String currentPassword,
+            @RequestParam("newPassword") String newPassword){
+
         userService.setUserPassword(currentPassword, newPassword);
         return new ResponseEntity<>("The user's password has been updated successfully", HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void insertUser(@RequestBody User user){
+    public void insert(@RequestBody User user){
         userService.insertUser(user);
     }
 
     @RequestMapping(value = "/token", method = RequestMethod.POST)
-    public UserDTO getUserByToken(){
+    public UserDTO getByToken(){
         return userService.getUserByToken();
     }
 

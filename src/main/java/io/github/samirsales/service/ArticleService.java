@@ -31,14 +31,14 @@ public class ArticleService {
     }
 
     public Collection<Article> getArticlesBySearch(String search){
-        return articleDao.getArticlesBySearch(search);
+        return articleDao.searchByText(search);
     }
 
     public ArticleDTO getArticleByUrl(String url){
         Article article = this.articleDao.getByUrl(url);
 
         if(article != null){
-            User user = this.userDao.getUserById(article.getLastEditorId());
+            User user = this.userDao.getById(article.getLastEditorId());
             return new ArticleDTO(article, user);
         }
         return null;

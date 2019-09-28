@@ -8,7 +8,7 @@ public interface ArticleDao {
 
     Collection<Article> getAll();
 
-    Collection<Article> getArticlesBySearch(String search);
+    Collection<Article> searchByText(String text);
 
     Article getByUrl(String url);
 

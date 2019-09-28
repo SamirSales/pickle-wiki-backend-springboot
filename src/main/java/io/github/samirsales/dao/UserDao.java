@@ -5,19 +5,19 @@ import io.github.samirsales.model.entity.User;
 import java.util.Collection;
 
 public interface UserDao {
-    Collection<User> getAllUsers();
+    Collection<User> getAll();
 
-    User getUserById(long id);
+    User getById(long id);
 
-    User getUserByLogin(String login, boolean active);
+    User getByLogin(String login, boolean active);
 
-    User getUserByEmail(String login, boolean active);
+    User getByEmail(String login, boolean active);
 
-    User getUserByAuthentication(User user);
+    User getByAuthentication(User user);
 
-    void removeUserById(long id);
+    void deleteById(long id);
 
-    void updateUser(User user);
+    void update(User user);
 
-    void insertUser(User user);
+    void insert(User user);
 }

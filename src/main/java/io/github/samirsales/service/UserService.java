@@ -42,7 +42,7 @@ public class UserService {
     }
 
     public List<UserDTO> getAllUsers(){
-        Collection<User> users = userDao.getAllUsers();
+        Collection<User> users = userDao.getAll();
         return users.parallelStream().map(UserDTO::new).collect(Collectors.toList());
     }
 
@@ -54,26 +54,26 @@ public class UserService {
             throw new AuthorizationException("Access Denied");
         }
 
-        return new UserDTO(this.userDao.getUserById(id));
+        return new UserDTO(this.userDao.getById(id));
     }
 
     public UserDTO getUserByAuthentication(User user) {
-        return new UserDTO(this.userDao.getUserByAuthentication(user));
+        return new UserDTO(this.userDao.getByAuthentication(user));
     }
 
     public void removeUserById(long id) {
-        this.userDao.removeUserById(id);
+        this.userDao.deleteById(id);
     }
 
     public void updateUser(User user){
         TextEncryption textEncryption = new TextEncryption();
         user.setPassword(textEncryption.getMD5(user.getPassword()));
 
-        this.userDao.updateUser(user);
+        this.userDao.update(user);
     }
 
     public void insertUser(User user) {
-        this.userDao.insertUser(user);
+        this.userDao.insert(user);
     }
 
     public UserDTO getUserByToken() {
@@ -93,21 +93,21 @@ public class UserService {
             throw new AuthorizationException("Access Denied");
         }
 
-        User userSaved = this.userDao.getUserById(userSS.getId());
+        User userSaved = this.userDao.getById(userSS.getId());
 
         userSaved.setName(user.getName());
         userSaved.setGender(user.getGender());
 
         String password = userSaved.getPassword();
 
-        User userByLogin = this.userDao.getUserByLogin(user.getLogin(), false);
+        User userByLogin = this.userDao.getByLogin(user.getLogin(), false);
         if(userByLogin == null || userByLogin.getId().equals(userSaved.getId())){
             userSaved.setLogin(user.getLogin());
         }else {
             throw new UserUpdateException("Login not available");
         }
 
-        User userByEmail = this.userDao.getUserByEmail(user.getEmail(), false);
+        User userByEmail = this.userDao.getByEmail(user.getEmail(), false);
         if(userByEmail == null || userByEmail.getId().equals(userSaved.getId())){
             userSaved.setEmail(user.getEmail());
         }else {
@@ -115,7 +115,7 @@ public class UserService {
         }
 
         userSaved.setPassword(password);
-        this.userDao.updateUser(userSaved);
+        this.userDao.update(userSaved);
 
         return new UserDTO(userSaved);
     }
@@ -128,14 +128,14 @@ public class UserService {
             throw new AuthorizationException("Access Denied");
         }
 
-        User savedUser = this.userDao.getUserById(userSS.getId());
+        User savedUser = this.userDao.getById(userSS.getId());
 
         if(savedUser == null || !savedUser.getPassword().equals(textEncryption.getMD5(currentPassword))){
             throw new AuthorizationException("Access Denied");
         }
 
         savedUser.setPassword(textEncryption.getMD5(newPassword));
-        this.userDao.updateUser(savedUser);
+        this.userDao.update(savedUser);
     }
 
     public UserDTO userPicture(MultipartFile file) throws IOException {
@@ -144,7 +144,7 @@ public class UserService {
         if(userSS == null ){
             throw new AuthorizationException("Access Denied");
         }
-        User savedUser = this.userDao.getUserById(userSS.getId());
+        User savedUser = this.userDao.getById(userSS.getId());
 
         String fileName = savedUser.getId()+"."+getFileExtension(file.getOriginalFilename());
         String path = imagePath+"/"+fileName;
@@ -162,7 +162,7 @@ public class UserService {
             imgResizer.resize(path, path,300);
 
             savedUser.setPictureFileName(fileName);
-            this.userDao.updateUser(savedUser);
+            this.userDao.update(savedUser);
         } catch (IOException ioException) {
             ioException.printStackTrace();
             throw ioException;

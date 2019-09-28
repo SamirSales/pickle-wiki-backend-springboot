@@ -19,17 +19,17 @@ public class UserDaoImpl implements UserDao {
     private UserRepository userRepository;
 
     @Override
-    public Collection<User> getAllUsers() {
+    public Collection<User> getAll() {
         return userRepository.findByActiveTrueOrderByName();
     }
 
     @Override
-    public User getUserById(long id) {
+    public User getById(long id) {
         return userRepository.findByIdAndActiveTrue(id);
     }
 
     @Override
-    public User getUserByLogin(String login, boolean active) {
+    public User getByLogin(String login, boolean active) {
         User user = active ? userRepository.findByLoginAndActiveTrue(login) : userRepository.findByLogin(login);
 
         if(user != null){
@@ -41,7 +41,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserByEmail(String email, boolean active) {
+    public User getByEmail(String email, boolean active) {
         User user = active ? userRepository.findByEmailAndActiveTrue(email) : userRepository.findByEmail(email);
 
         if(user != null){
@@ -53,7 +53,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserByAuthentication(User user) {
+    public User getByAuthentication(User user) {
         User authUser = userRepository.findByLoginAndActiveTrue(user.getLogin());
 
         if(authUser != null && authUser.getPassword().equals(user.getPassword())){
@@ -69,7 +69,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void removeUserById(long id) {
+    public void deleteById(long id) {
         User user = userRepository.findByIdAndActiveTrue(id);
         if(user != null) {
             user.setActive(false);
@@ -78,12 +78,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void updateUser(User user) {
+    public void update(User user) {
         userRepository.save(user);
     }
 
     @Override
-    public void insertUser(User user) {
+    public void insert(User user) {
         TextEncryption textEncryption = new TextEncryption();
         user.setPassword(textEncryption.getMD5(user.getPassword()));
 
