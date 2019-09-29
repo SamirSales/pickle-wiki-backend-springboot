@@ -1,8 +1,8 @@
 package io.github.samirsales.model.dto;
 
-import io.github.samirsales.model.entity.Picture;
+import io.github.samirsales.model.entity.ImageEntity;
 
-public class PictureDTO {
+public class ImageDTO {
 
     private Long _id;
     private String name;
@@ -10,12 +10,12 @@ public class PictureDTO {
     private String thumbFileName;
     private String pictureType;
 
-    public PictureDTO(Picture picture, String thumbnailFileIndicator){
-        this._id = picture.get_id();
-        this.name = picture.getName();
-        this.pictureType = picture.getPictureType().getValue();
-        this.fileName = picture.get_id() + "." + picture.getFileExtension();
-        this.thumbFileName = picture.get_id() + thumbnailFileIndicator + "." + picture.getFileExtension();
+    public ImageDTO(ImageEntity imageEntity, String thumbnailFileIndicator){
+        this._id = imageEntity.getId();
+        this.name = imageEntity.getName();
+        this.pictureType = imageEntity.getImageType().getValue();
+        this.fileName = imageEntity.getId() + "." + imageEntity.getFileExtension();
+        this.thumbFileName = imageEntity.getId() + thumbnailFileIndicator + "." + imageEntity.getFileExtension();
     }
 
     public Long get_id() {

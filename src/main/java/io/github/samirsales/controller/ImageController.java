@@ -1,8 +1,8 @@
 package io.github.samirsales.controller;
 
-import io.github.samirsales.model.dto.PictureDTO;
-import io.github.samirsales.model.entity.Picture;
-import io.github.samirsales.service.PictureService;
+import io.github.samirsales.model.dto.ImageDTO;
+import io.github.samirsales.model.entity.ImageEntity;
+import io.github.samirsales.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,47 +16,47 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/pictures")
-public class PictureController {
+public class ImageController {
 
     @Autowired
-    private PictureService pictureService;
+    private ImageService imageService;
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(value = "/upload",method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file,
                                              @RequestParam("fileName") String fileName,
                                              @RequestParam("pictureType") String pictureType) throws Exception {
-        pictureService.insertPicture(file, fileName, pictureType);
+        imageService.insertPicture(file, fileName, pictureType);
         return new ResponseEntity<>("File is upload successfully", HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(method = RequestMethod.GET)
-    public Collection<PictureDTO> getAllPictures(){
-        return pictureService.getAll();
+    public Collection<ImageDTO> getAllPictures(){
+        return imageService.getAll();
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public PictureDTO getPictureById(@PathVariable("id") long id){
-        return pictureService.getPictureById(id);
+    public ImageDTO getPictureById(@PathVariable("id") long id){
+        return imageService.getPictureById(id);
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void removePictureById(@PathVariable("id") long id) throws IOException {
-        pictureService.removePictureById(id);
+        imageService.removePictureById(id);
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updatePicture(@RequestBody Picture picture){
-        pictureService.updatePicture(picture);
+    public void updatePicture(@RequestBody ImageEntity imageEntity){
+        imageService.updatePicture(imageEntity);
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(value = "/search/{search}", method = RequestMethod.GET)
-    public Collection<PictureDTO>  getPicturesBySearch(@PathVariable("search") String search){
-        return pictureService.getPicturesBySearch(search);
+    public Collection<ImageDTO>  getPicturesBySearch(@PathVariable("search") String search){
+        return imageService.getPicturesBySearch(search);
     }
 }

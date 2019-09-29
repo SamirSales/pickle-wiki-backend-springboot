@@ -10,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -39,8 +38,6 @@ public class UserEntity extends Audit {
 
     private boolean active;
 
-    private String pictureFileName;
-
     @NotEmpty
     private String password;
 
@@ -50,71 +47,87 @@ public class UserEntity extends Audit {
     @ManyToMany
     private Set<RoleEntity> roleEntities;
 
-    public UserEntity(Long id, String name, String login, String email, String password, Gender gender, boolean active,
-                      Set<RoleEntity> roleEntities) {
+    @OneToOne
+    private ImageEntity imageEntity;
+
+    public UserEntity(Long id, @NotNull @NotEmpty String name, @NotEmpty String login,
+                      @Email String email, boolean active, @NotEmpty String password,
+                      Gender gender, Set<RoleEntity> roleEntities, ImageEntity imageEntity) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
+        this.active = active;
         this.password = password;
         this.gender = gender;
-        this.active = active;
         this.roleEntities = roleEntities;
+        this.imageEntity = imageEntity;
     }
 
-    public UserEntity() {
-    }
+    public UserEntity() { /* Necessary for JPA */ }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getLogin() {
         return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Gender getGender() {
         return gender;
     }
 
+    public Set<RoleEntity> getRoleEntities() {
+        return roleEntities;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void setGender(Gender gender) {
         this.gender = gender;
     }
 
-    public Set<RoleEntity> getRoleEntities() {
-        return roleEntities;
+    public void setRoleEntities(Set<RoleEntity> roleEntities) {
+        this.roleEntities = roleEntities;
+    }
+
+    public void setImageEntity(ImageEntity imageEntity) {
+        this.imageEntity = imageEntity;
     }
 
     public boolean hasRole(Role role){
@@ -126,8 +139,12 @@ public class UserEntity extends Audit {
         return false;
     }
 
-    public void setRoleEntities(Set<RoleEntity> roleEntities) {
-        this.roleEntities = roleEntities;
+    public boolean isActive() {
+        return active;
+    }
+
+    public ImageEntity getImageEntity() {
+        return imageEntity;
     }
 
     @Override
@@ -140,23 +157,6 @@ public class UserEntity extends Audit {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id);
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public String getPictureFileName() {
-        return pictureFileName;
-    }
-
-    public void setPictureFileName(String pictureFileName) {
-        this.pictureFileName = pictureFileName;
     }
 }

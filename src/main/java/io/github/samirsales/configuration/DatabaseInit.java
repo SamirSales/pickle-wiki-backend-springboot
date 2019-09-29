@@ -2,6 +2,7 @@ package io.github.samirsales.configuration;
 
 import io.github.samirsales.dao.RoleDao;
 import io.github.samirsales.dao.UserDao;
+import io.github.samirsales.model.entity.ImageEntity;
 import io.github.samirsales.model.entity.RoleEntity;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.model.enums.Gender;
@@ -10,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Component
 @SuppressWarnings("unused")
@@ -59,6 +63,7 @@ public class DatabaseInit {
         String password = "admin";
         Gender gender = Gender.MALE;
         final boolean active = true;
+        final ImageEntity imageEntity = null;
         Set<RoleEntity> roleEntities = new HashSet<>();
 
         Optional<RoleEntity> adminRoleEntityOptional = roleDao.getEntityByRole(Role.ADMIN);
@@ -67,6 +72,6 @@ public class DatabaseInit {
         Optional<RoleEntity> editorRoleEntityOptional = roleDao.getEntityByRole(Role.EDITOR);
         editorRoleEntityOptional.ifPresent(roleEntities::add);
 
-        return new UserEntity(id, name, login, email, password, gender, active, roleEntities);
+        return new UserEntity(id, name, login, email, active, password, gender, roleEntities, imageEntity);
     }
 }

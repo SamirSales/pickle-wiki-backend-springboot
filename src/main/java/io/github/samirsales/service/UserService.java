@@ -161,7 +161,8 @@ public class UserService {
             ImageResizer imgResizer = new ImageResizer();
             imgResizer.resize(path, path,300);
 
-            savedUserEntity.setPictureFileName(fileName);
+            // TODO: solve this
+//            savedUserEntity.setPictureFileName(fileName);
             this.userDao.update(savedUserEntity);
         } catch (IOException ioException) {
             ioException.printStackTrace();

@@ -24,7 +24,7 @@ public class UserDTO {
         email = userEntity.getEmail();
         active = userEntity.isActive();
         gender = userEntity.getGender().getValue();
-        pictureFileName = userEntity.getPictureFileName();
+        pictureFileName = userEntity.getImageEntity().getFilename();
 
         roleEntities = new ArrayList<>();
         for(RoleEntity roleEntity : userEntity.getRoleEntities()){

@@ -1,11 +1,12 @@
 package io.github.samirsales.model.enums;
 
-public enum PictureType {
-    DEFAULT("DEFAULT"), PROFILE("PROFILE");
+public enum ImageType {
+    ARTICLE("ARTICLE"),
+    PROFILE("PROFILE");
 
     private String value;
 
-    PictureType(String value) {
+    ImageType(String value) {
         this.value = value;
     }
 
