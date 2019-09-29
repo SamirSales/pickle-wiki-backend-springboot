@@ -25,10 +25,6 @@ public class ArticleDTO {
         active = article.isActive();
 
         lastEditor = new UserDTO(userEntity);
-        lastEditor.setId(null);
-        lastEditor.setLogin("");
-        lastEditor.setId(null);
-        lastEditor.setRoleEntities(null);
 
         updatedAt = article.getUpdatedAt().toString();
     }
@@ -37,63 +33,38 @@ public class ArticleDTO {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    @SuppressWarnings("unused")
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
+    @SuppressWarnings("unused")
     public String getContext() {
         return context;
     }
 
-    public void setContext(String context) {
-        this.context = context;
-    }
-
+    @SuppressWarnings("unused")
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public UserDTO getLastEditor() {
-        return lastEditor;
-    }
-
-    public void setLastEditor(UserDTO lastEditor) {
-        this.lastEditor = lastEditor;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
+    @SuppressWarnings("unused")
     public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
+    @SuppressWarnings("unused")
     public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    @SuppressWarnings("unused")
+    public UserDTO getLastEditor() {
+        return lastEditor;
+    }
+
+    @SuppressWarnings("unused")
+    public boolean isActive() {
+        return active;
     }
 }

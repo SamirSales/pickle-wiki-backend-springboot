@@ -2,17 +2,13 @@ package io.github.samirsales.dao;
 
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.repository.UserRepository;
-import io.github.samirsales.util.TextEncryption;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
 @Repository
-@Qualifier("postgres")
+@SuppressWarnings("unused")
 public class UserDaoImpl implements UserDao {
 
     @Autowired
@@ -29,52 +25,57 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public UserEntity getByLogin(String login, boolean active) {
-        UserEntity userEntity = active ? userRepository.findByLoginAndActiveTrue(login) : userRepository.findByLogin(login);
-
-        if(userEntity != null){
-            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String hashedPassword = passwordEncoder.encode(userEntity.getPassword());
-            userEntity.setPassword(hashedPassword);
-        }
-        return userEntity;
+    public UserEntity getActiveByLogin(String login) {
+        return userRepository.findByLoginAndActiveTrue(login);
     }
 
     @Override
-    public UserEntity getByEmail(String email, boolean active) {
-        UserEntity userEntity = active ? userRepository.findByEmailAndActiveTrue(email) : userRepository.findByEmail(email);
+    public UserEntity getByLogin(String login) {
+        return userRepository.findByLogin(login);
+    }
 
-        if(userEntity != null){
-            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String hashedPassword = passwordEncoder.encode(userEntity.getPassword());
-            userEntity.setPassword(hashedPassword);
-        }
-        return userEntity;
+    @Override
+    public UserEntity getActiveByEmail(String email) {
+        return userRepository.findByEmailAndActiveTrue(email) ;
+    }
+
+    @Override
+    public UserEntity getByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
     public UserEntity getByAuthentication(UserEntity userEntity) {
-        UserEntity authUserEntity = userRepository.findByLoginAndActiveTrue(userEntity.getLogin());
-
-        if(authUserEntity != null && authUserEntity.getPassword().equals(userEntity.getPassword())){
-
-            // encoding password
-            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String hashedPassword = passwordEncoder.encode(authUserEntity.getPassword());
-            authUserEntity.setPassword(hashedPassword);
-
-            return authUserEntity;
-        }
-        return null;
+        return userRepository.findByLoginAndActiveTrue(userEntity.getLogin());
     }
 
     @Override
     public void deleteById(long id) {
-        UserEntity userEntity = userRepository.findByIdAndActiveTrue(id);
+        UserEntity userEntity = getInactivatedEntityById(id);
         if(userEntity != null) {
-            userEntity.setActive(false);
             userRepository.save(userEntity);
         }
+    }
+
+    private UserEntity getInactivatedEntityById(long id){
+        UserEntity userEntity = getById(id);
+
+        if(userEntity != null){
+            final boolean activeStatus = false;
+
+            return new UserEntity(
+                    userEntity.getId(),
+                    userEntity.getName(),
+                    userEntity.getLogin(),
+                    userEntity.getEmail(),
+                    activeStatus,
+                    userEntity.getPassword(),
+                    userEntity.getGender(),
+                    userEntity.getRoleEntities(),
+                    userEntity.getImageEntity()
+            );
+        }
+        return null;
     }
 
     @Override
@@ -84,9 +85,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void create(UserEntity userEntity) {
-        TextEncryption textEncryption = new TextEncryption();
-        userEntity.setPassword(textEncryption.getMD5(userEntity.getPassword()));
-
         userRepository.save(userEntity);
     }
 }

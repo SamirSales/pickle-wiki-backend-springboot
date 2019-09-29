@@ -1,7 +1,7 @@
 package io.github.samirsales.controller;
 
 import io.github.samirsales.security.JWTUtil;
-import io.github.samirsales.security.UserSS;
+import io.github.samirsales.security.UserSecurity;
 import io.github.samirsales.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +21,8 @@ public class AuthResource {
     @RequestMapping(value = "/refresh_token", method=RequestMethod.POST)
     public ResponseEntity<Void> refreshToken(HttpServletResponse response){
 
-        UserSS userSS = UserService.authenticated();
-        String token = jwtUtil.generateToken(userSS.getUsername());
+        UserSecurity userSecurity = UserService.authenticated();
+        String token = jwtUtil.generateToken(userSecurity.getUsername());
         response.addHeader("Authorization", "Bearer "+token);
         response.addHeader("access-control-expose-headers", "Authorization");
 

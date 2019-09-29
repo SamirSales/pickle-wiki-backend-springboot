@@ -9,9 +9,13 @@ public interface UserDao {
 
     UserEntity getById(long id);
 
-    UserEntity getByLogin(String login, boolean active);
+    UserEntity getActiveByLogin(String login);
 
-    UserEntity getByEmail(String login, boolean active);
+    UserEntity getByLogin(String login);
+
+    UserEntity getActiveByEmail(String email);
+
+    UserEntity getByEmail(String email);
 
     UserEntity getByAuthentication(UserEntity userEntity);
 

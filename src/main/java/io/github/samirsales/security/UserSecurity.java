@@ -11,17 +11,17 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class UserSS implements UserDetails {
+public class UserSecurity implements UserDetails {
 
     private Long id;
     private String login;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserSS(){
+    public UserSecurity(){
     }
 
-    public UserSS(Long id, String login, String password, RoleEntity roleEntity){
+    public UserSecurity(Long id, String login, String password, RoleEntity roleEntity){
         super();
         ArrayList<SimpleGrantedAuthority> userTypes = new ArrayList<>();
         userTypes.add(new SimpleGrantedAuthority(roleEntity.getRole().getValue()));
@@ -31,7 +31,7 @@ public class UserSS implements UserDetails {
         this.authorities = userTypes;
     }
 
-    public UserSS(Long id, String login, String password, Set<RoleEntity> roleEntity){
+    public UserSecurity(Long id, String login, String password, Set<RoleEntity> roleEntity){
         super();
         this.id = id;
         this.login = login;

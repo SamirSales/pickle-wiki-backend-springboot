@@ -2,9 +2,8 @@ package io.github.samirsales.service;
 
 import io.github.samirsales.dao.UserDao;
 import io.github.samirsales.model.entity.UserEntity;
-import io.github.samirsales.security.UserSS;
+import io.github.samirsales.security.UserSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,12 +19,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 
-        UserEntity userEntity = userDao.getByLogin(login, true);
+        UserEntity userEntity = userDao.getActiveByLogin(login);
 
         if(userEntity == null){
             throw new UsernameNotFoundException(login);
         }
 
-        return new UserSS(userEntity.getId(), userEntity.getLogin(), userEntity.getPassword(), userEntity.getRoleEntities());
+        return new UserSecurity(userEntity.getId(), userEntity.getLogin(), userEntity.getPassword(), userEntity.getRoleEntities());
     }
 }

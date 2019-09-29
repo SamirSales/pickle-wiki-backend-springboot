@@ -6,7 +6,7 @@ import io.github.samirsales.model.entity.Article;
 import io.github.samirsales.model.dto.ArticleDTO;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.exception.AuthorizationException;
-import io.github.samirsales.security.UserSS;
+import io.github.samirsales.security.UserSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,10 @@ import java.util.Collection;
 public class ArticleService {
 
     @Autowired
-    @Qualifier("postgres")
     @SuppressWarnings("unused")
     private ArticleDao articleDao;
 
     @Autowired
-    @Qualifier("postgres")
     @SuppressWarnings("unused")
     private UserDao userDao;
 
@@ -50,12 +48,12 @@ public class ArticleService {
 
     public void updateArticle(Article article){
 
-        UserSS userSS = UserService.authenticated();
+        UserSecurity userSecurity = UserService.authenticated();
 
-        if(userSS == null) {
+        if(userSecurity == null) {
             throw new AuthorizationException("Access Denied");
         }
-        article.setLastEditorId(userSS.getId());
+        article.setLastEditorId(userSecurity.getId());
 
         StringBuilder urlSB = new StringBuilder(buildURL(article.getTitle()) + "-" + buildURL(article.getContext()));
 
@@ -75,12 +73,12 @@ public class ArticleService {
 
     public void insertArticle(Article article) {
 
-        UserSS userSS = UserService.authenticated();
+        UserSecurity userSecurity = UserService.authenticated();
 
-        if(userSS == null) {
+        if(userSecurity == null) {
             throw new AuthorizationException("Access Denied");
         }
-        article.setLastEditorId(userSS.getId());
+        article.setLastEditorId(userSecurity.getId());
 
         StringBuilder urlSB = new StringBuilder(buildURL(article.getTitle()) + "-" + buildURL(article.getContext()));
 
