@@ -17,9 +17,9 @@ public class UserDTO {
     private Gender gender;
     private String password;
 
-    private ImageDTO imageDTO;
+    private ImageDTO imageProfile;
 
-    private Set<RoleEntity> roleEntities;
+    private Set<RoleDTO> roles;
 
     public UserDTO(UserEntity userEntity){
         id = userEntity.getId();
@@ -29,13 +29,13 @@ public class UserDTO {
         gender = userEntity.getGender();
         password = "";
 
-        if(userEntity.getImageEntity() != null){
-            imageDTO = new ImageDTO(userEntity.getImageEntity(), "");
+        if(userEntity.getImageProfile() != null){
+            imageProfile = new ImageDTO(userEntity.getImageProfile(), "");
         }
 
-        roleEntities = new HashSet<>();
+        roles = new HashSet<>();
         for(RoleEntity roleEntity : userEntity.getRoleEntities()){
-            roleEntities.add(new RoleEntity(roleEntity.getId(), roleEntity.getRole()));
+            roles.add(new RoleDTO(roleEntity));
         }
     }
 
@@ -68,12 +68,12 @@ public class UserDTO {
     }
 
     @SuppressWarnings("unused")
-    public ImageDTO getImageDTO() {
-        return imageDTO;
+    public ImageDTO getImageProfile() {
+        return imageProfile;
     }
 
     @SuppressWarnings("unused")
-    public Set<RoleEntity> getRoleEntities() {
-        return roleEntities;
+    public Set<RoleDTO> getRoles() {
+        return roles;
     }
 }

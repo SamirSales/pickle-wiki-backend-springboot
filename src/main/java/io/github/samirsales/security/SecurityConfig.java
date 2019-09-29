@@ -22,6 +22,7 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@SuppressWarnings("unused")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -31,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JWTUtil jwtUtil;
 
     @Autowired
-    private Environment env;
+    private Environment environment;
 
     private static final String[] PUBLIC_MATCHERS = {
             "/articles/**",
@@ -60,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        if(Arrays.asList(env.getActiveProfiles()).contains("test")){
+        if(Arrays.asList(environment.getActiveProfiles()).contains("test")){
             http.headers().frameOptions().disable();
         }
 
@@ -100,6 +101,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    @SuppressWarnings("WeakerAccess")
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }

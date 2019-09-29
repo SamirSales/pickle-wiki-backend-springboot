@@ -72,7 +72,7 @@ public class UserDaoImpl implements UserDao {
                     userEntity.getPassword(),
                     userEntity.getGender(),
                     userEntity.getRoleEntities(),
-                    userEntity.getImageEntity()
+                    userEntity.getImageProfile()
             );
         }
         return null;

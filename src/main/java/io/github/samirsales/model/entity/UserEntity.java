@@ -48,11 +48,11 @@ public class UserEntity extends Audit {
     private Set<RoleEntity> roleEntities;
 
     @OneToOne
-    private ImageEntity imageEntity;
+    private ImageEntity imageProfile;
 
     public UserEntity(Long id, @NotNull @NotEmpty String name, @NotEmpty String login,
                       @Email String email, boolean active, @NotEmpty String password,
-                      Gender gender, Set<RoleEntity> roleEntities, ImageEntity imageEntity) {
+                      Gender gender, Set<RoleEntity> roleEntities, ImageEntity imageProfile) {
         this.id = id;
         this.name = name;
         this.login = login;
@@ -61,7 +61,7 @@ public class UserEntity extends Audit {
         this.password = password;
         this.gender = gender;
         this.roleEntities = roleEntities;
-        this.imageEntity = imageEntity;
+        this.imageProfile = imageProfile;
     }
 
     public UserEntity() { /* Necessary for JPA */ }
@@ -107,8 +107,8 @@ public class UserEntity extends Audit {
         return active;
     }
 
-    public ImageEntity getImageEntity() {
-        return imageEntity;
+    public ImageEntity getImageProfile() {
+        return imageProfile;
     }
 
     @Override

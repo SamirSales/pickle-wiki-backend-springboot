@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(value = "/auth")
+@SuppressWarnings("unused")
 public class AuthResource {
 
     @Autowired
@@ -20,11 +21,13 @@ public class AuthResource {
 
     @RequestMapping(value = "/refresh_token", method=RequestMethod.POST)
     public ResponseEntity<Void> refreshToken(HttpServletResponse response){
-
         UserSecurity userSecurity = UserService.authenticated();
-        String token = jwtUtil.generateToken(userSecurity.getUsername());
-        response.addHeader("Authorization", "Bearer "+token);
-        response.addHeader("access-control-expose-headers", "Authorization");
+
+        if(userSecurity != null){
+            String token = jwtUtil.generateToken(userSecurity.getUsername());
+            response.addHeader("Authorization", "Bearer "+token);
+            response.addHeader("access-control-expose-headers", "Authorization");
+        }
 
         return ResponseEntity.noContent().build();
     }
