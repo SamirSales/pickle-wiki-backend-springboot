@@ -11,10 +11,8 @@ import java.util.Date;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(
-        value = {"createdAt", "updatedAt"},
-        allowGetters = true
-)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+@SuppressWarnings("unused")
 public abstract class Audit implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -30,10 +28,4 @@ public abstract class Audit implements Serializable {
     public Date getUpdatedAt() {
         return updatedAt;
     }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    // Getters and Setters (Omitted for brevity)
 }

@@ -4,7 +4,7 @@ import io.github.samirsales.dao.ArticleDao;
 import io.github.samirsales.dao.UserDao;
 import io.github.samirsales.model.entity.Article;
 import io.github.samirsales.model.dto.ArticleDTO;
-import io.github.samirsales.model.entity.User;
+import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.exception.AuthorizationException;
 import io.github.samirsales.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +38,8 @@ public class ArticleService {
         Article article = this.articleDao.getByUrl(url);
 
         if(article != null){
-            User user = this.userDao.getById(article.getLastEditorId());
-            return new ArticleDTO(article, user);
+            UserEntity userEntity = this.userDao.getById(article.getLastEditorId());
+            return new ArticleDTO(article, userEntity);
         }
         return null;
     }

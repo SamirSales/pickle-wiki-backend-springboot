@@ -1,7 +1,7 @@
 package io.github.samirsales.model.dto;
 
-import io.github.samirsales.model.entity.Permission;
-import io.github.samirsales.model.entity.User;
+import io.github.samirsales.model.entity.RoleEntity;
+import io.github.samirsales.model.entity.UserEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,20 +15,20 @@ public class UserDTO {
     private boolean active;
     private String pictureFileName;
     private String gender;
-    private List<Permission> permissions;
+    private List<RoleEntity> roleEntities;
 
-    public UserDTO(User user){
-        id = user.getId();
-        name = user.getName();
-        login = user.getLogin();
-        email = user.getEmail();
-        active = user.isActive();
-        gender = user.getGender().getValue();
-        pictureFileName = user.getPictureFileName();
+    public UserDTO(UserEntity userEntity){
+        id = userEntity.getId();
+        name = userEntity.getName();
+        login = userEntity.getLogin();
+        email = userEntity.getEmail();
+        active = userEntity.isActive();
+        gender = userEntity.getGender().getValue();
+        pictureFileName = userEntity.getPictureFileName();
 
-        permissions = new ArrayList<>();
-        for(Permission permission : user.getPermissions()){
-            permissions.add(new Permission(permission.getId(), permission.getPermissionType(), null));
+        roleEntities = new ArrayList<>();
+        for(RoleEntity roleEntity : userEntity.getRoleEntities()){
+            roleEntities.add(new RoleEntity(roleEntity.getId(), roleEntity.getRole()));
         }
     }
 
@@ -80,12 +80,12 @@ public class UserDTO {
         this.gender = gender;
     }
 
-    public List<Permission> getPermissions() {
-        return permissions;
+    public List<RoleEntity> getRoleEntities() {
+        return roleEntities;
     }
 
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
+    public void setRoleEntities(List<RoleEntity> roleEntities) {
+        this.roleEntities = roleEntities;
     }
 
     public String getPictureFileName() {

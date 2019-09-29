@@ -3,6 +3,7 @@ package io.github.samirsales.model.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.github.samirsales.model.enums.Gender;
+import io.github.samirsales.model.enums.Role;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -11,10 +12,11 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity(name = "users")
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-public class User extends Audit {
+public class UserEntity extends Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,10 +48,10 @@ public class User extends Audit {
     private Gender gender;
 
     @ManyToMany
-    private List<Permission> permissions;
+    private Set<RoleEntity> roleEntities;
 
-    public User(Long id, String name, String login, String email, String password, Gender gender, boolean active,
-                List<Permission> permissions) {
+    public UserEntity(Long id, String name, String login, String email, String password, Gender gender, boolean active,
+                      Set<RoleEntity> roleEntities) {
         this.id = id;
         this.name = name;
         this.login = login;
@@ -57,10 +59,10 @@ public class User extends Audit {
         this.password = password;
         this.gender = gender;
         this.active = active;
-        this.permissions = permissions;
+        this.roleEntities = roleEntities;
     }
 
-    public User() {
+    public UserEntity() {
     }
 
     public Long getId() {
@@ -111,20 +113,29 @@ public class User extends Audit {
         this.gender = gender;
     }
 
-    public List<Permission> getPermissions() {
-        return permissions;
+    public Set<RoleEntity> getRoleEntities() {
+        return roleEntities;
     }
 
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
+    public boolean hasRole(Role role){
+        for(RoleEntity roleEntity : roleEntities){
+            if(roleEntity.getRole().equals(role)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void setRoleEntities(Set<RoleEntity> roleEntities) {
+        this.roleEntities = roleEntities;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id);
+        UserEntity userEntity = (UserEntity) o;
+        return Objects.equals(id, userEntity.id);
     }
 
     @Override

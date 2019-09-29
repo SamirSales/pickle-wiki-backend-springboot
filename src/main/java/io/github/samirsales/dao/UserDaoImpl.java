@@ -1,6 +1,6 @@
 package io.github.samirsales.dao;
 
-import io.github.samirsales.model.entity.User;
+import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.repository.UserRepository;
 import io.github.samirsales.util.TextEncryption;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,74 +19,74 @@ public class UserDaoImpl implements UserDao {
     private UserRepository userRepository;
 
     @Override
-    public Collection<User> getAll() {
+    public Collection<UserEntity> getAll() {
         return userRepository.findByActiveTrueOrderByName();
     }
 
     @Override
-    public User getById(long id) {
+    public UserEntity getById(long id) {
         return userRepository.findByIdAndActiveTrue(id);
     }
 
     @Override
-    public User getByLogin(String login, boolean active) {
-        User user = active ? userRepository.findByLoginAndActiveTrue(login) : userRepository.findByLogin(login);
+    public UserEntity getByLogin(String login, boolean active) {
+        UserEntity userEntity = active ? userRepository.findByLoginAndActiveTrue(login) : userRepository.findByLogin(login);
 
-        if(user != null){
+        if(userEntity != null){
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String hashedPassword = passwordEncoder.encode(user.getPassword());
-            user.setPassword(hashedPassword);
+            String hashedPassword = passwordEncoder.encode(userEntity.getPassword());
+            userEntity.setPassword(hashedPassword);
         }
-        return user;
+        return userEntity;
     }
 
     @Override
-    public User getByEmail(String email, boolean active) {
-        User user = active ? userRepository.findByEmailAndActiveTrue(email) : userRepository.findByEmail(email);
+    public UserEntity getByEmail(String email, boolean active) {
+        UserEntity userEntity = active ? userRepository.findByEmailAndActiveTrue(email) : userRepository.findByEmail(email);
 
-        if(user != null){
+        if(userEntity != null){
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String hashedPassword = passwordEncoder.encode(user.getPassword());
-            user.setPassword(hashedPassword);
+            String hashedPassword = passwordEncoder.encode(userEntity.getPassword());
+            userEntity.setPassword(hashedPassword);
         }
-        return user;
+        return userEntity;
     }
 
     @Override
-    public User getByAuthentication(User user) {
-        User authUser = userRepository.findByLoginAndActiveTrue(user.getLogin());
+    public UserEntity getByAuthentication(UserEntity userEntity) {
+        UserEntity authUserEntity = userRepository.findByLoginAndActiveTrue(userEntity.getLogin());
 
-        if(authUser != null && authUser.getPassword().equals(user.getPassword())){
+        if(authUserEntity != null && authUserEntity.getPassword().equals(userEntity.getPassword())){
 
             // encoding password
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String hashedPassword = passwordEncoder.encode(authUser.getPassword());
-            authUser.setPassword(hashedPassword);
+            String hashedPassword = passwordEncoder.encode(authUserEntity.getPassword());
+            authUserEntity.setPassword(hashedPassword);
 
-            return authUser;
+            return authUserEntity;
         }
         return null;
     }
 
     @Override
     public void deleteById(long id) {
-        User user = userRepository.findByIdAndActiveTrue(id);
-        if(user != null) {
-            user.setActive(false);
-            userRepository.save(user);
+        UserEntity userEntity = userRepository.findByIdAndActiveTrue(id);
+        if(userEntity != null) {
+            userEntity.setActive(false);
+            userRepository.save(userEntity);
         }
     }
 
     @Override
-    public void update(User user) {
-        userRepository.save(user);
+    public void update(UserEntity userEntity) {
+        userRepository.save(userEntity);
     }
 
     @Override
-    public void insert(User user) {
+    public void create(UserEntity userEntity) {
         TextEncryption textEncryption = new TextEncryption();
-        user.setPassword(textEncryption.getMD5(user.getPassword()));
+        userEntity.setPassword(textEncryption.getMD5(userEntity.getPassword()));
 
-        userRepository.save(user);
+        userRepository.save(userEntity);
     }
 }

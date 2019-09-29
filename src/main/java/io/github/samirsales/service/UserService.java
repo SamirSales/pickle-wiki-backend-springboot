@@ -2,8 +2,8 @@ package io.github.samirsales.service;
 
 import io.github.samirsales.dao.UserDao;
 import io.github.samirsales.model.dto.UserDTO;
-import io.github.samirsales.model.enums.PermissionType;
-import io.github.samirsales.model.entity.User;
+import io.github.samirsales.model.entity.UserEntity;
+import io.github.samirsales.model.enums.Role;
 import io.github.samirsales.exception.AuthorizationException;
 import io.github.samirsales.exception.UserUpdateException;
 import io.github.samirsales.util.ImageResizer;
@@ -42,38 +42,38 @@ public class UserService {
     }
 
     public List<UserDTO> getAllUsers(){
-        Collection<User> users = userDao.getAll();
-        return users.parallelStream().map(UserDTO::new).collect(Collectors.toList());
+        Collection<UserEntity> userEntities = userDao.getAll();
+        return userEntities.parallelStream().map(UserDTO::new).collect(Collectors.toList());
     }
 
     public UserDTO getUserById(Long id){
 
         UserSS userSS = UserService.authenticated();
 
-        if(userSS == null || (!userSS.hashRole(PermissionType.ADMIN) && !id.equals(userSS.getId()))){
+        if(userSS == null || (!userSS.hashRole(Role.ADMIN) && !id.equals(userSS.getId()))){
             throw new AuthorizationException("Access Denied");
         }
 
         return new UserDTO(this.userDao.getById(id));
     }
 
-    public UserDTO getUserByAuthentication(User user) {
-        return new UserDTO(this.userDao.getByAuthentication(user));
+    public UserDTO getUserByAuthentication(UserEntity userEntity) {
+        return new UserDTO(this.userDao.getByAuthentication(userEntity));
     }
 
     public void removeUserById(long id) {
         this.userDao.deleteById(id);
     }
 
-    public void updateUser(User user){
+    public void updateUser(UserEntity userEntity){
         TextEncryption textEncryption = new TextEncryption();
-        user.setPassword(textEncryption.getMD5(user.getPassword()));
+        userEntity.setPassword(textEncryption.getMD5(userEntity.getPassword()));
 
-        this.userDao.update(user);
+        this.userDao.update(userEntity);
     }
 
-    public void insertUser(User user) {
-        this.userDao.insert(user);
+    public void insertUser(UserEntity userEntity) {
+        this.userDao.create(userEntity);
     }
 
     public UserDTO getUserByToken() {
@@ -86,38 +86,38 @@ public class UserService {
         return getUserById(userSS.getId());
     }
 
-    public UserDTO dataUserConfig(User user) {
+    public UserDTO dataUserConfig(UserEntity userEntity) {
         UserSS userSS = UserService.authenticated();
 
         if(userSS == null ){
             throw new AuthorizationException("Access Denied");
         }
 
-        User userSaved = this.userDao.getById(userSS.getId());
+        UserEntity userEntitySaved = this.userDao.getById(userSS.getId());
 
-        userSaved.setName(user.getName());
-        userSaved.setGender(user.getGender());
+        userEntitySaved.setName(userEntity.getName());
+        userEntitySaved.setGender(userEntity.getGender());
 
-        String password = userSaved.getPassword();
+        String password = userEntitySaved.getPassword();
 
-        User userByLogin = this.userDao.getByLogin(user.getLogin(), false);
-        if(userByLogin == null || userByLogin.getId().equals(userSaved.getId())){
-            userSaved.setLogin(user.getLogin());
+        UserEntity userEntityByLogin = this.userDao.getByLogin(userEntity.getLogin(), false);
+        if(userEntityByLogin == null || userEntityByLogin.getId().equals(userEntitySaved.getId())){
+            userEntitySaved.setLogin(userEntity.getLogin());
         }else {
             throw new UserUpdateException("Login not available");
         }
 
-        User userByEmail = this.userDao.getByEmail(user.getEmail(), false);
-        if(userByEmail == null || userByEmail.getId().equals(userSaved.getId())){
-            userSaved.setEmail(user.getEmail());
+        UserEntity userEntityByEmail = this.userDao.getByEmail(userEntity.getEmail(), false);
+        if(userEntityByEmail == null || userEntityByEmail.getId().equals(userEntitySaved.getId())){
+            userEntitySaved.setEmail(userEntity.getEmail());
         }else {
             throw new UserUpdateException("E-mail not available");
         }
 
-        userSaved.setPassword(password);
-        this.userDao.update(userSaved);
+        userEntitySaved.setPassword(password);
+        this.userDao.update(userEntitySaved);
 
-        return new UserDTO(userSaved);
+        return new UserDTO(userEntitySaved);
     }
 
     public void setUserPassword(String currentPassword, String newPassword){
@@ -128,14 +128,14 @@ public class UserService {
             throw new AuthorizationException("Access Denied");
         }
 
-        User savedUser = this.userDao.getById(userSS.getId());
+        UserEntity savedUserEntity = this.userDao.getById(userSS.getId());
 
-        if(savedUser == null || !savedUser.getPassword().equals(textEncryption.getMD5(currentPassword))){
+        if(savedUserEntity == null || !savedUserEntity.getPassword().equals(textEncryption.getMD5(currentPassword))){
             throw new AuthorizationException("Access Denied");
         }
 
-        savedUser.setPassword(textEncryption.getMD5(newPassword));
-        this.userDao.update(savedUser);
+        savedUserEntity.setPassword(textEncryption.getMD5(newPassword));
+        this.userDao.update(savedUserEntity);
     }
 
     public UserDTO userPicture(MultipartFile file) throws IOException {
@@ -144,9 +144,9 @@ public class UserService {
         if(userSS == null ){
             throw new AuthorizationException("Access Denied");
         }
-        User savedUser = this.userDao.getById(userSS.getId());
+        UserEntity savedUserEntity = this.userDao.getById(userSS.getId());
 
-        String fileName = savedUser.getId()+"."+getFileExtension(file.getOriginalFilename());
+        String fileName = savedUserEntity.getId()+"."+getFileExtension(file.getOriginalFilename());
         String path = imagePath+"/"+fileName;
         File convertFile = new File(path);
 
@@ -161,14 +161,14 @@ public class UserService {
             ImageResizer imgResizer = new ImageResizer();
             imgResizer.resize(path, path,300);
 
-            savedUser.setPictureFileName(fileName);
-            this.userDao.update(savedUser);
+            savedUserEntity.setPictureFileName(fileName);
+            this.userDao.update(savedUserEntity);
         } catch (IOException ioException) {
             ioException.printStackTrace();
             throw ioException;
         }
 
-        return new UserDTO(savedUser);
+        return new UserDTO(savedUserEntity);
     }
 
     private String getFileExtension(String fullName) {

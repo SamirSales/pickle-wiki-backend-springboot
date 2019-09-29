@@ -1,21 +1,21 @@
 package io.github.samirsales.repository;
 
-import io.github.samirsales.model.entity.User;
+import io.github.samirsales.model.entity.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Collection;
 
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
-    Collection<User> findByActiveTrueOrderByName();
+    Collection<UserEntity> findByActiveTrueOrderByName();
 
-    User findByIdAndActiveTrue(Long id);
+    UserEntity findByIdAndActiveTrue(Long id);
 
-    User findByLoginAndActiveTrue(String login);
+    UserEntity findByLoginAndActiveTrue(String login);
 
-    User findByEmailAndActiveTrue(String login);
+    UserEntity findByEmailAndActiveTrue(String login);
 
-    User findByLogin(String login);
+    UserEntity findByLogin(String login);
 
-    User findByEmail(String login);
+    UserEntity findByEmail(String login);
 }

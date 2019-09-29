@@ -1,11 +1,11 @@
 package io.github.samirsales.model.enums;
 
-public enum PermissionType {
+public enum Role {
     EDITOR("ROLE_EDITOR"), ADMIN("ROLE_ADMIN");
 
     private String value;
 
-    PermissionType(String value) {
+    Role(String value) {
         this.value = value;
     }
 

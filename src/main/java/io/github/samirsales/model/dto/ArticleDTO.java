@@ -1,7 +1,7 @@
 package io.github.samirsales.model.dto;
 
 import io.github.samirsales.model.entity.Article;
-import io.github.samirsales.model.entity.User;
+import io.github.samirsales.model.entity.UserEntity;
 
 public class ArticleDTO {
 
@@ -16,7 +16,7 @@ public class ArticleDTO {
 
     private boolean active;
 
-    public ArticleDTO(Article article, User user){
+    public ArticleDTO(Article article, UserEntity userEntity){
         id = article.getId();
         title = article.getTitle();
         context = article.getContext();
@@ -24,11 +24,11 @@ public class ArticleDTO {
         url = article.getUrl();
         active = article.isActive();
 
-        lastEditor = new UserDTO(user);
+        lastEditor = new UserDTO(userEntity);
         lastEditor.setId(null);
         lastEditor.setLogin("");
         lastEditor.setId(null);
-        lastEditor.setPermissions(null);
+        lastEditor.setRoleEntities(null);
 
         updatedAt = article.getUpdatedAt().toString();
     }

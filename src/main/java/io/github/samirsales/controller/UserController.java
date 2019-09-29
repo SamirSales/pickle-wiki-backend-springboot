@@ -1,7 +1,7 @@
 package io.github.samirsales.controller;
 
 import io.github.samirsales.model.dto.UserDTO;
-import io.github.samirsales.model.entity.User;
+import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.exception.UserUpdateException;
 import io.github.samirsales.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,21 +41,21 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody User user){
-        userService.updateUser(user);
+    public void update(@RequestBody UserEntity userEntity){
+        userService.updateUser(userEntity);
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
     @RequestMapping(value = "/setting", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> dataUserConfig(@RequestBody User user){
+    public ResponseEntity<Object> dataUserConfig(@RequestBody UserEntity userEntity){
 
         try{
-            userService.dataUserConfig(user);
+            userService.dataUserConfig(userEntity);
         }catch (UserUpdateException ex){
             System.out.println(ex.getMessage());
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.OK);
         }
-        return new ResponseEntity<>("The user's password has been updated successfully", HttpStatus.OK);
+        return new ResponseEntity<>("The userEntity's password has been updated successfully", HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('EDITOR')")
@@ -80,8 +80,8 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void insert(@RequestBody User user){
-        userService.insertUser(user);
+    public void insert(@RequestBody UserEntity userEntity){
+        userService.insertUser(userEntity);
     }
 
     @RequestMapping(value = "/token", method = RequestMethod.POST)
