@@ -33,28 +33,30 @@ public class DatabaseInit {
         roleDao.createIfNotExist(Role.EDITOR);
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void createUserAdminIfThereIsNoAdmin() {
-
         if(!isThereAnyAdminUserOnDatabase()){
-            Long id = null;
-            String name = "Admin";
-            String login = "admin";
-            String email = "admin@email.com";
-            String password = "admin";
-            Gender gender = Gender.MALE;
-            boolean active = true;
-            Set<RoleEntity> roleEntities = new HashSet<>();
-
-            Optional<RoleEntity> adminRoleEntityOptional = roleDao.getEntityByRole(Role.ADMIN);
-            adminRoleEntityOptional.ifPresent(roleEntities::add);
-
-            Optional<RoleEntity> editorRoleEntityOptional = roleDao.getEntityByRole(Role.EDITOR);
-            editorRoleEntityOptional.ifPresent(roleEntities::add);
-
-            UserEntity userEntityAdmin = new UserEntity(id, name, login, email, password, gender, active, roleEntities);
+            UserEntity userEntityAdmin = getDefaultAdminUserEntity();
             userDao.create(userEntityAdmin);
         }
+    }
+    
+    private UserEntity getDefaultAdminUserEntity(){
+        final Long id = null;
+        String name = "Admin";
+        String login = "admin";
+        String email = "admin@email.com";
+        String password = "admin";
+        Gender gender = Gender.MALE;
+        final boolean active = true;
+        Set<RoleEntity> roleEntities = new HashSet<>();
+
+        Optional<RoleEntity> adminRoleEntityOptional = roleDao.getEntityByRole(Role.ADMIN);
+        adminRoleEntityOptional.ifPresent(roleEntities::add);
+
+        Optional<RoleEntity> editorRoleEntityOptional = roleDao.getEntityByRole(Role.EDITOR);
+        editorRoleEntityOptional.ifPresent(roleEntities::add);
+
+        return new UserEntity(id, name, login, email, password, gender, active, roleEntities);
     }
 
     private boolean isThereAnyAdminUserOnDatabase(){
