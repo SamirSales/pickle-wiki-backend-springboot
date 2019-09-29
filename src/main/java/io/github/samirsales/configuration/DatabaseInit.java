@@ -39,7 +39,18 @@ public class DatabaseInit {
             userDao.create(userEntityAdmin);
         }
     }
-    
+
+    private boolean isThereAnyAdminUserOnDatabase(){
+        List<UserEntity> userEntities = (List<UserEntity>) userDao.getAll();
+
+        for(UserEntity userEntity : userEntities){
+            if(userEntity.hasRole(Role.ADMIN)){
+                return true;
+            }
+        }
+        return  false;
+    }
+
     private UserEntity getDefaultAdminUserEntity(){
         final Long id = null;
         String name = "Admin";
@@ -57,16 +68,5 @@ public class DatabaseInit {
         editorRoleEntityOptional.ifPresent(roleEntities::add);
 
         return new UserEntity(id, name, login, email, password, gender, active, roleEntities);
-    }
-
-    private boolean isThereAnyAdminUserOnDatabase(){
-        List<UserEntity> userEntities = (List<UserEntity>) userDao.getAll();
-
-        for(UserEntity userEntity : userEntities){
-            if(userEntity.hasRole(Role.ADMIN)){
-                return true;
-            }
-        }
-        return  false;
     }
 }
