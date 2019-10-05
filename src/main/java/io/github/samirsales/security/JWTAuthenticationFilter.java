@@ -20,6 +20,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private AuthenticationManager authenticationManager;
     private JWTUtil jwtUtil;
 
+    @SuppressWarnings("WeakerAccess")
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
@@ -30,17 +31,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throws AuthenticationException {
 
         try{
-            CredentialsDTO creds = new ObjectMapper().readValue(
-                    req.getInputStream(), CredentialsDTO.class);
-
+            CredentialsDTO credentialsDTO = new ObjectMapper().readValue(req.getInputStream(), CredentialsDTO.class);
             TextEncryption textEncryption = new TextEncryption();
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    creds.getLogin(), textEncryption.getMD5(creds.getPassword()), new ArrayList<>());
+                    credentialsDTO.getLogin(),
+                    textEncryption.getMD5(credentialsDTO.getPassword()),
+                    new ArrayList<>());
 
-            Authentication auth = authenticationManager.authenticate(authToken);
-            return auth;
-
+            return authenticationManager.authenticate(authToken);
         }catch (IOException ex){
             ex.printStackTrace();
             throw new RuntimeException(ex);

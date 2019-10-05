@@ -12,27 +12,32 @@ import java.util.Date;
 public class JWTUtil {
 
     @Value("${jwt.secret}")
+    @SuppressWarnings("unused")
     private String secret;
 
-    @Value("${jwt.expiration}")
-    private Long expiration;
+    @Value("${jwt.expirationTimeInHours}")
+    @SuppressWarnings("unused")
+    private Long expirationTimeInHours;
 
     public String generateToken(String username){
+        long expirationTimeInMilliseconds = expirationTimeInHours * 1000 * 60 * 60;
+        Date expirationDate = new Date(System.currentTimeMillis() + expirationTimeInMilliseconds);
+
         return Jwts.builder().setSubject(username)
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(SignatureAlgorithm.HS512, secret.getBytes())
-                .compact();
+            .setExpiration(expirationDate)
+            .signWith(SignatureAlgorithm.HS512, secret.getBytes())
+            .compact();
     }
 
-    public boolean validToken(String token) {
+    public boolean isValidToken(String token) {
         Claims claims = getClaims(token);
 
         if(claims != null){
-            String username = claims.getSubject();
+            String userName = claims.getSubject();
             Date expirationDate = claims.getExpiration();
             Date now = new Date(System.currentTimeMillis());
 
-            return username != null && expirationDate != null && now.before(expirationDate);
+            return userName != null && expirationDate != null && now.before(expirationDate);
         }
 
         return false;

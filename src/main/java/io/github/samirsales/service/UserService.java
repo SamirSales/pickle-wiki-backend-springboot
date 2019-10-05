@@ -62,37 +62,24 @@ public class UserService {
     }
 
     public void update(UserDTO userDTO){
-        UserEntity userEntity = userEntityDtoFacade.getSavedEntitySetByDTO(userDTO.getId(), userDTO);
+        UserEntity userEntity = userEntityDtoFacade.getActiveEntitySetByDTO(userDTO.getId(), userDTO);
         this.userDao.update(userEntity);
     }
 
-    public void create(UserEntity userEntity) {
+    public void create(UserDTO userDTO) {
+        UserEntity userEntity = userEntityDtoFacade.getActiveEntityByDTO(userDTO);
         this.userDao.create(userEntity);
     }
 
-    public UserDTO getUserByToken() {
+    public UserDTO getAuthenticatedUser() {
         UserSecurity userSecurity = getUserSecurity();
         return getById(userSecurity.getId());
     }
 
     public UserDTO getUpdatedAuthenticatedUserByDTO(UserDTO userDTO) {
         UserSecurity userSecurity = getUserSecurity();
-//        UserEntity savedUserEntity = this.userDao.getById(userSecurity.getId());
-
-//        UserEntity userEntityByLogin = this.userDao.getByLogin(userDTO.getLogin(), false);
-//        boolean isLoginValueAvailable = userEntityByLogin == null || userEntityByLogin.getId().equals(savedUserEntity.getId());
-//        if(!isLoginValueAvailable){
-//            throw new UserUpdateException("Login not available");
-//        }
-//
-//        UserEntity userEntityByEmail = this.userDao.getByEmail(userDTO.getEmail(), false);
-//        boolean isEmailValueAvailable = userEntityByEmail == null || userEntityByEmail.getId().equals(savedUserEntity.getId());
-//        if(!isEmailValueAvailable){
-//            throw new UserUpdateException("E-mail not available");
-//        }
-
         Long idAuthenticatedUser = userSecurity.getId();
-        UserEntity userEntitySetByDTO = userEntityDtoFacade.getSavedEntitySetByDTO(idAuthenticatedUser, userDTO);
+        UserEntity userEntitySetByDTO = userEntityDtoFacade.getActiveEntitySetByDTO(idAuthenticatedUser, userDTO);
         userDao.update(userEntitySetByDTO);
 
         UserEntity updatedUserEntity = this.userDao.getById(userSecurity.getId());

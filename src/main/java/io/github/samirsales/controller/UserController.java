@@ -1,7 +1,6 @@
 package io.github.samirsales.controller;
 
 import io.github.samirsales.model.dto.UserDTO;
-import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.exception.UserUpdateException;
 import io.github.samirsales.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,13 +78,13 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void insert(@RequestBody UserEntity userEntity){
-        userService.create(userEntity);
+    public void create(@RequestBody UserDTO userDTO){
+        userService.create(userDTO);
     }
 
-    @RequestMapping(value = "/token", method = RequestMethod.POST)
-    public UserDTO getByToken(){
-        return userService.getUserByToken();
+    @RequestMapping(value = "/authenticated", method = RequestMethod.POST)
+    public UserDTO getAuthenticatedUser(){
+        return userService.getAuthenticatedUser();
     }
 
 }
