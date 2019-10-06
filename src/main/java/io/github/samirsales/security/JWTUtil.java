@@ -29,6 +29,7 @@ public class JWTUtil {
             .compact();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public boolean isValidToken(String token) {
         Claims claims = getClaims(token);
 

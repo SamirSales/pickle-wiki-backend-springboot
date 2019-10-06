@@ -22,8 +22,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    final private String PASSWORD_UPDATED_SUCCESSFULLY_MESSAGE = "The user's password has been deleted successfully";
-
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public List<UserDTO> getAll(){
@@ -63,6 +61,8 @@ public class UserController {
     public void update(@RequestBody UserDTO userDTO){
         userService.update(userDTO);
     }
+
+    final private String PASSWORD_UPDATED_SUCCESSFULLY_MESSAGE = "The user's password has been deleted successfully";
 
     @RequestMapping(value = "/update_authenticated", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object>  updateAuthenticatedUser(@RequestBody UserDTO authenticatedUserDTO){
