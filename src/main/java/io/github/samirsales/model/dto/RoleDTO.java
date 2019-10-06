@@ -9,6 +9,10 @@ public class RoleDTO {
 
     private Role role;
 
+    @SuppressWarnings("unused")
+    public RoleDTO() {
+    }
+
     public RoleDTO(RoleEntity roleEntity){
         this.role = roleEntity.getRole();
     }

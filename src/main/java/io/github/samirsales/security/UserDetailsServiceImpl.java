@@ -1,9 +1,7 @@
-package io.github.samirsales.service;
+package io.github.samirsales.security;
 
 import io.github.samirsales.dao.UserDao;
 import io.github.samirsales.model.entity.UserEntity;
-import io.github.samirsales.security.UserSecurity;
-import io.github.samirsales.util.TextEncryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,9 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private String getHashedPassword(String unencryptedPassword){
-        TextEncryption textEncryption = new TextEncryption();
-        String passwordEncryptedByMD5 = textEncryption.getMD5(unencryptedPassword);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.encode(passwordEncryptedByMD5);
+        return passwordEncoder.encode(unencryptedPassword);
     }
 }

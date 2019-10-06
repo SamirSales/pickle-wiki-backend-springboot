@@ -53,9 +53,10 @@ public class UserService {
         return new UserDTO(userDao.getById(id));
     }
 
-//    public UserDTO getUserByAuthentication(UserEntity userEntity) {
-//        return new UserDTO(this.userDao.getByAuthentication(userEntity));
-//    }
+    public void create(UserDTO userDTO) {
+        UserEntity userEntity = userEntityDtoFacade.getActiveEntityByDTO(userDTO);
+        this.userDao.create(userEntity);
+    }
 
     public void removeById(long id) {
         this.userDao.deleteById(id);
@@ -64,11 +65,6 @@ public class UserService {
     public void update(UserDTO userDTO){
         UserEntity userEntity = userEntityDtoFacade.getActiveEntitySetByDTO(userDTO.getId(), userDTO);
         this.userDao.update(userEntity);
-    }
-
-    public void create(UserDTO userDTO) {
-        UserEntity userEntity = userEntityDtoFacade.getActiveEntityByDTO(userDTO);
-        this.userDao.create(userEntity);
     }
 
     public UserDTO getAuthenticatedUser() {

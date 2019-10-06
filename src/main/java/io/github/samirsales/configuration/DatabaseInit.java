@@ -7,6 +7,7 @@ import io.github.samirsales.model.entity.RoleEntity;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.model.enums.Gender;
 import io.github.samirsales.model.enums.Role;
+import io.github.samirsales.util.TextEncryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -60,7 +61,7 @@ public class DatabaseInit {
         String name = "Admin";
         String login = "admin";
         String email = "admin@email.com";
-        String password = "admin";
+        String password = getMD5EncryptedText("admin");
         Gender gender = Gender.MALE;
         final boolean active = true;
         final ImageEntity imageEntity = null;
@@ -73,5 +74,11 @@ public class DatabaseInit {
         editorRoleEntityOptional.ifPresent(roleEntities::add);
 
         return new UserEntity(id, name, login, email, active, password, gender, roleEntities, imageEntity);
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private String getMD5EncryptedText(String text){
+        TextEncryption textEncryption = new TextEncryption();
+        return textEncryption.getMD5(text);
     }
 }

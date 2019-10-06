@@ -17,6 +17,7 @@ public class UserSecurity implements UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
+    @SuppressWarnings("unused")
     public UserSecurity(){
     }
 

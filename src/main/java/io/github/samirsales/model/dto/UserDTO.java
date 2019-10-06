@@ -21,6 +21,10 @@ public class UserDTO {
 
     private Set<RoleDTO> roles;
 
+    @SuppressWarnings("unused")
+    public UserDTO() {
+    }
+
     public UserDTO(UserEntity userEntity){
         id = userEntity.getId();
         name = userEntity.getName();

@@ -18,6 +18,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private JWTUtil jwtUtil;
     private UserDetailsService userDetailsService;
 
+    @SuppressWarnings("WeakerAccess")
     public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil,
                                   UserDetailsService userDetailsService ) {
         super(authenticationManager);
@@ -46,8 +47,9 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         if(jwtUtil.isValidToken(token)){
             String username = jwtUtil.getUsername(token);
             UserDetails user = userDetailsService.loadUserByUsername(username);
+            final Object credentials = null;
 
-            return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            return new UsernamePasswordAuthenticationToken(user, credentials, user.getAuthorities());
         }
 
         return null;
