@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @SuppressWarnings("unused")
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -19,12 +21,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        UserEntity userEntity = userDao.getActiveByLogin(login);
+        Optional<UserEntity> userEntityOptional = userDao.getActiveByLogin(login);
 
-        if(userEntity == null){
-            throw new UsernameNotFoundException(login);
+        if(userEntityOptional.isPresent()){
+            UserEntity userEntity = userEntityOptional.get();
+            return getUserSecurityByEntity(userEntity);
         }
 
+        throw new UsernameNotFoundException(login);
+    }
+
+    private UserSecurity getUserSecurityByEntity(UserEntity userEntity){
         String hashedPassword = getHashedPassword(userEntity.getPassword());
 
         return new UserSecurity(

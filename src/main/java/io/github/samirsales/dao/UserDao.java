@@ -3,21 +3,22 @@ package io.github.samirsales.dao;
 import io.github.samirsales.model.entity.UserEntity;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface UserDao {
     Collection<UserEntity> getAll();
 
-    UserEntity getById(long id);
+    Optional<UserEntity> getById(long id);
 
-    UserEntity getActiveByLogin(String login);
+    Optional<UserEntity> getActiveByLogin(String login);
 
-    UserEntity getByLogin(String login);
+    Optional<UserEntity> getByLogin(String login);
 
-    UserEntity getActiveByEmail(String email);
+    Optional<UserEntity> getActiveByEmail(String email);
 
-    UserEntity getByEmail(String email);
+    Optional<UserEntity> getByEmail(String email);
 
-    UserEntity getByAuthentication(UserEntity userEntity);
+    Optional<UserEntity> getByAuthentication(UserEntity userEntity);
 
     void deleteById(long id);
 

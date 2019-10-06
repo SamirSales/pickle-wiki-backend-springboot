@@ -84,10 +84,10 @@ public class UserEntityDtoFacade {
             return getMD5EncryptedText(userDTO.getPassword());
         }
 
-        UserEntity userEntity = userDao.getById(userDTO.getId());
-        boolean isUserOnDatabase = userEntity != null;
+        Optional<UserEntity> userEntityOptional = userDao.getById(userDTO.getId());
 
-        if(isUserOnDatabase){
+        if(userEntityOptional.isPresent()){
+            UserEntity userEntity = userEntityOptional.get();
             return userEntity.getPassword();
         }
 

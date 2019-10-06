@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Repository
 @SuppressWarnings("unused")
@@ -20,50 +21,49 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public UserEntity getById(long id) {
+    public Optional<UserEntity> getById(long id) {
         return userRepository.findByIdAndActiveTrue(id);
     }
 
     @Override
-    public UserEntity getActiveByLogin(String login) {
+    public Optional<UserEntity> getActiveByLogin(String login) {
         return userRepository.findByLoginAndActiveTrue(login);
     }
 
     @Override
-    public UserEntity getByLogin(String login) {
+    public Optional<UserEntity> getByLogin(String login) {
         return userRepository.findByLogin(login);
     }
 
     @Override
-    public UserEntity getActiveByEmail(String email) {
+    public Optional<UserEntity> getActiveByEmail(String email) {
         return userRepository.findByEmailAndActiveTrue(email) ;
     }
 
     @Override
-    public UserEntity getByEmail(String email) {
+    public Optional<UserEntity> getByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public UserEntity getByAuthentication(UserEntity userEntity) {
+    public Optional<UserEntity> getByAuthentication(UserEntity userEntity) {
         return userRepository.findByLoginAndActiveTrue(userEntity.getLogin());
     }
 
     @Override
     public void deleteById(long id) {
-        UserEntity userEntity = getInactivatedEntityById(id);
-        if(userEntity != null) {
-            userRepository.save(userEntity);
-        }
+        Optional<UserEntity> userEntityOptional = getInactivatedEntityById(id);
+        userEntityOptional.ifPresent(userEntity -> userRepository.save(userEntity));
     }
 
-    private UserEntity getInactivatedEntityById(long id){
-        UserEntity userEntity = getById(id);
+    private Optional<UserEntity> getInactivatedEntityById(long id){
+        Optional<UserEntity> userEntityOptional = getById(id);
 
-        if(userEntity != null){
+        if(userEntityOptional.isPresent()){
+            final UserEntity userEntity = userEntityOptional.get();
             final boolean activeStatus = false;
 
-            return new UserEntity(
+            UserEntity inactivatedUserEntity =  new UserEntity(
                     userEntity.getId(),
                     userEntity.getName(),
                     userEntity.getLogin(),
@@ -74,8 +74,9 @@ public class UserDaoImpl implements UserDao {
                     userEntity.getRoleEntities(),
                     userEntity.getImageProfile()
             );
+            return Optional.of(inactivatedUserEntity);
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override

@@ -36,7 +36,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteById(@PathVariable("id") long id){
-        userService.removeById(id);
+        userService.deleteById(id);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")

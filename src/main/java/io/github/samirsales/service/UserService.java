@@ -11,6 +11,7 @@ import io.github.samirsales.util.TextEncryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,7 +52,13 @@ public class UserService {
     }
 
     public UserDTO getById(Long id){
-        return new UserDTO(userDao.getById(id));
+        Optional<UserEntity> userEntityOptional = userDao.getById(id);
+
+        if(userEntityOptional.isPresent()){
+            return new UserDTO(userEntityOptional.get());
+        }
+
+        throw new UsernameNotFoundException("ID = " + id);
     }
 
     public void create(UserDTO userDTO) {
@@ -58,13 +66,13 @@ public class UserService {
         this.userDao.create(userEntity);
     }
 
-    public void removeById(long id) {
-        this.userDao.deleteById(id);
-    }
-
     public void update(UserDTO userDTO){
         UserEntity userEntity = userEntityDtoFacade.getActiveEntitySetByDTO(userDTO.getId(), userDTO);
         this.userDao.update(userEntity);
+    }
+
+    public void deleteById(long id) {
+        this.userDao.deleteById(id);
     }
 
     public UserDTO getAuthenticatedUser() {
@@ -78,52 +86,67 @@ public class UserService {
         UserEntity userEntitySetByDTO = userEntityDtoFacade.getActiveEntitySetByDTO(idAuthenticatedUser, userDTO);
         userDao.update(userEntitySetByDTO);
 
-        UserEntity updatedUserEntity = this.userDao.getById(userSecurity.getId());
-        return new UserDTO(updatedUserEntity);
+        Optional<UserEntity> updatedUserEntityOptional = this.userDao.getById(userSecurity.getId());
+
+        if(updatedUserEntityOptional.isPresent()){
+            return new UserDTO(updatedUserEntityOptional.get());
+        }
+
+        throw new UsernameNotFoundException("ID = " + idAuthenticatedUser);
     }
 
     public void setUserPassword(String currentPassword, String newPassword){
         UserSecurity userSecurity = getUserSecurity();
-        TextEncryption textEncryption = new TextEncryption();
+        Optional<UserEntity> savedUserEntityOptional = this.userDao.getById(userSecurity.getId());
 
-        UserEntity savedUserEntity = this.userDao.getById(userSecurity.getId());
+        if(savedUserEntityOptional.isPresent()){
+            UserEntity savedUserEntity = savedUserEntityOptional.get();
+            TextEncryption textEncryption = new TextEncryption();
 
-        if(savedUserEntity == null || !savedUserEntity.getPassword().equals(textEncryption.getMD5(currentPassword))){
-            throw new AuthorizationException("Access Denied");
+            if(!savedUserEntity.getPassword().equals(textEncryption.getMD5(currentPassword))){
+                throw new AuthorizationException("Access Denied");
+            }
+
+            UserEntity userEntityWithUpdatedPassword = userEntityDtoFacade
+                    .getEntityWithUpdatedPassword(savedUserEntity, newPassword);
+
+            this.userDao.update(userEntityWithUpdatedPassword);
         }
 
-        UserEntity userEntityWithUpdatedPassword = userEntityDtoFacade
-                .getEntityWithUpdatedPassword(savedUserEntity, newPassword);
-
-        this.userDao.update(userEntityWithUpdatedPassword);
+        throw new UsernameNotFoundException("Username = " + userSecurity.getUsername());
     }
 
     public UserDTO userPicture(MultipartFile file) throws IOException {
         UserSecurity userSecurity = getUserSecurity();
-        UserEntity savedUserEntity = this.userDao.getById(userSecurity.getId());
+        Optional<UserEntity> savedUserEntityOptional = this.userDao.getById(userSecurity.getId());
 
-        String fileName = savedUserEntity.getId()+"."+getFileExtension(file.getOriginalFilename());
-        String path = imagePath+"/"+fileName;
-        File convertFile = new File(path);
+        if(savedUserEntityOptional.isPresent()){
+            UserEntity savedUserEntity = savedUserEntityOptional.get();
+            String fileName = savedUserEntity.getId()+"."+getFileExtension(file.getOriginalFilename());
+            String path = imagePath+"/"+fileName;
+            File convertFile = new File(path);
 
-        try {
-            convertFile.createNewFile();
-            FileOutputStream fileOutputStream = new FileOutputStream(convertFile);
-            fileOutputStream.write(file.getBytes());
-            fileOutputStream.close();
+            try {
+                convertFile.createNewFile();
+                FileOutputStream fileOutputStream = new FileOutputStream(convertFile);
+                fileOutputStream.write(file.getBytes());
+                fileOutputStream.close();
 
-            ImageResizer imageResizer = new ImageResizer();
-            imageResizer.resize(path, path,300);
+                ImageResizer imageResizer = new ImageResizer();
+                imageResizer.resize(path, path,300);
 
-            // TODO: solve this
+                // TODO: solve this
 //            savedUserEntity.setPictureFileName(fileName);
-            this.userDao.update(savedUserEntity);
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-            throw ioException;
+                this.userDao.update(savedUserEntity);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+                throw ioException;
+            }
+
+            return new UserDTO(savedUserEntity);
         }
 
-        return new UserDTO(savedUserEntity);
+        throw new UsernameNotFoundException("Username = " + userSecurity.getUsername());
     }
 
     private UserSecurity getUserSecurity(){

@@ -2,16 +2,16 @@ package io.github.samirsales.service;
 
 import io.github.samirsales.dao.ArticleDao;
 import io.github.samirsales.dao.UserDao;
-import io.github.samirsales.model.entity.Article;
-import io.github.samirsales.model.dto.ArticleDTO;
-import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.exception.AuthorizationException;
+import io.github.samirsales.model.dto.ArticleDTO;
+import io.github.samirsales.model.entity.Article;
+import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.security.UserSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class ArticleService {
@@ -36,8 +36,11 @@ public class ArticleService {
         Article article = this.articleDao.getByUrl(url);
 
         if(article != null){
-            UserEntity userEntity = this.userDao.getById(article.getLastEditorId());
-            return new ArticleDTO(article, userEntity);
+            Optional<UserEntity> userEntityOptional = this.userDao.getById(article.getLastEditorId());
+
+            if(userEntityOptional.isPresent()){
+                return new ArticleDTO(article, userEntityOptional.get());
+            }
         }
         return null;
     }

@@ -28,12 +28,12 @@ public class UserEntity extends Audit {
 
     @NaturalId(mutable = true)
     @NotEmpty
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String login;
 
     @NaturalId(mutable = true)
     @Email
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String email;
 
     private boolean active;
