@@ -36,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return new UserSecurity(
             userEntity.getId(),
-            userEntity.getLogin(),
+            userEntity.getUsername(),
             hashedPassword,
             userEntity.getRoleEntities());
     }

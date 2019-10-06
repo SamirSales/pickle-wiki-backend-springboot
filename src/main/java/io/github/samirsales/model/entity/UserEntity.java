@@ -29,7 +29,7 @@ public class UserEntity extends Audit {
     @NaturalId(mutable = true)
     @NotEmpty
     @Column(nullable = false, unique=true)
-    private String login;
+    private String username;
 
     @NaturalId(mutable = true)
     @Email
@@ -50,12 +50,12 @@ public class UserEntity extends Audit {
     @OneToOne
     private ImageEntity imageProfile;
 
-    public UserEntity(Long id, @NotNull @NotEmpty String name, @NotEmpty String login,
+    public UserEntity(Long id, @NotNull @NotEmpty String name, @NotEmpty String username,
                       @Email String email, boolean active, @NotEmpty String password,
                       Gender gender, Set<RoleEntity> roleEntities, ImageEntity imageProfile) {
         this.id = id;
         this.name = name;
-        this.login = login;
+        this.username = username;
         this.email = email;
         this.active = active;
         this.password = password;
@@ -74,8 +74,8 @@ public class UserEntity extends Audit {
         return name;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
     public String getEmail() {

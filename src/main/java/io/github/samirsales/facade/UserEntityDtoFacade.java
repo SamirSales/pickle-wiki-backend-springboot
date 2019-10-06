@@ -32,7 +32,7 @@ public class UserEntityDtoFacade {
         return new UserEntity(
                 userEntity.getId(),
                 userEntity.getName(),
-                userEntity.getLogin(),
+                userEntity.getUsername(),
                 userEntity.getEmail(),
                 userEntity.isActive(),
                 encryptedPassword,
@@ -55,7 +55,7 @@ public class UserEntityDtoFacade {
         return new UserEntity(
                 idEntity,
                 userDTO.getName(),
-                userDTO.getLogin(),
+                userDTO.getUsername(),
                 userDTO.getEmail(),
                 isActiveUser,
                 password,

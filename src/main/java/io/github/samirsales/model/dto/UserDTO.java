@@ -12,7 +12,7 @@ public class UserDTO {
     private Long id;
 
     private String name;
-    private String login;
+    private String username;
     private String email;
     private Gender gender;
     private String password;
@@ -28,7 +28,7 @@ public class UserDTO {
     public UserDTO(UserEntity userEntity){
         id = userEntity.getId();
         name = userEntity.getName();
-        login = userEntity.getLogin();
+        username = userEntity.getUsername();
         email = userEntity.getEmail();
         gender = userEntity.getGender();
         password = "";
@@ -53,8 +53,8 @@ public class UserDTO {
     }
 
     @SuppressWarnings("unused")
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
     @SuppressWarnings("unused")

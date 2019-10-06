@@ -27,12 +27,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<UserEntity> getActiveByLogin(String login) {
-        return userRepository.findByLoginAndActiveTrue(login);
+        return userRepository.findByUsernameAndActiveTrue(login);
     }
 
     @Override
     public Optional<UserEntity> getByLogin(String login) {
-        return userRepository.findByLogin(login);
+        return userRepository.findByUsername(login);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<UserEntity> getByAuthentication(UserEntity userEntity) {
-        return userRepository.findByLoginAndActiveTrue(userEntity.getLogin());
+        return userRepository.findByUsernameAndActiveTrue(userEntity.getUsername());
     }
 
     @Override
@@ -66,7 +66,7 @@ public class UserDaoImpl implements UserDao {
             UserEntity inactivatedUserEntity =  new UserEntity(
                     userEntity.getId(),
                     userEntity.getName(),
-                    userEntity.getLogin(),
+                    userEntity.getUsername(),
                     userEntity.getEmail(),
                     activeStatus,
                     userEntity.getPassword(),

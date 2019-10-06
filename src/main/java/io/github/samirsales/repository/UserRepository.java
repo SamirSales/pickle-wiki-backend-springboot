@@ -12,11 +12,11 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByIdAndActiveTrue(Long id);
 
-    Optional<UserEntity>  findByLoginAndActiveTrue(String login);
+    Optional<UserEntity> findByUsernameAndActiveTrue(String username);
 
-    Optional<UserEntity>  findByEmailAndActiveTrue(String login);
+    Optional<UserEntity>  findByEmailAndActiveTrue(String email);
 
-    Optional<UserEntity>  findByLogin(String login);
+    Optional<UserEntity> findByUsername(String username);
 
-    Optional<UserEntity>  findByEmail(String login);
+    Optional<UserEntity>  findByEmail(String email);
 }
