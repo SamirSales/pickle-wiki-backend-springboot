@@ -43,10 +43,10 @@ public class UserEntityDtoFacade {
     }
 
     public UserEntity getActiveEntityByDTO(UserDTO userDTO) {
-        return getActiveEntitySetByDTO(userDTO.getId(), userDTO);
+        return getActiveEntityByDTO(userDTO.getId(), userDTO);
     }
 
-    public UserEntity getActiveEntitySetByDTO(Long idEntity, UserDTO userDTO){
+    public UserEntity getActiveEntityByDTO(Long idEntity, UserDTO userDTO){
         String password = getEncryptedPasswordByUserDTO(userDTO);
         final boolean isActiveUser = true;
         Set<RoleEntity> roleEntitySet = getSetOfRoleEntitiesBySetOfRoleDTOs(userDTO.getRoles());

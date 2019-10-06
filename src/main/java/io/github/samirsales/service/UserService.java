@@ -8,6 +8,7 @@ import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.security.UserSecurity;
 import io.github.samirsales.util.ImageResizer;
 import io.github.samirsales.util.TextEncryption;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,14 +52,15 @@ public class UserService {
         return userEntities.parallelStream().map(UserDTO::new).collect(Collectors.toList());
     }
 
-    public UserDTO getById(Long id){
+    public UserDTO getById(Long id) throws NotFoundException {
         Optional<UserEntity> userEntityOptional = userDao.getById(id);
 
         if(userEntityOptional.isPresent()){
             return new UserDTO(userEntityOptional.get());
         }
 
-        throw new UsernameNotFoundException("ID = " + id);
+        String exceptionMessage = getNotFoundExceptionMessageByUserId(id);
+        throw new NotFoundException(exceptionMessage);
     }
 
     public void create(UserDTO userDTO) {
@@ -67,23 +69,38 @@ public class UserService {
     }
 
     public void update(UserDTO userDTO){
-        UserEntity userEntity = userEntityDtoFacade.getActiveEntitySetByDTO(userDTO.getId(), userDTO);
+        UserEntity userEntity = userEntityDtoFacade.getActiveEntityByDTO(userDTO.getId(), userDTO);
         this.userDao.update(userEntity);
     }
 
-    public void deleteById(long id) {
-        this.userDao.deleteById(id);
+    public void deleteById(long id) throws NotFoundException {
+        Optional<UserEntity> userEntityOptional = userDao.getById(id);
+
+        if(userEntityOptional.isPresent()){
+            this.userDao.deleteById(id);
+        }else{
+            String exceptionMessage = getNotFoundExceptionMessageByUserId(id);
+            throw new NotFoundException(exceptionMessage);
+        }
     }
 
     public UserDTO getAuthenticatedUser() {
         UserSecurity userSecurity = getUserSecurity();
-        return getById(userSecurity.getId());
+        try {
+            return getById(userSecurity.getId());
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String exceptionMessage = getNotFoundExceptionMessageByUserId(userSecurity.getId());
+        throw new UsernameNotFoundException(exceptionMessage);
     }
 
-    public UserDTO getUpdatedAuthenticatedUserByDTO(UserDTO userDTO) {
+    public UserDTO getUpdatedAuthenticatedUserByDTO(UserDTO userDTO) { //TODO: it needs revision.
         UserSecurity userSecurity = getUserSecurity();
         Long idAuthenticatedUser = userSecurity.getId();
-        UserEntity userEntitySetByDTO = userEntityDtoFacade.getActiveEntitySetByDTO(idAuthenticatedUser, userDTO);
+
+        UserEntity userEntitySetByDTO = userEntityDtoFacade.getActiveEntityByDTO(idAuthenticatedUser, userDTO);
         userDao.update(userEntitySetByDTO);
 
         Optional<UserEntity> updatedUserEntityOptional = this.userDao.getById(userSecurity.getId());
@@ -92,10 +109,11 @@ public class UserService {
             return new UserDTO(updatedUserEntityOptional.get());
         }
 
-        throw new UsernameNotFoundException("ID = " + idAuthenticatedUser);
+        String exceptionMessage = getNotFoundExceptionMessageByUserId(idAuthenticatedUser);
+        throw new UsernameNotFoundException(exceptionMessage);
     }
 
-    public void setUserPassword(String currentPassword, String newPassword){
+    public void setUserPassword(String currentPassword, String newPassword){ //TODO: it needs revision.
         UserSecurity userSecurity = getUserSecurity();
         Optional<UserEntity> savedUserEntityOptional = this.userDao.getById(userSecurity.getId());
 
@@ -113,10 +131,11 @@ public class UserService {
             this.userDao.update(userEntityWithUpdatedPassword);
         }
 
-        throw new UsernameNotFoundException("Username = " + userSecurity.getUsername());
+        String exceptionMessage = getNotFoundExceptionMessageByUsername(userSecurity.getUsername());
+        throw new UsernameNotFoundException(exceptionMessage);
     }
 
-    public UserDTO userPicture(MultipartFile file) throws IOException {
+    public UserDTO userPicture(MultipartFile file) throws IOException { //TODO: it needs revision.
         UserSecurity userSecurity = getUserSecurity();
         Optional<UserEntity> savedUserEntityOptional = this.userDao.getById(userSecurity.getId());
 
@@ -146,7 +165,8 @@ public class UserService {
             return new UserDTO(savedUserEntity);
         }
 
-        throw new UsernameNotFoundException("Username = " + userSecurity.getUsername());
+        String exceptionMessage = getNotFoundExceptionMessageByUsername(userSecurity.getUsername());
+        throw new UsernameNotFoundException(exceptionMessage);
     }
 
     private UserSecurity getUserSecurity(){
@@ -165,5 +185,13 @@ public class UserService {
         String fileName = new File(fullName).getName();
         int dotIndex = fileName.lastIndexOf('.');
         return (dotIndex == -1) ? "" : fileName.substring(dotIndex + 1);
+    }
+
+    private String getNotFoundExceptionMessageByUserId(long userId){
+        return "User not found (id = " + userId + ")";
+    }
+
+    private String getNotFoundExceptionMessageByUsername(String username){
+        return "User not found (username = " + username + ")";
     }
 }

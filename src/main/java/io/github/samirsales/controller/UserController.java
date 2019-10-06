@@ -3,6 +3,7 @@ package io.github.samirsales.controller;
 import io.github.samirsales.model.dto.UserDTO;
 import io.github.samirsales.exception.UserUpdateException;
 import io.github.samirsales.service.UserService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +22,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    final private String PASSWORD_UPDATED_SUCCESSFULLY_MESSAGE = "The user's password has been deleted successfully";
+
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public List<UserDTO> getAll(){
@@ -29,14 +32,30 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public UserDTO getById(@PathVariable("id") long id){
-        return userService.getById(id);
+    public ResponseEntity<Object> getById(@PathVariable("id") long id){
+        try {
+            return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(value = "/authenticated", method = RequestMethod.GET)
+    public UserDTO getAuthenticatedUser(){
+        return userService.getAuthenticatedUser();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteById(@PathVariable("id") long id){
-        userService.deleteById(id);
+    public ResponseEntity<Object> deleteById(@PathVariable("id") long id){
+        try {
+            userService.deleteById(id);
+            return new ResponseEntity<>("The user's password has been deleted successfully", HttpStatus.OK);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -45,35 +64,32 @@ public class UserController {
         userService.update(userDTO);
     }
 
-    @PreAuthorize("hasAnyRole('EDITOR')")
-    @RequestMapping(value = "/authenticated", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/update_authenticated", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object>  updateAuthenticatedUser(@RequestBody UserDTO authenticatedUserDTO){
 
         try{
             userService.getUpdatedAuthenticatedUserByDTO(authenticatedUserDTO);
         }catch (UserUpdateException ex){
-            System.out.println(ex.getMessage());
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.OK);
+            ex.printStackTrace();
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); //TODO
         }
-        return new ResponseEntity<>("The user's password has been updated successfully", HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/update_picture",
-        method = RequestMethod.POST,
-        consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public UserDTO uploadImageFile(@RequestParam("file") MultipartFile file) throws Exception {
-        return userService.userPicture(file);
+        return new ResponseEntity<>(PASSWORD_UPDATED_SUCCESSFULLY_MESSAGE, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/update_password",
-        method = RequestMethod.POST,
-        consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+        method = RequestMethod.PUT,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> updateUserPassword(
         @RequestParam("currentPassword") String currentPassword,
         @RequestParam("newPassword") String newPassword){
 
-        userService.setUserPassword(currentPassword, newPassword);
-        return new ResponseEntity<>("The user's password has been updated successfully", HttpStatus.OK);
+        userService.setUserPassword(currentPassword, newPassword); //TODO
+        return new ResponseEntity<>(PASSWORD_UPDATED_SUCCESSFULLY_MESSAGE, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/update_picture",
+        method = RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public UserDTO uploadImageFile(@RequestParam("file") MultipartFile file) throws Exception {
+        return userService.userPicture(file);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -81,10 +97,4 @@ public class UserController {
     public void create(@RequestBody UserDTO userDTO){
         userService.create(userDTO);
     }
-
-    @RequestMapping(value = "/authenticated", method = RequestMethod.POST)
-    public UserDTO getAuthenticatedUser(){
-        return userService.getAuthenticatedUser();
-    }
-
 }
