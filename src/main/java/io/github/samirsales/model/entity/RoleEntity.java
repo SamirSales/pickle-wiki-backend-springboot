@@ -3,6 +3,9 @@ package io.github.samirsales.model.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.github.samirsales.model.enums.Role;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -10,6 +13,9 @@ import java.util.Objects;
 
 @Entity(name = "roles")
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RoleEntity {
 
     @Id
@@ -19,23 +25,6 @@ public class RoleEntity {
     @NaturalId
     @Enumerated
     private Role role;
-
-    @SuppressWarnings("unused")
-    public RoleEntity(){
-    }
-
-    public RoleEntity(Long id, Role role){
-        this.id = id;
-        this.role = role;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public Long getId() {
-        return id;
-    }
 
     @Override
     public boolean equals(Object o) {

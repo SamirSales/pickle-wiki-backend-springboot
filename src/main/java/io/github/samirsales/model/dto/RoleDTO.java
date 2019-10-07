@@ -2,24 +2,19 @@ package io.github.samirsales.model.dto;
 
 import io.github.samirsales.model.entity.RoleEntity;
 import io.github.samirsales.model.enums.Role;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
+@Getter
+@NoArgsConstructor
 public class RoleDTO {
 
     private Role role;
 
-    @SuppressWarnings("unused")
-    public RoleDTO() {
-    }
-
     public RoleDTO(RoleEntity roleEntity){
         this.role = roleEntity.getRole();
-    }
-
-    @SuppressWarnings("unused")
-    public Role getRole() {
-        return role;
     }
 
     @Override
