@@ -63,12 +63,12 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     private List<Parameter> getGlobalOperationParameterList(){
         return Lists.newArrayList(new ParameterBuilder()
-                .name("Authorization")
-                .description("Access Token")
-                .modelRef(new ModelRef("string"))
-                .parameterType("header")
-                .required(true)
-                .build());
+            .name("Authorization")
+            .description("Access Token")
+            .modelRef(new ModelRef("string"))
+            .parameterType("header")
+            .required(true)
+            .build());
     }
 
     @Override
@@ -89,7 +89,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     private ApiInfo apiInfo() {
         final String TITLE = "Pickle Wiki - Backend Service";
-        final String DESCRIPTION = "The Pickle Wiki is an open source encyclopedia project, written collaboratively and inspired by Wikipedia system.";
+        final String DESCRIPTION = getApiDescription();
         final String VERSION = "1.0.0";
         final String TERM_SERVICE_URL = "";
         final String LICENSE = "MIT License";
@@ -97,6 +97,11 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
         return new ApiInfo(TITLE, DESCRIPTION, VERSION, TERM_SERVICE_URL, getContact(), LICENSE, LICENSE_URL,
             Collections.emptyList());
+    }
+
+    private String getApiDescription(){
+        return "\"The Pickle Wiki is an open source encyclopedia project, written collaboratively and inspired by " +
+                "Wikipedia system.\"";
     }
 
     private Contact getContact(){
