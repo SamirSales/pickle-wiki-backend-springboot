@@ -3,12 +3,10 @@ package io.github.samirsales.configuration;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -16,6 +14,7 @@ import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -28,28 +27,19 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 @SuppressWarnings("unused")
-public class SwaggerConfig extends WebMvcConfigurerAdapter {
+public class SwaggerConfig implements WebMvcConfigurer {
 
     @Bean
     public Docket api() {
-
-        System.out.println("INICIALIZANDO SWAGGER...");
-
         List<ResponseMessage> defaultResponseMessageList = getDefaultResponseMessageList();
+        List<Parameter> globalOperationParameterList = getGlobalOperationParameterList();
 
         return new Docket(DocumentationType.SWAGGER_2)
             .select()
             .apis(RequestHandlerSelectors.basePackage("io.github.samirsales.controller"))
             .paths(PathSelectors.any())
             .build()
-            .globalOperationParameters(
-                Lists.newArrayList(new ParameterBuilder()
-                    .name("Authorization")
-                    .description("Access Token")
-                    .modelRef(new ModelRef("string"))
-                    .parameterType("header")
-                    .required(true)
-                    .build()))
+            .globalOperationParameters(globalOperationParameterList)
             .apiInfo(apiInfo())
             .globalResponseMessage(RequestMethod.POST, defaultResponseMessageList)
             .globalResponseMessage(RequestMethod.PUT, defaultResponseMessageList)
@@ -60,10 +50,25 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
 
     private List<ResponseMessage> getDefaultResponseMessageList(){
         return Arrays.asList(
-            new ResponseMessageBuilder().code(401).message("You are not authorized to view the resource.").build(),
-            new ResponseMessageBuilder().code(403).message("Accessing the resource you were trying to reach is forbidden.").build(),
-            new ResponseMessageBuilder().code(404).message("The resource you were trying to reach is not found.").build(),
-            new ResponseMessageBuilder().code(500).message("There was an internal error.").build());
+            getResponseMessageByCodeAndMessage(401, "You are not authorized to view the resource."),
+            getResponseMessageByCodeAndMessage(403, "Accessing the resource you were trying to reach is forbidden."),
+            getResponseMessageByCodeAndMessage(404, "The resource you were trying to reach is not found."),
+            getResponseMessageByCodeAndMessage(500, "There was an internal error.")
+        );
+    }
+
+    private ResponseMessage getResponseMessageByCodeAndMessage(int code, String message){
+        return new ResponseMessageBuilder().code(code).message(message).build();
+    }
+
+    private List<Parameter> getGlobalOperationParameterList(){
+        return Lists.newArrayList(new ParameterBuilder()
+                .name("Authorization")
+                .description("Access Token")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header")
+                .required(true)
+                .build());
     }
 
     @Override
