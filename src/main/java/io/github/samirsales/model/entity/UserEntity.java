@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.github.samirsales.model.enums.Gender;
 import io.github.samirsales.model.enums.Role;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -15,6 +18,9 @@ import java.util.Set;
 
 @Entity(name = "users")
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity extends Audit {
 
     @Id
@@ -50,50 +56,6 @@ public class UserEntity extends Audit {
     @OneToOne
     private ImageEntity imageProfile;
 
-    public UserEntity(Long id, @NotNull @NotEmpty String name, @NotEmpty String username,
-                      @Email String email, boolean active, @NotEmpty String password,
-                      Gender gender, Set<RoleEntity> roleEntities, ImageEntity imageProfile) {
-        this.id = id;
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.active = active;
-        this.password = password;
-        this.gender = gender;
-        this.roleEntities = roleEntities;
-        this.imageProfile = imageProfile;
-    }
-
-    public UserEntity() { /* Necessary for JPA */ }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public Set<RoleEntity> getRoleEntities() {
-        return roleEntities;
-    }
-
     public boolean hasRole(Role role){
         for(RoleEntity roleEntity : roleEntities){
             if(roleEntity.getRole().equals(role)){
@@ -101,14 +63,6 @@ public class UserEntity extends Audit {
             }
         }
         return false;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public ImageEntity getImageProfile() {
-        return imageProfile;
     }
 
     @Override
