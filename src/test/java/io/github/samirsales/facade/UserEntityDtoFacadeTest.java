@@ -4,6 +4,7 @@ import io.github.samirsales.model.entity.ImageEntity;
 import io.github.samirsales.model.entity.RoleEntity;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.model.enums.Gender;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -11,14 +12,19 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 @SuppressWarnings("WeakerAccess")
 public class UserEntityDtoFacadeTest {
 
-    private UserEntityDtoFacade userEntityDtoFacade = new UserEntityDtoFacade();
+    private static UserEntityDtoFacade userEntityDtoFacade = null;
+
+    @BeforeAll
+    public static void setUp(){
+        userEntityDtoFacade = new UserEntityDtoFacade();
+    }
 
     @Test
     public void getEntityWithUpdatedPasswordTest(){
-
         UserEntity userEntity = getUserEntity();
         String newPasswordNotEncrypted = "123456";
         String encryptedPassword = "e10adc3949ba59abbe56e057f20f883e";
@@ -30,7 +36,6 @@ public class UserEntityDtoFacadeTest {
         assertEquals(userEntity.getUsername(), userEntityNewPassword.getUsername());
         assertEquals(userEntity.getEmail(), userEntityNewPassword.getEmail());
         assertEquals(userEntity.isActive(), userEntityNewPassword.isActive());
-
         assertEquals(encryptedPassword, userEntityNewPassword.getPassword());
         assertEquals(userEntity.getGender(), userEntityNewPassword.getGender());
         assertEquals(userEntity.getRoleEntities(), userEntityNewPassword.getRoleEntities());
