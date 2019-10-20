@@ -7,7 +7,10 @@ import io.github.samirsales.model.enums.Gender;
 import io.github.samirsales.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.*;
 
@@ -19,73 +22,72 @@ import static org.junit.Assert.assertFalse;
 @SuppressWarnings("WeakerAccess")
 public class UserDaoImplTest {
 
-    private UserDaoImplMock userDaoImplMock = null;
+    @InjectMocks
+    private UserDaoImpl userDaoImpl;
+
+    @Mock
+    @SuppressWarnings("unused")
+    private UserRepository userRepository;
 
     @Before
     public void setUp(){
-        userDaoImplMock = new UserDaoImplMock();
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
     public void testGetAll(){
-        Mockito.when(userDaoImplMock.getAll()).thenReturn(getUserEntityCollection());
-        Collection<UserEntity> collection = userDaoImplMock.getAll();
+        Mockito.when(userDaoImpl.getAll()).thenReturn(getUserEntityCollection());
+        Collection<UserEntity> collection = userDaoImpl.getAll();
         assertEquals(2, collection.size());
     }
 
     @Test
     public void testGetAllWithoutEntities(){
-        Mockito.when(userDaoImplMock.getAll()).thenReturn(new ArrayList<>());
-        Collection<UserEntity> collection = userDaoImplMock.getAll();
+        Mockito.when(userDaoImpl.getAll()).thenReturn(new ArrayList<>());
+        Collection<UserEntity> collection = userDaoImpl.getAll();
         assertEquals(0, collection.size());
     }
 
     @Test
     public void testGetById(){
-        Mockito.when(userDaoImplMock.getById(1L)).thenReturn(Optional.of(getUserEntity1()));
-        Optional<UserEntity> optionalUserEntity = userDaoImplMock.getById(1L);
+        Mockito.when(userDaoImpl.getById(1L)).thenReturn(Optional.of(getUserEntity1()));
+        Optional<UserEntity> optionalUserEntity = userDaoImpl.getById(1L);
         assertTrue(optionalUserEntity.isPresent());
     }
 
     @Test
     public void testGetByIdNotFound(){
-        Mockito.when(userDaoImplMock.getById(1L)).thenReturn(Optional.empty());
-        Optional<UserEntity> optionalUserEntity = userDaoImplMock.getById(1L);
+        Mockito.when(userDaoImpl.getById(1L)).thenReturn(Optional.empty());
+        Optional<UserEntity> optionalUserEntity = userDaoImpl.getById(1L);
         assertFalse(optionalUserEntity.isPresent());
     }
 
     @Test
     public void testGetActiveByLogin(){
-        Mockito.when(userDaoImplMock.getByLogin("username1")).thenReturn(Optional.of(getUserEntity1()));
-        Optional<UserEntity> optionalUserEntity = userDaoImplMock.getByLogin("username1");
+        Mockito.when(userDaoImpl.getByLogin("username1")).thenReturn(Optional.of(getUserEntity1()));
+        Optional<UserEntity> optionalUserEntity = userDaoImpl.getByLogin("username1");
         assertTrue(optionalUserEntity.isPresent());
     }
 
     @Test
     public void testGetActiveByLoginNotFound(){
-        Mockito.when(userDaoImplMock.getByLogin("username1")).thenReturn(Optional.empty());
-        Optional<UserEntity> optionalUserEntity = userDaoImplMock.getByLogin("username1");
+        Mockito.when(userDaoImpl.getByLogin("username1")).thenReturn(Optional.empty());
+        Optional<UserEntity> optionalUserEntity = userDaoImpl.getByLogin("username1");
         assertFalse(optionalUserEntity.isPresent());
     }
 
     @Test
     public void testGetActiveByEmail(){
-        Mockito.when(userDaoImplMock.getByEmail("user@email.com")).thenReturn(Optional.of(getUserEntity1()));
-        Optional<UserEntity> optionalUserEntity = userDaoImplMock.getByEmail("user@email.com");
+        Mockito.when(userDaoImpl.getByEmail("user@email.com")).thenReturn(Optional.of(getUserEntity1()));
+        Optional<UserEntity> optionalUserEntity = userDaoImpl.getByEmail("user@email.com");
         assertTrue(optionalUserEntity.isPresent());
     }
 
     @Test
     public void testGetActiveByEmailNotFound(){
-        Mockito.when(userDaoImplMock.getByEmail("user@email.com")).thenReturn(Optional.empty());
-        Optional<UserEntity> optionalUserEntity = userDaoImplMock.getByEmail("user@email.com");
+        Mockito.when(userDaoImpl.getByEmail("user@email.com")).thenReturn(Optional.empty());
+        Optional<UserEntity> optionalUserEntity = userDaoImpl.getByEmail("user@email.com");
         assertFalse(optionalUserEntity.isPresent());
-    }
-
-    public class UserDaoImplMock extends UserDaoImpl{
-        public UserDaoImplMock() {
-            userRepository = Mockito.mock(UserRepository.class);
-        }
     }
 
     private Collection<UserEntity> getUserEntityCollection(){
