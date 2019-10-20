@@ -5,6 +5,7 @@ import io.github.samirsales.model.entity.UserEntity;
 import java.util.Collection;
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 public interface UserDao {
     Collection<UserEntity> getAll();
 

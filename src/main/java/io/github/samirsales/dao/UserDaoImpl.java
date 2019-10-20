@@ -13,7 +13,7 @@ import java.util.Optional;
 public class UserDaoImpl implements UserDao {
 
     @Autowired
-    private UserRepository userRepository;
+    protected UserRepository userRepository;
 
     @Override
     public Collection<UserEntity> getAll() {
