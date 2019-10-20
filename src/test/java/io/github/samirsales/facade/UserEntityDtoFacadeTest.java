@@ -4,22 +4,22 @@ import io.github.samirsales.model.entity.ImageEntity;
 import io.github.samirsales.model.entity.RoleEntity;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.model.enums.Gender;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 
 @SuppressWarnings("WeakerAccess")
 public class UserEntityDtoFacadeTest {
 
-    private static UserEntityDtoFacade userEntityDtoFacade = null;
+    private UserEntityDtoFacade userEntityDtoFacade = null;
 
-    @BeforeAll
-    public static void setUp(){
+    @Before
+    public void setUp(){
         userEntityDtoFacade = new UserEntityDtoFacade();
     }
 

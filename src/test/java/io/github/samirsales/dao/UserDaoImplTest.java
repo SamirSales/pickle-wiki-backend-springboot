@@ -5,15 +5,15 @@ import io.github.samirsales.model.entity.RoleEntity;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.model.enums.Gender;
 import io.github.samirsales.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 
 @SuppressWarnings("WeakerAccess")
@@ -21,7 +21,7 @@ public class UserDaoImplTest {
 
     private UserDaoImplMock userDaoImplMock = null;
 
-    @BeforeEach
+    @Before
     public void setUp(){
         userDaoImplMock = new UserDaoImplMock();
     }
