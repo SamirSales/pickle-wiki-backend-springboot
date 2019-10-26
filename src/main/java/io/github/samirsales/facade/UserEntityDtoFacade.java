@@ -42,11 +42,11 @@ public class UserEntityDtoFacade {
         );
     }
 
-    public UserEntity getActiveEntityByDTO(UserDTO userDTO) {
-        return getActiveEntityByDTO(userDTO.getId(), userDTO);
+    public UserEntity getActiveEntitySetByDTO(UserDTO userDTO) {
+        return getActiveEntitySetByIdAndDTO(userDTO.getId(), userDTO);
     }
 
-    public UserEntity getActiveEntityByDTO(Long idEntity, UserDTO userDTO){
+    public UserEntity getActiveEntitySetByIdAndDTO(Long idEntity, UserDTO userDTO){
         String password = getEncryptedPasswordByUserDTO(userDTO);
         final boolean isActiveUser = true;
         Set<RoleEntity> roleEntitySet = getSetOfRoleEntitiesBySetOfRoleDTOs(userDTO.getRoles());

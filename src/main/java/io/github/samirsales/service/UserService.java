@@ -64,12 +64,12 @@ public class UserService {
     }
 
     public void create(UserDTO userDTO) {
-        UserEntity userEntity = userEntityDtoFacade.getActiveEntityByDTO(userDTO);
+        UserEntity userEntity = userEntityDtoFacade.getActiveEntitySetByDTO(userDTO);
         this.userDao.create(userEntity);
     }
 
     public void update(UserDTO userDTO){
-        UserEntity userEntity = userEntityDtoFacade.getActiveEntityByDTO(userDTO.getId(), userDTO);
+        UserEntity userEntity = userEntityDtoFacade.getActiveEntitySetByIdAndDTO(userDTO.getId(), userDTO);
         this.userDao.update(userEntity);
     }
 
@@ -100,7 +100,7 @@ public class UserService {
         UserSecurity userSecurity = getUserSecurity();
         Long idAuthenticatedUser = userSecurity.getId();
 
-        UserEntity userEntitySetByDTO = userEntityDtoFacade.getActiveEntityByDTO(idAuthenticatedUser, userDTO);
+        UserEntity userEntitySetByDTO = userEntityDtoFacade.getActiveEntitySetByIdAndDTO(idAuthenticatedUser, userDTO);
         userDao.update(userEntitySetByDTO);
 
         Optional<UserEntity> updatedUserEntityOptional = this.userDao.getById(userSecurity.getId());

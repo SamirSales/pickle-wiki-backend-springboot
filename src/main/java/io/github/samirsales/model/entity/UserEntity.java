@@ -69,12 +69,20 @@ public class UserEntity extends Audit {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserEntity userEntity = (UserEntity) o;
-        return Objects.equals(id, userEntity.id);
+        UserEntity that = (UserEntity) o;
+        return active == that.active &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(username, that.username) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(password, that.password) &&
+                gender == that.gender &&
+                Objects.equals(roleEntities, that.roleEntities) &&
+                Objects.equals(imageProfile, that.imageProfile);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name, username, email, active, password, gender, roleEntities, imageProfile);
     }
 }
