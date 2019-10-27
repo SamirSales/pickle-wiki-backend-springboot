@@ -1,4 +1,4 @@
-package io.github.samirsales;
+package io.github.samirsales.utils;
 
 import io.github.samirsales.model.entity.ImageEntity;
 import io.github.samirsales.model.entity.RoleEntity;

@@ -1,10 +1,12 @@
 package io.github.samirsales.dao;
 
-import io.github.samirsales.UserEntityGenerator;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.repository.UserRepository;
+import io.github.samirsales.runner.ParallelRunner;
+import io.github.samirsales.utils.UserEntityGenerator;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -19,7 +21,7 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-
+@RunWith(ParallelRunner.class)
 public class UserDaoImplTest {
 
     @InjectMocks

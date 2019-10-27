@@ -1,12 +1,14 @@
 package io.github.samirsales.facade;
 
-import io.github.samirsales.UserEntityGenerator;
 import io.github.samirsales.dao.RoleDao;
 import io.github.samirsales.dao.UserDao;
 import io.github.samirsales.model.dto.UserDTO;
 import io.github.samirsales.model.entity.UserEntity;
+import io.github.samirsales.runner.ParallelRunner;
+import io.github.samirsales.utils.UserEntityGenerator;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -16,7 +18,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
-
+@RunWith(ParallelRunner.class)
 public class UserEntityDtoFacadeTest {
 
     @InjectMocks
