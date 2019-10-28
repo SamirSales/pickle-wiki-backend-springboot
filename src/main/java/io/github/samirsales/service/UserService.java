@@ -52,15 +52,9 @@ public class UserService {
         return userEntities.parallelStream().map(UserDTO::new).collect(Collectors.toList());
     }
 
-    public UserDTO getById(Long id) throws NotFoundException {
+    public UserDTO getById(Long id) {
         Optional<UserEntity> userEntityOptional = userDao.getById(id);
-
-        if(userEntityOptional.isPresent()){
-            return new UserDTO(userEntityOptional.get());
-        }
-
-        String exceptionMessage = getNotFoundExceptionMessageByUserId(id);
-        throw new NotFoundException(exceptionMessage);
+        return userEntityOptional.map(UserDTO::new).orElse(null);
     }
 
     public void create(UserDTO userDTO) {
@@ -86,10 +80,10 @@ public class UserService {
 
     public UserDTO getAuthenticatedUser() {
         UserSecurity userSecurity = getUserSecurity();
-        try {
-            return getById(userSecurity.getId());
-        } catch (NotFoundException e) {
-            e.printStackTrace();
+        UserDTO userDTO = getById(userSecurity.getId());
+
+        if(userDTO != null){
+            return userDTO;
         }
 
         String exceptionMessage = getNotFoundExceptionMessageByUserId(userSecurity.getId());

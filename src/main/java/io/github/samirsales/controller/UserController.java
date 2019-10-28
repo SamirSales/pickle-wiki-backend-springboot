@@ -31,12 +31,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getById(@PathVariable("id") long id){
-        try {
-            return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/authenticated", method = RequestMethod.GET)

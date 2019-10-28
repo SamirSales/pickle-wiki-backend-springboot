@@ -5,7 +5,6 @@ import io.github.samirsales.model.dto.UserDTO;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.runner.ParallelRunner;
 import io.github.samirsales.utils.UserEntityGenerator;
-import javassist.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(ParallelRunner.class)
 public class UserServiceTest {
@@ -47,12 +47,19 @@ public class UserServiceTest {
         assertEquals(2L, (long) userDtoList.get(1).getId());
     }
 
-//    @Test
-//    public void getByIdTest() throws NotFoundException {
-//        UserEntity userEntityExample = UserEntityGenerator.getUserEntityGeneratedById(1L);
-//        Mockito.when(userDao.getById(1L)).thenReturn(Optional.of(userEntityExample));
-//
-//        UserDTO userDTO = userService.getById(1L);
-//
-//    }
+    @Test
+    public void getByIdTest() {
+        UserEntity userEntityExample = UserEntityGenerator.getUserEntityGeneratedById(1L);
+        Mockito.when(userDao.getById(1L)).thenReturn(Optional.of(userEntityExample));
+
+        UserDTO userDTO = userService.getById(1L);
+        assertEquals(1L, (long) userDTO.getId());
+    }
+
+    @Test
+    public void getByIdNotFoundTest() {
+        Mockito.when(userDao.getById(1L)).thenReturn(Optional.empty());
+        UserDTO userDTO = userService.getById(1L);
+        assertNull(userDTO);
+    }
 }
