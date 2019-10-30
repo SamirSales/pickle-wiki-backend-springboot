@@ -4,6 +4,8 @@ import io.github.samirsales.model.dto.UserDTO;
 import io.github.samirsales.exception.UserUpdateException;
 import io.github.samirsales.service.UserService;
 import javassist.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,33 +21,44 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class UserController {
 
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private UserService userService;
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public List<UserDTO> getAll(){
+        logger.info("Requesting all the users.");
         return userService.getAll();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getById(@PathVariable("id") long id){
+        logger.info("Requesting user [ID = "+ id +"].");
         return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/authenticated", method = RequestMethod.GET)
     public UserDTO getAuthenticatedUser(){
+        logger.info("Requesting authenticated user.");
         return userService.getAuthenticatedUser();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteById(@PathVariable("id") long id){
+        logger.info("Requesting user deletion [ID = " + id + "].");
+
         try {
             userService.deleteById(id);
-            return new ResponseEntity<>("The user's password has been deleted successfully", HttpStatus.OK);
+            String successMessage = "The user has been deleted successfully.";
+            logger.info(successMessage);
+            return new ResponseEntity<>(successMessage, HttpStatus.OK);
+
         } catch (NotFoundException e) {
+            logger.error("Error trying to delete user [ID = " + id + "].");
             e.printStackTrace();
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -54,6 +67,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody UserDTO userDTO){
+        logger.info("Requesting update of user [ID = "+ userDTO.getId() +"].");
         userService.update(userDTO);
     }
 
