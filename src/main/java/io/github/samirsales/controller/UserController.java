@@ -29,27 +29,27 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public List<UserDTO> getAll(){
-        logger.info("Requesting all the users.");
+        logger.info("Getting all the users.");
         return userService.getAll();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getById(@PathVariable("id") long id){
-        logger.info("Requesting user [ID = "+ id +"].");
+        logger.info("Getting user by ID = {}.", id);
         return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/authenticated", method = RequestMethod.GET)
     public UserDTO getAuthenticatedUser(){
-        logger.info("Requesting authenticated user.");
+        logger.info("Getting authenticated user.");
         return userService.getAuthenticatedUser();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteById(@PathVariable("id") long id){
-        logger.info("Requesting user deletion [ID = " + id + "].");
+        logger.info("Deleting user by ID = {}.", id);
 
         try {
             userService.deleteById(id);
@@ -58,7 +58,7 @@ public class UserController {
             return new ResponseEntity<>(successMessage, HttpStatus.OK);
 
         } catch (NotFoundException e) {
-            logger.error("Error trying to delete user [ID = " + id + "].");
+            logger.error("Error trying to delete user [ID = {}].", id);
             e.printStackTrace();
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -67,7 +67,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody UserDTO userDTO){
-        logger.info("Requesting update of user [ID = "+ userDTO.getId() +"].");
+        logger.info("Updating user [ID = {}].", userDTO.getId());
         userService.update(userDTO);
     }
 
