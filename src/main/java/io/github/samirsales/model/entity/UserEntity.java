@@ -28,12 +28,12 @@ public class UserEntity extends Audit {
     private Long id;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "The 'name' attribute must be filled.")
     @Column(nullable = false)
     private String name;
 
     @NaturalId(mutable = true)
-    @NotEmpty
+    @NotEmpty(message = "The 'username' attribute must be filled.")
     @Column(nullable = false, unique=true)
     private String username;
 
@@ -44,7 +44,7 @@ public class UserEntity extends Audit {
 
     private boolean active;
 
-    @NotEmpty
+    @NotEmpty(message = "The 'password' attribute must be filled.")
     private String password;
 
     @Enumerated
