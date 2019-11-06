@@ -13,6 +13,7 @@ import java.util.Optional;
 public class UserDaoImpl implements UserDao {
 
     @Autowired
+    @SuppressWarnings("WeakerAccess")
     protected UserRepository userRepository;
 
     @Override
