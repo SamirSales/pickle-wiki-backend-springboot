@@ -38,25 +38,6 @@ public class UserEntityDtoFacadeTest {
     }
 
     @Test
-    public void getEntityWithUpdatedPasswordTest(){
-        UserEntity userEntity = UserEntityGenerator.getUserEntityGeneratedById(1L);
-        String newPasswordNotEncrypted = userEntity.getPassword();
-        String encryptedPasswordFor123456 = "e10adc3949ba59abbe56e057f20f883e";
-        UserEntity userEntityNewPassword = userEntityDtoFacade
-                .getEntityWithUpdatedPassword(userEntity, newPasswordNotEncrypted);
-
-        assertEquals(userEntity.getId(), userEntityNewPassword.getId());
-        assertEquals(userEntity.getName(), userEntityNewPassword.getName());
-        assertEquals(userEntity.getUsername(), userEntityNewPassword.getUsername());
-        assertEquals(userEntity.getEmail(), userEntityNewPassword.getEmail());
-        assertEquals(userEntity.isActive(), userEntityNewPassword.isActive());
-        assertEquals(encryptedPasswordFor123456, userEntityNewPassword.getPassword());
-        assertEquals(userEntity.getGender(), userEntityNewPassword.getGender());
-        assertEquals(userEntity.getRoleEntities(), userEntityNewPassword.getRoleEntities());
-        assertEquals(userEntity.getImageProfile(), userEntityNewPassword.getImageProfile());
-    }
-
-    @Test
     public void getActiveEntityByDTOTest(){
         Long userIdExample = 1L;
         UserEntity generatedUserEntity = UserEntityGenerator.getUserEntityGeneratedById(userIdExample);

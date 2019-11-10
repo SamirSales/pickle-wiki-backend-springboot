@@ -113,20 +113,23 @@ public class UserService {
 
         if(savedUserEntityOptional.isPresent()){
             UserEntity savedUserEntity = savedUserEntityOptional.get();
-            TextEncryption textEncryption = new TextEncryption();
 
-            if(!savedUserEntity.getPassword().equals(textEncryption.getMD5(currentPassword))){
+            if(!savedUserEntity.getPassword().equals(getEncrytedText(currentPassword))){
                 throw new AuthorizationException("Access Denied");
             }
 
-            UserEntity userEntityWithUpdatedPassword = userEntityDtoFacade
-                    .getEntityWithUpdatedPassword(savedUserEntity, newPassword);
-
+            String encryptedNewPassword = getEncrytedText(newPassword);
+            UserEntity userEntityWithUpdatedPassword = savedUserEntity.toBuilder().password(encryptedNewPassword).build();
             this.userDao.update(userEntityWithUpdatedPassword);
         }
 
         String exceptionMessage = getNotFoundExceptionMessageByUsername(userSecurity.getUsername());
         throw new UsernameNotFoundException(exceptionMessage);
+    }
+
+    private String getEncrytedText(String text){
+        TextEncryption textEncryption = new TextEncryption();
+        return textEncryption.getMD5(text);
     }
 
     public UserDTO userPicture(MultipartFile file) throws IOException { //TODO: it needs revision.

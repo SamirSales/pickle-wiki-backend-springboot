@@ -26,22 +26,6 @@ public class UserEntityDtoFacade {
     @SuppressWarnings("unused")
     private RoleDao roleDao;
 
-    public  UserEntity getEntityWithUpdatedPassword(UserEntity userEntity, String newPasswordNotEncrypted){
-        String encryptedPassword = getMD5EncryptedText(newPasswordNotEncrypted);
-
-        return new UserEntity(
-                userEntity.getId(),
-                userEntity.getName(),
-                userEntity.getUsername(),
-                userEntity.getEmail(),
-                userEntity.isActive(),
-                encryptedPassword,
-                userEntity.getGender(),
-                userEntity.getRoleEntities(),
-                userEntity.getImageProfile()
-        );
-    }
-
     public UserEntity getActiveEntitySetByDTO(UserDTO userDTO) {
         return getActiveEntitySetByIdAndDTO(userDTO.getId(), userDTO);
     }
