@@ -2,6 +2,7 @@ package io.github.samirsales.repository;
 
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.utils.UserEntityGenerator;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,15 +26,17 @@ public class UserRepositoryTest {
     @SuppressWarnings("unused")
     private UserRepository userRepository;
 
-    @Before
-    public void setUp(){
-        UserEntity userEntity = UserEntityGenerator.getUserEntityGeneratedById(1L);
-        userRepository.save(userEntity);
+    @After
+    public  void end(){
+        userRepository.deleteAll();
     }
 
     @Test
     public void findByUsernameTest(){
-        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername("username1");
+        UserEntity userEntity = UserEntityGenerator.getUserEntityGeneratedById(1L);
+        userRepository.save(userEntity);
+
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername(userEntity.getUsername());
         assertTrue(optionalUserEntity.isPresent());
     }
 
