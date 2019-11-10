@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.github.samirsales.model.enums.Gender;
 import io.github.samirsales.model.enums.Role;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
@@ -19,6 +20,7 @@ import java.util.Set;
 @Entity(name = "users")
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Getter
+@Builder(toBuilder=true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity extends Audit {
