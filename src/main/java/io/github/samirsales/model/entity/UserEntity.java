@@ -52,7 +52,7 @@ public class UserEntity extends Audit {
     @Enumerated
     private Gender gender;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<RoleEntity> roleEntities;
 
     @OneToOne

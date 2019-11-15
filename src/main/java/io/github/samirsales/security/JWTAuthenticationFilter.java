@@ -1,6 +1,7 @@
 package io.github.samirsales.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.samirsales.model.dto.CredentialDTO;
 import io.github.samirsales.util.TextEncryption;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,12 +32,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throws AuthenticationException {
 
         try{
-            CredentialsDTO credentialsDTO = new ObjectMapper().readValue(req.getInputStream(), CredentialsDTO.class);
+            CredentialDTO credentialDTO = new ObjectMapper().readValue(req.getInputStream(), CredentialDTO.class);
             TextEncryption textEncryption = new TextEncryption();
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    credentialsDTO.getLogin(),
-                    textEncryption.getMD5(credentialsDTO.getPassword()),
+                    credentialDTO.getUsername(),
+                    textEncryption.getMD5(credentialDTO.getPassword()),
                     new ArrayList<>());
 
             return authenticationManager.authenticate(authToken);
@@ -47,8 +48,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                            FilterChain chain, Authentication authResult)
+    protected void successfulAuthentication(
+            HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
 
         String username = ((UserSecurity) authResult.getPrincipal()).getUsername();
