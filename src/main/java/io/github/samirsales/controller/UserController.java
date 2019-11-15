@@ -26,11 +26,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @RequestMapping(method = RequestMethod.GET)
-    public List<UserDTO> getAll(){
+    public ResponseEntity<List<UserDTO>> getAll(){
         logger.info("Getting all the users.");
-        return userService.getAll();
+        return ResponseEntity.ok(userService.getAll());
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
