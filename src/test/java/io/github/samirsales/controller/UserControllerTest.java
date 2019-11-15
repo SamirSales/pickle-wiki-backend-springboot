@@ -60,16 +60,20 @@ public class UserControllerTest {
     }
 
     private ResultActions getAuthenticationResultAction() throws Exception{
-        CredentialDTO credentialDTO = new CredentialDTO("admin", "admin");
-
+        CredentialDTO credentialDTO = getAdminCredentialDTO();
         ObjectMapper objectMapper = new ObjectMapper();
         String credentialDtoStringJson = objectMapper.writeValueAsString(credentialDTO);
 
         return mockMvc.perform(post("/login")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .content(credentialDtoStringJson)
-        );
+            .content(credentialDtoStringJson));
+    }
+
+    private CredentialDTO getAdminCredentialDTO(){
+        String username = "admin";
+        String password = "admin";
+        return new CredentialDTO(username, password);
     }
 
 }
