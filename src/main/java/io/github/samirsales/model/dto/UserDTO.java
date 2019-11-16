@@ -3,6 +3,8 @@ package io.github.samirsales.model.dto;
 import io.github.samirsales.model.entity.RoleEntity;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.model.enums.Gender;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +13,8 @@ import java.util.Set;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder=true)
 public class UserDTO {
 
     private Long id;

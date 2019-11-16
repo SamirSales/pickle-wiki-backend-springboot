@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 @RunWith(ParallelRunner.class)
 public class UserServiceTest {
@@ -52,14 +51,17 @@ public class UserServiceTest {
         UserEntity userEntityExample = UserEntityGenerator.getUserEntityGeneratedById(1L);
         Mockito.when(userDao.getById(1L)).thenReturn(Optional.of(userEntityExample));
 
-        UserDTO userDTO = userService.getById(1L);
+        Optional<UserDTO> optionalUserDTO = userService.getById(1L);
+
+        assertTrue(optionalUserDTO.isPresent());
+        UserDTO userDTO = optionalUserDTO.get();
         assertEquals(1L, (long) userDTO.getId());
     }
 
     @Test
     public void getByIdNotFoundTest() {
         Mockito.when(userDao.getById(1L)).thenReturn(Optional.empty());
-        UserDTO userDTO = userService.getById(1L);
-        assertNull(userDTO);
+        Optional<UserDTO> optionalUserDTO = userService.getById(1L);
+        assertFalse(optionalUserDTO.isPresent());
     }
 }

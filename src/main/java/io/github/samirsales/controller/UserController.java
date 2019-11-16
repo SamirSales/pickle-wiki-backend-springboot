@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -37,7 +38,10 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getById(@PathVariable("id") long id){
         logger.info("Getting user by ID = {}.", id);
-        return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
+        Optional<UserDTO> optionalUserDTO = userService.getById(id);
+
+        return optionalUserDTO.<ResponseEntity<Object>>map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
     @RequestMapping(value = "/authenticated", method = RequestMethod.GET)
@@ -103,7 +107,8 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void create(@RequestBody UserDTO userDTO){
-        userService.create(userDTO);
+    public ResponseEntity<Object> insert(@RequestBody UserDTO userDTO){
+        userService.insert(userDTO);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }
