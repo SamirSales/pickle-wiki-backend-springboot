@@ -67,9 +67,11 @@ public class UserControllerRestTest {
     @Test
     public void verifyIfGetUserByIdNotFound() {
         HttpEntity<?> requestEntity = getHttpEntityWithAuthorization();
-        Long id = 999L;
+        Long nonexistentId = 999L;
+        String url = USER_CONTROLLER_URL_PREFIX + "/" + nonexistentId;
+
         ResponseEntity<UserDTO> responseEntity = testRestTemplate
-                .exchange(USER_CONTROLLER_URL_PREFIX + "/" + id , HttpMethod.GET, requestEntity, UserDTO.class);
+                .exchange(url,  HttpMethod.GET, requestEntity, UserDTO.class);
 
         Assert.assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
         Assert.assertNull(requestEntity.getBody());
@@ -77,21 +79,25 @@ public class UserControllerRestTest {
 
     @Test
     public void verifyIfInsertUserWorks() {
-        UserEntity userEntity = UserEntityGenerator.getUserEntityGeneratedById(3L);
-        UserEntity userEntityToInsert = userEntity.toBuilder().id(null).build();
-        UserDTO userDTOToInsert = new UserDTO(userEntityToInsert);
-        UserDTO userDTOWithSetPassword = userDTOToInsert.toBuilder().password("123456").build();
+        UserDTO genericUserDtoToInsert = getGenericUserDtoToInsert();
 
         String authenticationToken = getAuthenticationToken();
         HttpHeaders headers = new HttpHeaders();
         headers.add(AUTHORIZATION_HEADER_NAME, authenticationToken);
 
-        HttpEntity<UserDTO> requestEntity = new HttpEntity<>(userDTOWithSetPassword, headers);
+        HttpEntity<UserDTO> requestEntity = new HttpEntity<>(genericUserDtoToInsert, headers);
         ResponseEntity<UserDTO> responseEntity = testRestTemplate
-            .exchange(USER_CONTROLLER_URL_PREFIX + "/" , HttpMethod.POST, requestEntity, UserDTO.class);
+                .exchange(USER_CONTROLLER_URL_PREFIX + "/" , HttpMethod.POST, requestEntity, UserDTO.class);
 
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertNull(responseEntity.getBody());
+    }
+
+    private UserDTO getGenericUserDtoToInsert(){
+        UserEntity userEntity = UserEntityGenerator.getUserEntityGeneratedById(3L);
+        UserEntity userEntityToInsert = userEntity.toBuilder().id(null).build();
+        UserDTO userDTOToInsert = new UserDTO(userEntityToInsert);
+        return userDTOToInsert.toBuilder().password("123456").build();
     }
 
     private HttpEntity<?> getHttpEntityWithAuthorization(){
