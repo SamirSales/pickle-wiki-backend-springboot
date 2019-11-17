@@ -9,7 +9,6 @@ import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.model.enums.Gender;
 import io.github.samirsales.repository.UserRepository;
 import io.github.samirsales.utils.UserEntityGenerator;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,10 +19,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -35,17 +31,10 @@ public class UserControllerRestTest {
 
     @Autowired
     @SuppressWarnings("unused")
-    private static UserRepository userRepository;
+    private UserRepository userRepository;
 
     private final String AUTHORIZATION_HEADER_NAME = "Authorization";
     private final String USER_CONTROLLER_URL_PREFIX = "/users";
-
-    @AfterClass
-    public static void reset(){
-        if(userRepository != null){
-            userRepository.deleteAll();
-        }
-    }
 
     @Test
     public void verifyIfGetAllWorkingWithoutToken() {
@@ -100,8 +89,10 @@ public class UserControllerRestTest {
         ResponseEntity<UserCreationDTO> responseEntity = testRestTemplate
                 .exchange(USER_CONTROLLER_URL_PREFIX, HttpMethod.POST, requestEntity, UserCreationDTO.class);
 
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assert.assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
         Assert.assertNull(responseEntity.getBody());
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername(genericUserCreationDto.getUsername());
+        Assert.assertTrue(optionalUserEntity.isPresent());
     }
 
     private UserCreationDTO getGenericUserCreationDto(){
@@ -131,12 +122,13 @@ public class UserControllerRestTest {
         Assert.assertTrue(responseEntity.getBody().contains("The 'name' attribute must be filled."));
         Assert.assertTrue(responseEntity.getBody().contains("The 'username' attribute must be filled."));
         Assert.assertTrue(responseEntity.getBody().contains("The 'password' attribute must be filled."));
+        Assert.assertTrue(responseEntity.getBody().contains("The 'email' attribute must follow an email pattern."));
     }
 
     private UserDTO getUserDtoWithoutRequiredParametersToInsert(){
         UserEntity userEntity = UserEntityGenerator.getUserEntityGeneratedById(4L);
         UserEntity userEntityWithoutRequiredParameters = userEntity
-                .toBuilder().id(null).name("").username("").password("").build();
+                .toBuilder().id(null).name("").username("").password("").email("123").build();
         return new UserDTO(userEntityWithoutRequiredParameters);
     }
 

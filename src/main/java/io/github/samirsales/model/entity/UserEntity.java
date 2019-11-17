@@ -40,7 +40,7 @@ public class UserEntity extends Audit {
     private String username;
 
     @NaturalId(mutable = true)
-    @Email
+    @Email(message = "The 'email' attribute must follow an email pattern.")
     @Column(nullable = false, unique=true)
     private String email;
 

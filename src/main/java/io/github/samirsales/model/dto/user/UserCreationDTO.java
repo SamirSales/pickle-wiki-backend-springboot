@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
@@ -25,7 +26,7 @@ public class UserCreationDTO {
     @NotEmpty(message = "The 'password' attribute must be filled.")
     private String password;
 
-    @NotEmpty(message = "The 'password' attribute must be filled.")
+    @Email(message = "The 'email' attribute must follow an email pattern.")
     private String email;
 
     private Gender gender;
