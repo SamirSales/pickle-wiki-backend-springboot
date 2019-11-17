@@ -1,7 +1,7 @@
 package io.github.samirsales.service;
 
 import io.github.samirsales.dao.UserDao;
-import io.github.samirsales.model.dto.UserDTO;
+import io.github.samirsales.model.dto.user.UserDTO;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.runner.ParallelRunner;
 import io.github.samirsales.utils.UserEntityGenerator;

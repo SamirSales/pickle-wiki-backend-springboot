@@ -1,4 +1,4 @@
-package io.github.samirsales;
+package io.github.samirsales.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
+@SuppressWarnings("unused")
 public class HandleValidationExceptions {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -21,7 +22,7 @@ public class HandleValidationExceptions {
             .getBindingResult()
             .getAllErrors()
             .stream()
-            .map(ObjectError::getObjectName)
+            .map(ObjectError::getDefaultMessage)
             .collect(Collectors.toList());
 
         return new ResponseEntity<>(errorList, HttpStatus.BAD_REQUEST);

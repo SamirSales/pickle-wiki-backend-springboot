@@ -1,5 +1,7 @@
-package io.github.samirsales.model.dto;
+package io.github.samirsales.model.dto.user;
 
+import io.github.samirsales.model.dto.ImageDTO;
+import io.github.samirsales.model.dto.RoleDTO;
 import io.github.samirsales.model.entity.RoleEntity;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.model.enums.Gender;

@@ -1,5 +1,6 @@
 package io.github.samirsales.model.dto;
 
+import io.github.samirsales.model.dto.user.UserDTO;
 import io.github.samirsales.model.entity.Article;
 import io.github.samirsales.model.entity.UserEntity;
 

@@ -1,7 +1,8 @@
 package io.github.samirsales.controller;
 
-import io.github.samirsales.model.dto.UserDTO;
 import io.github.samirsales.exception.UserUpdateException;
+import io.github.samirsales.model.dto.user.UserCreationDTO;
+import io.github.samirsales.model.dto.user.UserDTO;
 import io.github.samirsales.service.UserService;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +37,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Object> getById(@PathVariable("id") long id){
         logger.info("Getting user by ID = {}.", id);
         Optional<UserDTO> optionalUserDTO = userService.getById(id);
@@ -44,14 +46,14 @@ public class UserController {
                 .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping(value = "/authenticated", method = RequestMethod.GET)
+    @GetMapping(value = "/authenticated")
     public UserDTO getAuthenticatedUser(){
         logger.info("Getting authenticated user.");
         return userService.getAuthenticatedUser();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> deleteById(@PathVariable("id") long id){
         logger.info("Deleting user by ID = {}.", id);
 
@@ -69,7 +71,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody UserDTO userDTO){
         logger.info("Updating user [ID = {}].", userDTO.getId());
         userService.update(userDTO);
@@ -77,7 +79,7 @@ public class UserController {
 
     final private String PASSWORD_UPDATED_SUCCESSFULLY_MESSAGE = "The user's password has been deleted successfully";
 
-    @RequestMapping(value = "/update_authenticated", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update_authenticated", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object>  updateAuthenticatedUser(@RequestBody UserDTO authenticatedUserDTO){
 
         try{
@@ -89,8 +91,7 @@ public class UserController {
         return new ResponseEntity<>(PASSWORD_UPDATED_SUCCESSFULLY_MESSAGE, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/update_password",
-        method = RequestMethod.PUT,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/update_password", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> updateUserPassword(
         @RequestParam("currentPassword") String currentPassword,
         @RequestParam("newPassword") String newPassword){
@@ -99,15 +100,14 @@ public class UserController {
         return new ResponseEntity<>(PASSWORD_UPDATED_SUCCESSFULLY_MESSAGE, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/update_picture",
-        method = RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/update_picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UserDTO uploadImageFile(@RequestParam("file") MultipartFile file) throws Exception {
         return userService.userPicture(file);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> insert(@RequestBody UserDTO userDTO){
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> insert(@RequestBody @Valid UserCreationDTO userDTO){
         userService.insert(userDTO);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }

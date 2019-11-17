@@ -3,7 +3,8 @@ package io.github.samirsales.service;
 import io.github.samirsales.dao.UserDao;
 import io.github.samirsales.exception.AuthorizationException;
 import io.github.samirsales.facade.UserEntityDtoFacade;
-import io.github.samirsales.model.dto.UserDTO;
+import io.github.samirsales.model.dto.user.UserCreationDTO;
+import io.github.samirsales.model.dto.user.UserDTO;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.security.UserSecurity;
 import io.github.samirsales.util.ImageResizer;
@@ -62,8 +63,8 @@ public class UserService {
         return Optional.empty();
     }
 
-    public void insert(UserDTO userDTO) {
-        UserEntity userEntity = userEntityDtoFacade.getActiveEntitySetByDTO(userDTO);
+    public void insert(UserCreationDTO userCreationDTO) {
+        UserEntity userEntity = userEntityDtoFacade.getActiveEntitySetByDTO(userCreationDTO);
         this.userDao.create(userEntity);
     }
 

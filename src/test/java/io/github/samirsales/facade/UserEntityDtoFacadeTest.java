@@ -2,7 +2,7 @@ package io.github.samirsales.facade;
 
 import io.github.samirsales.dao.RoleDao;
 import io.github.samirsales.dao.UserDao;
-import io.github.samirsales.model.dto.UserDTO;
+import io.github.samirsales.model.dto.user.UserDTO;
 import io.github.samirsales.model.entity.UserEntity;
 import io.github.samirsales.runner.ParallelRunner;
 import io.github.samirsales.utils.UserEntityGenerator;
@@ -35,17 +35,6 @@ public class UserEntityDtoFacadeTest {
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-    }
-
-    @Test
-    public void getActiveEntityByDTOTest(){
-        Long userIdExample = 1L;
-        UserEntity generatedUserEntity = UserEntityGenerator.getUserEntityGeneratedById(userIdExample);
-        UserDTO userDTO = new UserDTO(generatedUserEntity);
-
-        Mockito.when(userDao.getById(userIdExample)).thenReturn(Optional.of(generatedUserEntity));
-        UserEntity userEntityByDTO = userEntityDtoFacade.getActiveEntitySetByDTO(userDTO);
-        assertEquals(generatedUserEntity, userEntityByDTO);
     }
 
     @Test
