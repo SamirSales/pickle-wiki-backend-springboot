@@ -53,6 +53,39 @@ public class UserControllerRestTest {
     }
 
     @Test
+    public void getAuthenticatedUserTest(){
+        HttpEntity<?> requestEntity = getHttpEntityWithAuthorization();
+        String url = USER_CONTROLLER_URL_PREFIX + "/authenticated";
+        ResponseEntity<UserDTO> responseEntity = testRestTemplate
+                .exchange(url, HttpMethod.GET, requestEntity, UserDTO.class);
+
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assert.assertNotNull(responseEntity.getBody());
+    }
+
+    @Test
+    public void deleteByIdTest(){
+        UserEntity savedUserEntity = getSavedUserEntity();
+
+        HttpEntity<?> requestEntity = getHttpEntityWithAuthorization();
+        String url = USER_CONTROLLER_URL_PREFIX + "/" + savedUserEntity.getId();
+        ResponseEntity<String> responseEntity = testRestTemplate
+                .exchange(url, HttpMethod.DELETE, requestEntity, String.class);
+
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        boolean userStillExists = userRepository.findByUsernameAndActiveTrue(savedUserEntity.getUsername()).isPresent();
+        Assert.assertFalse(userStillExists);
+    }
+
+    private UserEntity getSavedUserEntity(){
+        UserEntity userEntity = UserEntityGenerator.getUserEntityGeneratedById(4L);
+        UserEntity userEntityToBeDelete = userEntity.toBuilder().id(null).build();
+        userRepository.save(userEntityToBeDelete);
+        Optional<UserEntity> savedUserEntity = userRepository.findByUsername(userEntityToBeDelete.getUsername());
+        return savedUserEntity.orElse(null);
+    }
+
+    @Test
     public void verifyIfGetUserByIdWorks() {
         HttpEntity<?> requestEntity = getHttpEntityWithAuthorization();
         Long id = 1L;
@@ -107,8 +140,8 @@ public class UserControllerRestTest {
 
     @Test
     @SuppressWarnings("ConstantConditions")
-    public void verifyIfInsertUserWithoutRequiredParameters() {
-        UserDTO userDtoWithoutRequiredParameters = getUserDtoWithoutRequiredParametersToInsert();
+    public void verifyIfInsertUserWithIncorrectParameters() {
+        UserDTO userDtoWithoutRequiredParameters = getUserDtoWithIncorrectParametersToInsert();
 
         String authenticationToken = getAuthenticationToken();
         HttpHeaders headers = new HttpHeaders();
@@ -125,7 +158,7 @@ public class UserControllerRestTest {
         Assert.assertTrue(responseEntity.getBody().contains("The 'email' attribute must follow an email pattern."));
     }
 
-    private UserDTO getUserDtoWithoutRequiredParametersToInsert(){
+    private UserDTO getUserDtoWithIncorrectParametersToInsert(){
         UserEntity userEntity = UserEntityGenerator.getUserEntityGeneratedById(4L);
         UserEntity userEntityWithoutRequiredParameters = userEntity
                 .toBuilder().id(null).name("").username("").password("").email("123").build();

@@ -47,27 +47,27 @@ public class UserController {
     }
 
     @GetMapping(value = "/authenticated")
-    public UserDTO getAuthenticatedUser(){
+    public ResponseEntity<UserDTO> getAuthenticatedUser(){
         logger.info("Getting authenticated user.");
-        return userService.getAuthenticatedUser();
+        return ResponseEntity.ok(userService.getAuthenticatedUser());
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable("id") long id){
+    public ResponseEntity<?> deleteById(@PathVariable("id") long id){
         logger.info("Deleting user by ID = {}.", id);
 
         try {
             userService.deleteById(id);
             String successMessage = "The user has been deleted successfully.";
             logger.info(successMessage);
-            return new ResponseEntity<>(successMessage, HttpStatus.OK);
+            return ResponseEntity.ok(successMessage);
 
         } catch (NotFoundException e) {
             logger.error("Error trying to delete user [ID = {}].", id);
             e.printStackTrace();
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
