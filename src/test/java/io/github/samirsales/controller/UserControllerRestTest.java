@@ -65,7 +65,7 @@ public class UserControllerRestTest {
 
     @Test
     public void deleteByIdTest(){
-        UserEntity savedUserEntity = getSavedUserEntity();
+        UserEntity savedUserEntity = getSavedUserEntity(7L);
 
         HttpEntity<?> requestEntity = getHttpEntityWithAuthorization();
         String url = USER_CONTROLLER_URL_PREFIX + "/" + savedUserEntity.getId();
@@ -77,8 +77,53 @@ public class UserControllerRestTest {
         Assert.assertFalse(userStillExists);
     }
 
-    private UserEntity getSavedUserEntity(){
-        UserEntity userEntity = UserEntityGenerator.getUserEntityGeneratedById(4L);
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    public void updateTest(){
+        UserEntity savedUserEntity = getSavedUserEntity(6L);
+        UserEntity updatedUserEntity = savedUserEntity.toBuilder().name("Fulana").username("fulana")
+                .gender(Gender.FEMALE).email("fulana@email.com").build();
+        UserDTO updatedUserDTO = new UserDTO(updatedUserEntity);
+
+        String authenticationToken = getAuthenticationToken();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(AUTHORIZATION_HEADER_NAME, authenticationToken);
+
+        HttpEntity<UserDTO> requestEntity = new HttpEntity<>(updatedUserDTO, headers);
+        ResponseEntity<String> responseEntity = testRestTemplate
+                .exchange(USER_CONTROLLER_URL_PREFIX, HttpMethod.PUT, requestEntity, String.class);
+
+        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Optional<UserEntity> optionalDatabaseUserEntity = userRepository.findById(savedUserEntity.getId());
+        Assert.assertEquals(updatedUserDTO.getName(), optionalDatabaseUserEntity.get().getName());
+        Assert.assertEquals(updatedUserDTO.getUsername(), optionalDatabaseUserEntity.get().getUsername());
+        Assert.assertEquals(updatedUserDTO.getGender(), optionalDatabaseUserEntity.get().getGender());
+        Assert.assertEquals(updatedUserDTO.getEmail(), optionalDatabaseUserEntity.get().getEmail());
+    }
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    public void updateTestWithIncorrectParameters(){
+        UserEntity savedUserEntity = getSavedUserEntity(5L);
+        UserEntity updatedUserEntity = savedUserEntity.toBuilder().name("").username("").email("123").build();
+        UserDTO updatedUserDTO = new UserDTO(updatedUserEntity);
+
+        String authenticationToken = getAuthenticationToken();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(AUTHORIZATION_HEADER_NAME, authenticationToken);
+
+        HttpEntity<UserDTO> requestEntity = new HttpEntity<>(updatedUserDTO, headers);
+        ResponseEntity<List<String>> responseEntity = testRestTemplate.exchange(USER_CONTROLLER_URL_PREFIX,
+                HttpMethod.PUT, requestEntity, new ParameterizedTypeReference<List<String>>(){});
+
+        Assert.assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        Assert.assertTrue(responseEntity.getBody().contains("The 'name' attribute must be filled."));
+        Assert.assertTrue(responseEntity.getBody().contains("The 'username' attribute must be filled."));
+        Assert.assertTrue(responseEntity.getBody().contains("The 'email' attribute must follow an email pattern."));
+    }
+
+    private UserEntity getSavedUserEntity(Long userId){
+        UserEntity userEntity = UserEntityGenerator.getUserEntityGeneratedById(userId);
         UserEntity userEntityToBeDelete = userEntity.toBuilder().id(null).build();
         userRepository.save(userEntityToBeDelete);
         Optional<UserEntity> savedUserEntity = userRepository.findByUsername(userEntityToBeDelete.getUsername());

@@ -72,9 +72,10 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody UserDTO userDTO){
+    public ResponseEntity<?> update(@RequestBody @Valid UserDTO userDTO){
         logger.info("Updating user [ID = {}].", userDTO.getId());
         userService.update(userDTO);
+        return ResponseEntity.ok("User has been updated successfully");
     }
 
     final private String PASSWORD_UPDATED_SUCCESSFULLY_MESSAGE = "The user's password has been deleted successfully";

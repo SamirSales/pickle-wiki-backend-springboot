@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,11 +22,19 @@ import java.util.Set;
 public class UserDTO {
 
     private Long id;
+
+    @NotEmpty(message = "The 'name' attribute must be filled.")
     private String name;
+
+    @NotEmpty(message = "The 'username' attribute must be filled.")
     private String username;
-    private String email;
-    private Gender gender;
+
     private String password;
+
+    @Email(message = "The 'email' attribute must follow an email pattern.")
+    private String email;
+
+    private Gender gender;
     private ImageDTO imageProfile;
     private Set<RoleDTO> roles;
 
